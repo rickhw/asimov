@@ -7,8 +7,15 @@ Code Name: Asimov (艾希莫夫)
 
 - multi-tenancy
 - extension services, marketplace
-- multi-version, depolyment
 
+
+## Code Functions
+
+- SSO
+- IAM
+- Usage Status
+- Isolation
+- multi-version, depolyment
 
 ## Keyword
 
