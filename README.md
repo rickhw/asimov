@@ -14,3 +14,10 @@ Keyword:
 - Microservices
 
 
+
+## Model
+
+- Model Base by Resource
+- Tenancy Base by Partition
+
+
