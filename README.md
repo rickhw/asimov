@@ -3,7 +3,7 @@
 Code Name: Asimov (艾希莫夫)
 
 
-## Code Features
+## Concepts - Code Features
 
 - multi-tenancy
 - extension services, marketplace
@@ -14,8 +14,13 @@ Code Name: Asimov (艾希莫夫)
 - SSO
 - IAM
 - Usage Status
-- Isolation
+- Isolation Factor
+    - Shared, Dedicate
 - multi-version, depolyment
+- Global Architecture - Multiple site
+    - Main Site
+    - Branch Site
+
 
 ## Keyword
 
@@ -27,10 +32,21 @@ Code Name: Asimov (艾希莫夫)
 - API First
 
 
-## Model
+## Part 2: Architecture
+
+### Data Model
 
 - Model Base by Resource
 - Tenancy Base by Partition
+- Tenant Context
+
+
+
+## Part3: Development
+
+
+
+## Part4: Operation
 
 
 
