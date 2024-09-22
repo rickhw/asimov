@@ -1,0 +1,39 @@
+plugins {
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+    id "application"
+}
+
+group = 'com.gtcafe.asimov'
+//version = '1.0.0-SNAPSHOT'
+version = '0.1.0-b' + getTimestamp()
+description = 'ApiServer'
+sourceCompatibility = '17'
+
+
+repositories {
+    mavenCentral()
+  	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+def getTimestamp() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd-HHmm')
+    return formattedDate
+}

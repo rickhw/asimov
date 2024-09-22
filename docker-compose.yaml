@@ -1,0 +1,66 @@
+version: "3.2"
+services:
+  rdb_mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: asimov
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./data/rdb_mysql:/var/lib/mysql
+    # networks:
+    #   - service-network
+
+  rdb-adminer_phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 9999:80
+    links:
+      - rdb_mysql:db
+    # networks:
+    #   - service-network
+    depends_on:
+      rdb_mysql:
+        condition: service_healthy
+
+  cache_redis:
+    image: redis:7.2-alpine
+    # container_name: 'redis-7.2'
+    ports:
+        - 6379:6379
+    volumes:
+        - ./data/cache_redis/data:/data
+        - ./data/cache_redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+
+  cache-adminer_phpRedisAdmin:
+    # https://github.com/erikdubbelboer/phpRedisAdmin
+    image: erikdubbelboer/phpredisadmin:1.19
+    # container_name: 'cache_adminer'
+    ports:
+        - 9998:80
+    environment:
+      REDIS_1_HOST: host.docker.internal
+      REDIS_1_NAME: localhost
+
+  queue_rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    # container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ./data/queue_rabbitmq/data:/var/lib/rabbitmq
+        - ./data/queue_rabbitmq/log:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: password
+
+
+
+
+
