@@ -1,0 +1,36 @@
+plugins {
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+
+    id 'java-library'
+}
+
+group = 'com.gtcafe.asimov'
+version = '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+// 禁用 Spring Boot 的 bootJar 任務，因為 common 不需要生成可執行 jar
+// 沒有 public static void main() 
+tasks.getByName('bootJar') {
+    enabled = false
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'com.github.loki4j:loki-logback-appender:1.4.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.jar {
+    archiveBaseName.set('core')
+    archiveVersion.set(version)
+}

@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system;
+package com.gtcafe.asimov.apiserver.services;
 
 import javax.sql.DataSource;
 

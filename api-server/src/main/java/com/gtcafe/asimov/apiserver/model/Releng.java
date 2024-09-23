@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.models;
+package com.gtcafe.asimov.apiserver.model;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;

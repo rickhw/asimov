@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.constants;
+package com.gtcafe.asimov.apiserver.constants;
 
 public class HttpHeaderConstants {
     // Request

@@ -1,0 +1,5 @@
+rootProject.name = 'asimov'
+
+include 'api-server'
+include 'consumer'
+include 'core'
