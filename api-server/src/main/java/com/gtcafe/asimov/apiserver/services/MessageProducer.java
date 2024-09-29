@@ -1,14 +1,29 @@
 package com.gtcafe.asimov.apiserver.services;
 
+import com.gtcafe.asimov.apiserver.event.EventType;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.apiserver.model.Event;
+//import com.gtcafe.asimov.apiserver.model.Event;
+import com.gtcafe.asimov.apiserver.event.Event;
+import com.gtcafe.asimov.apiserver.event.IMessage;
+import com.gtcafe.asimov.apiserver.event.message.CreateContainerMessage;
+import com.gtcafe.asimov.apiserver.event.message.DeleteContainerMessage;
+
+import java.util.UUID;
+
+
+//import com.gtcafe.asimov.system.event.Event;
+//import com.gtcafe.asimov.system.event.Message;
+//import com.gtcafe.asimov.system.event.message.CreateContainerMessage;
+//import com.gtcafe.asimov.system.event.message.DeleteContainerMessage;
+
 
 @Service
 public class MessageProducer {
+
     @Autowired
 	private AmqpTemplate rabbitTemplate;
 
@@ -18,8 +33,31 @@ public class MessageProducer {
 	@Value("${app.rabbitmq.routingkey}")
 	private String routingkey;
 
-	public void send(Event event) {
-		rabbitTemplate.convertAndSend(exchange, routingkey, event);
-		System.out.println("Enqueue, event: " + event);
+//	public void send(Event event) {
+//		rabbitTemplate.convertAndSend(exchange, routingkey, event);
+//		System.out.println("Enqueue, event: " + event);
+//	}
+
+	// 发送 Event 消息
+	public void sendEvent(Event<? extends IMessage> event) {
+		rabbitTemplate.convertAndSend("eventExchange", "eventRoutingKey", event);
+		System.out.println("Event Sent: " + event.getEventType());
+	}
+
+	// 示例：发送 TypeAMessage
+	public Event<CreateContainerMessage> sendCreateContainerEvent(CreateContainerMessage message) {
+		Event<CreateContainerMessage> event = new Event<>(EventType.CREATE_CONTAINER, message);
+		sendEvent(event);
+
+		return event;
+	}
+
+	// 示例：发送 TypeBMessage
+	public Event<DeleteContainerMessage> sendDeleteContainerMessageEvent(String containerId) {
+		DeleteContainerMessage message = new DeleteContainerMessage(containerId);
+		Event<DeleteContainerMessage> event = new Event<>(EventType.DELETE_CONTAINER, message);
+		sendEvent(event);
+
+		return event;
 	}
 }

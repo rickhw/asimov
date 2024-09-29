@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.model;
+package com.gtcafe.asimov.core.model;
 
 public class TenantContext {
     private String tenantId;

@@ -1,5 +1,5 @@
 rootProject.name = 'asimov'
 
 include 'api-server'
-include 'consumer'
+include 'event-consumer'
 include 'core'

@@ -17,3 +17,14 @@
 
 
 
+---
+
+## Tech Issue
+
+- core
+    - common librares for web server
+    - TenantContext
+    - ApiMetadataContext
+- async
+    - message dispatch, type
+    - annotation: @DryRun, @Async
