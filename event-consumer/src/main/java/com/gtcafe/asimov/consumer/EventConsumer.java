@@ -3,6 +3,7 @@ package com.gtcafe.asimov.consumer.handler;
 import com.gtcafe.asimov.core.event.Event;
 import com.gtcafe.asimov.core.event.EventType;
 import com.gtcafe.asimov.core.event.IMessage;
+import com.gtcafe.asimov.core.event.IEventHandler;
 import com.gtcafe.asimov.core.event.message.CreateContainerMessage;
 import com.gtcafe.asimov.core.event.message.DeleteContainerMessage;
 

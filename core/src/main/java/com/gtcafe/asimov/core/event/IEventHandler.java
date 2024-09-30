@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.consumer.handler;
+package com.gtcafe.asimov.core.event;
 
 import com.gtcafe.asimov.core.event.IMessage;
 
