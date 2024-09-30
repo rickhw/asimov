@@ -1,12 +1,13 @@
 package com.gtcafe.asimov.consumer.handler;
 
-import com.gtcafe.asimov.consumer.IEventHandler;
+import com.gtcafe.asimov.core.event.message.DeleteContainerMessage;
+import org.springframework.stereotype.Service;
 
-// TypeAEventHandler 处理 TypeAMessage
 @Service
-public class DeleteContainerEventHandler implements IEventHandler<TypeAMessage> {
+public class DeleteContainerEventHandler implements IEventHandler<DeleteContainerMessage> {
+    
     @Override
-    public void handle(TypeAMessage message) {
-        System.out.println("Handling Type A Message: " + message.getMessageContent());
+    public void handle(DeleteContainerMessage message) {
+        System.out.println("Handling Type A Message: " + message.getContent());
     }
 }

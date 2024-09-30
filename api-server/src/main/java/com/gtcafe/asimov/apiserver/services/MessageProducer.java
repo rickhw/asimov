@@ -1,24 +1,17 @@
 package com.gtcafe.asimov.apiserver.services;
 
-import com.gtcafe.asimov.apiserver.event.EventType;
+import com.gtcafe.asimov.core.event.EventType;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-//import com.gtcafe.asimov.apiserver.model.Event;
-import com.gtcafe.asimov.apiserver.event.Event;
-import com.gtcafe.asimov.apiserver.event.IMessage;
-import com.gtcafe.asimov.apiserver.event.message.CreateContainerMessage;
-import com.gtcafe.asimov.apiserver.event.message.DeleteContainerMessage;
+import com.gtcafe.asimov.core.event.Event;
+import com.gtcafe.asimov.core.event.IMessage;
+import com.gtcafe.asimov.core.event.message.CreateContainerMessage;
+import com.gtcafe.asimov.core.event.message.DeleteContainerMessage;
 
 import java.util.UUID;
-
-
-//import com.gtcafe.asimov.system.event.Event;
-//import com.gtcafe.asimov.system.event.Message;
-//import com.gtcafe.asimov.system.event.message.CreateContainerMessage;
-//import com.gtcafe.asimov.system.event.message.DeleteContainerMessage;
 
 
 @Service
@@ -44,7 +37,6 @@ public class MessageProducer {
 		System.out.println("Event Sent: " + event.getEventType());
 	}
 
-	// 示例：发送 TypeAMessage
 	public Event<CreateContainerMessage> sendCreateContainerEvent(CreateContainerMessage message) {
 		Event<CreateContainerMessage> event = new Event<>(EventType.CREATE_CONTAINER, message);
 		sendEvent(event);
@@ -52,7 +44,6 @@ public class MessageProducer {
 		return event;
 	}
 
-	// 示例：发送 TypeBMessage
 	public Event<DeleteContainerMessage> sendDeleteContainerMessageEvent(String containerId) {
 		DeleteContainerMessage message = new DeleteContainerMessage(containerId);
 		Event<DeleteContainerMessage> event = new Event<>(EventType.DELETE_CONTAINER, message);

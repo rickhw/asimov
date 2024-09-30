@@ -1,17 +1,16 @@
 package com.gtcafe.asimov.core.event.message;
 
-import com.gtcafe.asimov.core.event.Message;
+import com.gtcafe.asimov.core.event.IMessage;
 
-// TypeAMessage 实现 Message 接口
-public class CreateContainerMessage implements Message {
-    private final String messageContent;
+public class CreateContainerMessage implements IMessage {
+    private final String content;
 
-    public CreateContainerMessage(String messageContent) {
-        this.messageContent = messageContent;
+    public CreateContainerMessage(String content) {
+        this.content = content;
     }
 
     @Override
-    public String getMessageContent() {
-        return messageContent;
+    public String getContent() {
+        return content;
     }
 }

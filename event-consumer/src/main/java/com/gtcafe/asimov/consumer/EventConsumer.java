@@ -1,27 +1,30 @@
-package com.gtcafe.asimov.consumer;
+package com.gtcafe.asimov.consumer.handler;
 
+import com.gtcafe.asimov.core.event.Event;
+import com.gtcafe.asimov.core.event.EventType;
+import com.gtcafe.asimov.core.event.IMessage;
+import com.gtcafe.asimov.core.event.message.CreateContainerMessage;
+import com.gtcafe.asimov.core.event.message.DeleteContainerMessage;
 
-import com.example.common.event.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventConsumer {
 
-    private final IEventHandler<TypeAMessage> typeAHandler;
-    private final IEventHandler<TypeBMessage> typeBHandler;
+    private final IEventHandler<CreateContainerMessage> createContainerHandler;
+    private final IEventHandler<DeleteContainerMessage> deleteContainerHandler;
 
-    public EventConsumer(IEventHandler<TypeAMessage> typeAHandler, IEventHandler<TypeBMessage> typeBHandler) {
-        this.typeAHandler = typeAHandler;
-        this.typeBHandler = typeBHandler;
+    public EventConsumer(IEventHandler<CreateContainerMessage> createContainerHandler, IEventHandler<DeleteContainerMessage> deleteContainerHandler) {
+        this.createContainerHandler = createContainerHandler;
+        this.deleteContainerHandler = deleteContainerHandler;
     }
 
-    // RabbitMQ 消费者
     @RabbitListener(queues = "eventQueue")
-    public void receiveEvent(Event<? extends Message> event) {
+    public void receiveEvent(Event<? extends IMessage> event) {
         switch (event.getEventType()) {
-            case TYPE_A -> typeAHandler.handle((TypeAMessage) event.getData());
-            case TYPE_B -> typeBHandler.handle((TypeBMessage) event.getData());
+            case CREATE_CONTAINER -> createContainerHandler.handle((CreateContainerMessage) event.getData());
+            case DELETE_CONTAINER -> deleteContainerHandler.handle((DeleteContainerMessage) event.getData());
             default -> throw new IllegalArgumentException("Unknown event type: " + event.getEventType());
         }
     }

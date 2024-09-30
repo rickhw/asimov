@@ -1,17 +1,17 @@
 package com.gtcafe.asimov.core.event.message;
 
 
-import com.gtcafe.asimov.core.event.Message;
+import com.gtcafe.asimov.core.event.IMessage;
 
-public class DeleteContainerMessage implements Message {
-    private final String messageContent;
+public class DeleteContainerMessage implements IMessage {
+    private final String content;
 
-    public DeleteContainerMessage(String messageContent) {
-        this.messageContent = messageContent;
+    public DeleteContainerMessage(String content) {
+        this.content = content;
     }
 
     @Override
-    public String getMessageContent() {
-        return messageContent;
+    public String getContent() {
+        return content;
     }
 }

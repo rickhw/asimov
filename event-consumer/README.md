@@ -10,5 +10,4 @@ gradle wrapper
 
 ## run Springboot
 ./gradlew bootRun
-
 ```

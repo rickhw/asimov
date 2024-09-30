@@ -2,8 +2,6 @@ package com.gtcafe.asimov.apiserver.controller.api;
 
 import java.util.UUID;
 
-import com.gtcafe.asimov.apiserver.event.EventType;
-import com.gtcafe.asimov.apiserver.event.message.DeleteContainerMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +10,11 @@ import com.gtcafe.asimov.apiserver.services.MessageProducer;
 //import com.gtcafe.asimov.apiserver.model.Event;
 //import com.gtcafe.asimov.apiserver.model.Message;
 
-import com.gtcafe.asimov.apiserver.event.Event;
-import com.gtcafe.asimov.apiserver.event.IMessage;
-import com.gtcafe.asimov.apiserver.event.message.CreateContainerMessage;
-
+import com.gtcafe.asimov.core.event.EventType;
+import com.gtcafe.asimov.core.event.Event;
+import com.gtcafe.asimov.core.event.IMessage;
+import com.gtcafe.asimov.core.event.message.CreateContainerMessage;
+import com.gtcafe.asimov.core.event.message.DeleteContainerMessage;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController

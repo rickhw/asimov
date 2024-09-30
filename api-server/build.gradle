@@ -5,19 +5,19 @@ plugins {
     id "application"
 }
 
-group = 'com.gtcafe.asimov'
+//group = 'com.gtcafe.asimov'
 //version = '1.0.0-SNAPSHOT'
 version = '0.1.0-b' + getTimestamp()
 description = 'ApiServer'
-sourceCompatibility = '17'
+//sourceCompatibility = '17'
 
-
-repositories {
-    mavenCentral()
-  	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
-
-}
+//
+//repositories {
+//    mavenCentral()
+//  	maven { url 'https://repo.spring.io/milestone' }
+//	maven { url 'https://repo.spring.io/snapshot' }
+//
+//}
 
 dependencies {
     implementation project(':core')
@@ -49,13 +49,17 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
 
 
 def getTimestamp() {
     def date = new Date()
     def formattedDate = date.format('yyyyMMdd-HHmm')
     return formattedDate
+}
+
+bootJar {
+    mainClassName = 'com.gtcafe.asimov.apiserver.Main'
 }
