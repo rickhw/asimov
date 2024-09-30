@@ -1,7 +1,7 @@
-package com.gtcafe.asimov.consumer.handler;
+package com.gtcafe.asimov.consumer.container.handler;
 
 import com.gtcafe.asimov.core.event.IEventHandler;
-import com.gtcafe.asimov.core.event.message.DeleteContainerMessage;
+import com.gtcafe.asimov.core.event.message.container.DeleteContainerMessage;
 import org.springframework.stereotype.Service;
 
 @Service

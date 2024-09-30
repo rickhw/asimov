@@ -22,6 +22,7 @@ public class Event<T extends IMessage> {
     public EventType getEventType() {
         return eventType;
     }
+    
     public String getEventId() { return this.id; }
 
     public T getData() {

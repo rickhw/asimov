@@ -1,6 +1,7 @@
 package com.gtcafe.asimov.consumer.config;
 
-import com.gtcafe.asimov.consumer.MessageConsumer;
+import com.gtcafe.asimov.consumer.general.GeneralConsumer;
+
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
@@ -39,7 +40,7 @@ public class RabbitMQConfig {
 		SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
 		simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
 		simpleMessageListenerContainer.setQueues(queue());
-		simpleMessageListenerContainer.setMessageListener(new MessageConsumer());
+		simpleMessageListenerContainer.setMessageListener(new GeneralConsumer());
 		return simpleMessageListenerContainer;
 	}
 

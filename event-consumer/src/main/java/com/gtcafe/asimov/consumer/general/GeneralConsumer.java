@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.consumer;
+package com.gtcafe.asimov.consumer.general;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 // https://www.javainuse.com/messaging/rabbitmq/listeners
 @Service
-public class MessageConsumer implements MessageListener {
+public class GeneralConsumer implements MessageListener {
 
 	public void onMessage(Message message) {
 

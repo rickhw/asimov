@@ -1,13 +1,18 @@
 @contentType = application/json
 
-@hostname = http://localhost:8080/api/send-message
+@hostname = http://localhost:8080/api
+
 
 
 ### Send Message
-POST {{hostname}}
+GET {{hostname}}/
+
+
+
+### Send Message
+POST {{hostname}}/container
 content-type: {{contentType}}
 
 {
-  "name": "rick",
-  "age": 18
+  "content": "rick"
 }
