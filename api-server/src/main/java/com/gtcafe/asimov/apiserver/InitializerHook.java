@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.services;
+package com.gtcafe.asimov.apiserver;
 
 import javax.sql.DataSource;
 
@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 import com.gtcafe.asimov.apiserver.utils.Slogan;
 
 @Service
-public class InitialiarService implements CommandLineRunner, ApplicationRunner  {
+public class InitializerHook implements CommandLineRunner, ApplicationRunner  {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitialiarService.class);
+    private static final Logger logger = LoggerFactory.getLogger(InitializerHook.class);
 
     @Autowired
     private Slogan utils;
@@ -32,7 +32,7 @@ public class InitialiarService implements CommandLineRunner, ApplicationRunner  
 
     private final Environment env;
 
-    public InitialiarService(Environment env) {
+    public InitializerHook(Environment env) {
         this.env = env;
     }
 

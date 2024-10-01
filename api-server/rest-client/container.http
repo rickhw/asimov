@@ -1,0 +1,35 @@
+@contentType = application/json
+
+@hostname = http://localhost:8080/api
+
+
+
+### Send Message
+GET {{hostname}}/
+
+
+
+### Send Message
+POST {{hostname}}/container
+content-type: {{contentType}}
+
+{
+  "accountName": "test",
+  "description": "test"
+}
+
+### error#0: invalid json
+POST {{hostname}}/container
+content-type: {{contentType}}
+
+{
+  "accountName": "test",
+}
+
+### error#1: miss field
+POST {{hostname}}/container
+content-type: {{contentType}}
+
+{
+  "accountName": "test"
+}

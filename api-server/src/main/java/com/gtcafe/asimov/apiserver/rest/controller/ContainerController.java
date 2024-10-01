@@ -1,12 +1,14 @@
-package com.gtcafe.asimov.apiserver.controller.api;
+package com.gtcafe.asimov.apiserver.rest.controller;
 
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
 
 import com.gtcafe.asimov.apiserver.producer.ContainerProducer;
+import com.gtcafe.asimov.apiserver.rest.model.request.CreateContainerRequest;
 
 import com.gtcafe.asimov.core.event.EventType;
 import com.gtcafe.asimov.core.event.Event;
@@ -30,11 +32,16 @@ public class ContainerController {
 
   @PostMapping(value = "", produces = { "application/json" })
   public ResponseEntity<String> createContainerAsync(
-          @RequestBody CreateContainerMessage message) {
+      @RequestBody
+			@Validated
+			CreateContainerRequest request) {
 
-    Event<CreateContainerMessage> event = _producer.sendCreateContainerEvent(message);
+      // CreateContainerMessage message
 
-    return ResponseEntity.ok(String.format("sent, eventId: [%s], message: [%s]", event.getEventId(), message));
+    // Event<CreateContainerMessage> event = _producer.sendCreateContainerEvent(message);
+
+    return ResponseEntity.ok("ok");
+    // return ResponseEntity.ok(String.format("sent, eventId: [%s], message: [%s]", event.getEventId(), message));
   }
 
   @DeleteMapping(value = "/{id}", produces = { "application/json" })
