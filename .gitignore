@@ -1,21 +1,29 @@
+## OS index / metadata
 .DS_Store
 Thumbs.db
+
+## secret / credential
+credentials.json
+
+## Node.JS
 db.json
 debug.log
 node_modules/
+npm-debug.log
+
 .deploy/
 .deploy_git/
-npm-debug.log
+
+## Java
 *.jar
 *.class
 target/
-
-credentials.json
 
 ## Gradle
 .gradle
 bin/
 build/
+gradle
 
 ## docker data
 .docker-data
