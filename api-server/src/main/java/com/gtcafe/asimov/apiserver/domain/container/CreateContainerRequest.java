@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.rest.model.request;
+package com.gtcafe.asimov.apiserver.domain.container;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

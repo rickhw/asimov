@@ -1,15 +1,14 @@
-package com.gtcafe.asimov.apiserver.producer;
+package com.gtcafe.asimov.apiserver.domain.container;
 
-import com.gtcafe.asimov.core.event.EventType;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.core.event.Event;
+import com.gtcafe.asimov.core.event.EventType;
 import com.gtcafe.asimov.core.event.IMessage;
-import com.gtcafe.asimov.core.event.message.container.CreateContainerMessage;
-import com.gtcafe.asimov.core.event.message.container.DeleteContainerMessage;
+import com.gtcafe.asimov.core.domain.container.*;
 
 import java.util.UUID;
 

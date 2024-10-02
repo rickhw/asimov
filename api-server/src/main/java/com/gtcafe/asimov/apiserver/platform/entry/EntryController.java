@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.controller;
+package com.gtcafe.asimov.apiserver.platform.entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

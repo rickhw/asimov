@@ -1,11 +1,11 @@
-package com.gtcafe.asimov.core.event.message.container;
+package com.gtcafe.asimov.core.platform.tenant;
 
 import com.gtcafe.asimov.core.event.IMessage;
 
-public class CreateContainerMessage implements IMessage {
+public class CreateTenantMessage implements IMessage {
     private final String content;
 
-    public CreateContainerMessage(String content) {
+    public CreateTenantMessage(String content) {
         this.content = content;
     }
 

@@ -1,0 +1,29 @@
+@contentType = application/json
+@hostname = http://localhost:8080/api/tenants
+
+
+### apply a new tenant
+POST {{hostname}}
+content-type: {{contentType}}
+
+{
+  "tenantKey": "this-is-a-tenant-uniqu",
+  "description": "test",
+  "rootAccount": "rick@abc.com"
+}
+
+### error#0: invalid json
+POST {{hostname}}/container
+content-type: {{contentType}}
+
+{
+  "accountName": "test",
+}
+
+### error#1: miss field
+POST {{hostname}}/container
+content-type: {{contentType}}
+
+{
+  "accountName": "test"
+}

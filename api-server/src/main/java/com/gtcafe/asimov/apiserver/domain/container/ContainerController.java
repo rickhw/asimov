@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.rest.controller;
+package com.gtcafe.asimov.apiserver.domain.container;
 
 import java.util.UUID;
 
@@ -7,14 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 
-import com.gtcafe.asimov.apiserver.producer.ContainerProducer;
-import com.gtcafe.asimov.apiserver.rest.model.request.CreateContainerRequest;
-
 import com.gtcafe.asimov.core.event.EventType;
 import com.gtcafe.asimov.core.event.Event;
 import com.gtcafe.asimov.core.event.IMessage;
-import com.gtcafe.asimov.core.event.message.container.CreateContainerMessage;
-import com.gtcafe.asimov.core.event.message.container.DeleteContainerMessage;
+import com.gtcafe.asimov.core.domain.container.*;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController

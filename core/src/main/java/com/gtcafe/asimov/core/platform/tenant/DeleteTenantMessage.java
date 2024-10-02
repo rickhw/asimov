@@ -1,12 +1,11 @@
-package com.gtcafe.asimov.core.event.message.container;
-
+package com.gtcafe.asimov.core.platform.tenant;
 
 import com.gtcafe.asimov.core.event.IMessage;
 
-public class DeleteContainerMessage implements IMessage {
+public class DeleteTenantMessage implements IMessage {
     private final String content;
 
-    public DeleteContainerMessage(String content) {
+    public DeleteTenantMessage(String content) {
         this.content = content;
     }
 

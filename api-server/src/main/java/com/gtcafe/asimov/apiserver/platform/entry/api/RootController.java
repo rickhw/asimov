@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.controller.api;
+package com.gtcafe.asimov.apiserver.platform.entry.api;
 
 import java.util.UUID;
 
