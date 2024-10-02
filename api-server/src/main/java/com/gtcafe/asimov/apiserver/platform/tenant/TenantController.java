@@ -15,7 +15,7 @@ import com.gtcafe.asimov.core.platform.tenant.*;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController
-@RequestMapping("/api/tenant")
+@RequestMapping("/api/tenants")
 public class TenantController {
 
   @Autowired
