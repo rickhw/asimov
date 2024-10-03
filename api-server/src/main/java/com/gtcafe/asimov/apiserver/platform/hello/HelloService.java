@@ -12,8 +12,10 @@ public class HelloService {
   private Slogan utils;
 
   // 專注處理 Biz Logic,
-  // 不處理組 DTO 的任務
-  // 應該沒有其他的 import, 只有 POJO
+  // 1. 不處理組 DTO 的任務
+  // 2. 應該沒有其他的 import, 只有 POJO
+
+  // TODO: 把 HTTP Messsage (Request/Response) 的東西搬出去
   public HelloResponse handler(HelloRequest request) {
     HelloResponse res = new HelloResponse(request.getMessage());
 
