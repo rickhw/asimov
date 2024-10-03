@@ -18,7 +18,7 @@ plugins {
 //}
 
 
-// 禁用 Spring Boot 的 bootJar 任務，因為 common 不需要生成可執行 jar
+// 禁用 Spring Boot 的 bootJar 任務，因為 core 不需要生成可執行 jar
 // 沒有 public static void main() 
 tasks.getByName('bootJar') {
     enabled = false

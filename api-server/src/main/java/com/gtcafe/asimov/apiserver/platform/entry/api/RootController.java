@@ -22,6 +22,7 @@ public class RootController {
 
   @PostMapping(value = "/hello", produces = { "application/json" })
   public ResponseEntity<String> helloAsync() {
+    
     return ResponseEntity.ok("ok");
   }
 

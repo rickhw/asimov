@@ -33,7 +33,7 @@ public class TaskController {
 
     RetrieveTaskResponse response = new RetrieveTaskResponse();
 
-    return ResponseEntity.ok(request.toString());
+    return ResponseEntity.ok(response);
   }
 
 
