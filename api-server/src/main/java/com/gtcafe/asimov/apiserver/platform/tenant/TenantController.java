@@ -11,7 +11,7 @@ import com.gtcafe.asimov.core.event.EventType;
 import com.gtcafe.asimov.core.event.Event;
 import com.gtcafe.asimov.core.event.IMessage;
 
-import com.gtcafe.asimov.core.platform.tenant.*;
+import com.gtcafe.asimov.apiserver.platform.tenant.operation.*;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController
@@ -19,26 +19,32 @@ import com.gtcafe.asimov.core.platform.tenant.*;
 public class TenantController {
 
   @Autowired
-  TenantProducer _producer;
+  TenantService _service;
 
   @GetMapping(value = "", produces = { "application/json" })
   public ResponseEntity<String> rootPath() {
     return ResponseEntity.ok("ok");
   }
 
-
   @PostMapping(value = "", produces = { "application/json" })
-  public ResponseEntity<String> createAsync(
+  public ResponseEntity<String> registerAsync(
       @RequestBody
 			@Validated
 			CreateTenantRequest request) {
 
-      // CreateContainerMessage message
+    // 1. validate the request --> by spring-boot-starter-validation
 
-    // Event<CreateTenantMessage> event = _producer.sendCreateContainerEvent(message);
+    // 2. validate the profile, example: serviceQuota. check the TenantProfile in memory
 
+    // 3. validate associate.
+
+    // 4. gen the id
+
+    // 5. create async task
+    _service.registerTenantAsync(request);
+
+    // 6. return the task status.
     return ResponseEntity.ok("ok");
-    // return ResponseEntity.ok(String.format("sent, eventId: [%s], message: [%s]", event.getEventId(), message));
   }
 
   @GetMapping(value = "/{id}", produces = { "application/json" })
@@ -47,12 +53,15 @@ public class TenantController {
   }
 
   @DeleteMapping(value = "/{id}", produces = { "application/json" })
-  public ResponseEntity<String> deleteAsync(@PathVariable String id) {
+  public ResponseEntity<String> deregisterAsync(@PathVariable String id) {
 
-    Event<DeleteTenantMessage> event = _producer.sendDeleteEvent(id);
-    IMessage message = (IMessage) event.getData();
+    // 1. validate id
 
-    return ResponseEntity.ok(String.format("sent, eventId: [%s], message: [%s]",  event.getEventId(),  message));
+    // 2. create async task
+    _service.deregisterAsync(id);
+
+    // 3. return the task status.
+    return ResponseEntity.ok("ok");
   }
 
 }

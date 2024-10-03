@@ -1,5 +1,5 @@
 
-## build
+## build by Gradle wrapper
 
 ```bash
 ## initial gradle wrapper: gen gradlew and gradlew.bat
@@ -13,4 +13,12 @@ api-server-0.1.0-b20240922-1341-plain.jar api-server-0.1.0-b20240922-1341.jar
 
 ## run Springboot
 ./gradlew bootRun
+```
+
+
+## Run unit test
+
+```bash
+gradle :api-server:test
+gradle test --tests "TenantDomainObjectTest"
 ```

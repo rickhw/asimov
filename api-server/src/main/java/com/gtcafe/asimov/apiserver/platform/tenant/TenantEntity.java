@@ -28,26 +28,21 @@ public class TenantEntity {
 	@Column(name = "tenant_key")
 	private String tenantKey;
 
-
-	// @Column(name = "tenant_type")
-	// private ETenant tenantType;
-
 	@Column(name = "description")
 	private String description;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@MapsId
-	@JoinColumn(name = "rootAccount")
-  	private AccountEntity rootAccount;
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @MapsId
+	// @JoinColumn(name = "rootAccount")
+  	// private AccountEntity rootAccount;
 
 
 	public TenantEntity() {}
 
-	public TenantEntity(String tenantKey, String rootAccount) {
-		this.tenantKey = tenantKey;
-		this.displayName = tenantKey;
-		this.rootAccount = rootAccount;
-	}
-
+	// public TenantEntity(String tenantKey, String rootAccount) {
+	// 	this.tenantKey = tenantKey;
+	// 	this.displayName = tenantKey;
+	// 	// this.rootAccount = rootAccount;
+	// }
 
 }

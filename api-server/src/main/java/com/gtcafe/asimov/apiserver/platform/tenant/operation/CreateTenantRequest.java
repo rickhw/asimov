@@ -1,13 +1,9 @@
-package com.gtcafe.asimov.apiserver.platform.tenant;
+package com.gtcafe.asimov.apiserver.platform.tenant.operation;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class CreateTenantRequest {
-
-	// @NotBlank(message = "tenantId cannot empty")
-    // @Size(max = 50, message = "tenantId max lenght is 50.")
-    private String tenantId;
 
 	@NotBlank(message = "tenantKey cannot empty")
     @Size(max = 50, message = "tenantKey max lenght is 50.")

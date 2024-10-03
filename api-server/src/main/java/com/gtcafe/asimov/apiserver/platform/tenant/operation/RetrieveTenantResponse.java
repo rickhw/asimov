@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.platform.tenant;
+package com.gtcafe.asimov.apiserver.platform.tenant.operation;
 
 public class RetrieveTenantResponse {
 

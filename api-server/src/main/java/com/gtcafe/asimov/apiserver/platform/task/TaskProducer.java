@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.platform.tenant;
+package com.gtcafe.asimov.apiserver.platform.task;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 import com.gtcafe.asimov.core.event.Event;
 import com.gtcafe.asimov.core.event.EventType;
 import com.gtcafe.asimov.core.event.IMessage;
-import com.gtcafe.asimov.core.platform.tenant.*;
 
 
 import java.util.UUID;
-
 
 @Service
 public class TaskProducer {
@@ -26,15 +24,15 @@ public class TaskProducer {
 	@Value("${app.rabbitmq.routingkey}")
 	private String routingkey;
 
-	private final static String CREATE_TENANT_QUEUE = "create-tenant";
+	// private final static String CREATE_TENANT_QUEUE = "create-tenant";
 
 	public void sendEvent(String queueName, Event<? extends IMessage> event) {
 		rabbitTemplate.convertAndSend(queueName, event);
 	}
 
-	public void sendCreateTenantEvent(Event<? extends IMessage> event) {
-		rabbitTemplate.convertAndSend(CREATE_TENANT_QUEUE, event);
-	}
+	// public void sendCreateTenantEvent(Event<? extends IMessage> event) {
+	// 	rabbitTemplate.convertAndSend(CREATE_TENANT_QUEUE, event);
+	// }
 
 
 }

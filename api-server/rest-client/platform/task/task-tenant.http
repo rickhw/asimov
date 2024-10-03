@@ -1,0 +1,25 @@
+@contentType = application/json
+@hostname = http://localhost:8080/api/tasks
+
+
+## -----
+### create a task
+POST {{hostname}}
+content-type: {{contentType}}
+
+{
+    "kind": "core.Tenant",
+    "operationId": "registerTenant",
+    "data": {
+        "tenantKey": "this-is-a-tenant",
+        "rootAccount": "rick@abc.com",
+        "description": "this is a tenant"
+    }
+}
+
+
+### retrieve a task
+GET {{hostname}}/12345
+content-type: {{contentType}}
+
+

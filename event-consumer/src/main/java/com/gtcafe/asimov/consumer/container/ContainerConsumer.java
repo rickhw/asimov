@@ -4,8 +4,8 @@ import com.gtcafe.asimov.core.event.Event;
 import com.gtcafe.asimov.core.event.EventType;
 import com.gtcafe.asimov.core.event.IMessage;
 import com.gtcafe.asimov.core.event.IEventHandler;
-import com.gtcafe.asimov.core.event.message.container.CreateContainerMessage;
-import com.gtcafe.asimov.core.event.message.container.DeleteContainerMessage;
+import com.gtcafe.asimov.core.domain.container.CreateContainerMessage;
+import com.gtcafe.asimov.core.domain.container.DeleteContainerMessage;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;

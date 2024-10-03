@@ -1,0 +1,33 @@
+@contentType = application/json
+@hostname = http://localhost:8080/api/tasks
+
+## -----
+### create a task: core.Hello::sayHello
+POST {{hostname}}
+content-type: {{contentType}}
+
+{
+    "kind": "system.Hello",
+    "operationId": "sayHello",
+    "data": {
+        "message": "Hello, Master Asimov"
+    }
+}
+
+
+
+### error#0: invalid json
+POST {{hostname}}/container
+content-type: {{contentType}}
+
+{
+  "accountName": "test",
+}
+
+### error#1: miss field
+POST {{hostname}}/container
+content-type: {{contentType}}
+
+{
+  "accountName": "test"
+}

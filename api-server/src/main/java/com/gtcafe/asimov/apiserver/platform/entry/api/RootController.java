@@ -20,21 +20,9 @@ public class RootController {
     return ResponseEntity.ok("ok");
   }
 
-//  @PostMapping(value = "/send-message", produces = { "application/json" })
-//  public ResponseEntity<String> sendMessage(
-//      @RequestBody Message message) {
-//
-//    String eventId = UUID.randomUUID().toString();
-//    message.setId(eventId);
-//
-//    Event event = new Event();
-//    event.setEventId(eventId);
-//    event.setMessage(message);
-//
-//    _producer.send(event);
-//
-//    return ResponseEntity.ok(String.format("sent, eventId: [%s], message: [%s]", eventId, message));
-//  }
-
+  @PostMapping(value = "/hello", produces = { "application/json" })
+  public ResponseEntity<String> helloAsync() {
+    return ResponseEntity.ok("ok");
+  }
 
 }

@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.platform.tenant;
+package com.gtcafe.asimov.apiserver.platform.task;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,8 @@ public class TaskControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private String EXPECTED_PATH = "src/test/resources/test-data/tasks/expected";
+
     // Utility method to read file content
     private String readJsonFromFile(String filePath) throws Exception {
         return new String(Files.readAllBytes(Paths.get(filePath)));
@@ -28,7 +30,7 @@ public class TaskControllerTest {
     @Test
     void shouldGetTaskStatusRunning() throws Exception {
         // Read expected response data from file
-        String expectedResponse = readJsonFromFile("src/test/resources/expected-data/task-response-running.json");
+        String expectedResponse = readJsonFromFile(EXPECTED_PATH + "/task-response-running.json");
 
         // Perform GET request for the running task
         mockMvc.perform(get("/api/tasks/{taskId}", "uuid-1234-5678-91011"))
@@ -39,7 +41,7 @@ public class TaskControllerTest {
     @Test
     void shouldGetTaskStatusCompleted() throws Exception {
         // Read expected response data from file
-        String expectedResponse = readJsonFromFile("src/test/resources/expected-data/task-response-completed.json");
+        String expectedResponse = readJsonFromFile(EXPECTED_PATH + "/task-response-completed.json");
 
         // Perform GET request for the completed task
         mockMvc.perform(get("/api/tasks/{taskId}", "uuid-1234-5678-91011"))
