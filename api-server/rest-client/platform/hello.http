@@ -1,0 +1,17 @@
+@contentType = application/json
+@hostname = http://localhost:8080
+
+## -----
+### create a task: core.Hello::sayHello
+GET {{hostname}}/api/hello
+content-type: {{contentType}}
+
+
+
+### error#0: invalid json
+POST {{hostname}}/api/hello
+content-type: {{contentType}}
+
+{
+  "message": "Hello, Master Asimov"
+}

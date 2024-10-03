@@ -1,7 +1,5 @@
 package com.gtcafe.asimov.apiserver.platform.hello;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,20 +7,24 @@ import org.springframework.web.bind.annotation.*;
 import com.gtcafe.asimov.apiserver.utils.Slogan;
 
 
-// @Tag(name = "API Metadata", description = "")
 @RestController
-@RequestMapping("/api/hello")
+@RequestMapping("/api")
 public class HelloController {
 
-  // @Autowired
-  // MessageProducer _producer;
 
   @Autowired
   private Slogan utils;
 
 
-  @GetMapping(value = "/", produces = { "application/json" })
-  public ResponseEntity<HelloResponse> helloSync(@RequestBody HelloRequest request) {
+  @GetMapping(value = "/hello", produces = { "text/plain" })
+  public ResponseEntity<String> helloSync() {
+
+
+    return ResponseEntity.ok("Hello");
+  }
+
+  @PostMapping(value = "/hello", produces = { "application/json" })
+  public ResponseEntity<HelloResponse> helloAsync(@RequestBody HelloRequest request) {
 
     HelloResponse res = new HelloResponse(request.getMessage());
 
