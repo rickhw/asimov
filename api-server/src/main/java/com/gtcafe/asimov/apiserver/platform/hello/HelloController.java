@@ -16,11 +16,11 @@ public class HelloController {
   private HelloService _service;
 
 
-  @GetMapping(value = "/hello", produces = { "text/plain" })
-  public ResponseEntity<String> helloSync() {
+  @GetMapping(value = "/hello", produces = { "application/json" })
+  public ResponseEntity<HelloResponse> helloSync() {
 
-
-    return ResponseEntity.ok("Hello");
+    HelloResponse res = _service.handler("Hello Get");
+    return ResponseEntity.ok(res);
   }
 
   @PostMapping(value = "/hello", produces = { "application/json" })
@@ -33,7 +33,7 @@ public class HelloController {
 
   // @GetMapping(value = "/", produces = { "application/json" })
   // public ResponseEntity<String> helloAsync() {
-    
+
   //   return ResponseEntity.ok("ok");
   // }
 

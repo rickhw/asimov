@@ -23,4 +23,15 @@ public class HelloService {
 
     return res;
   }
+
+
+  // TODO: 把 HTTP Messsage (Request/Response) 的東西搬出去
+  public HelloResponse handler(String message) {
+    HelloResponse res = new HelloResponse(message);
+
+    // 處理核心商業邏輯
+
+    return res;
+  }
+
 }

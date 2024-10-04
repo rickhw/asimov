@@ -36,7 +36,7 @@ public class HelloControllerTest {
     @Test
     void testHelloPost() throws Exception {
         // 讀取 request-payload.json
-        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/request-payload.json"), StandardCharsets.UTF_8);
+        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-sync.json"), StandardCharsets.UTF_8);
 
         // 讀取 expected-payload.json
         String expectedPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/expected-payload.json"), StandardCharsets.UTF_8).trim();
