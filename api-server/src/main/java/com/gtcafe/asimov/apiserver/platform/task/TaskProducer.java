@@ -14,14 +14,6 @@ public class TaskProducer {
 	@Autowired
 	private AmqpTemplate rabbitTemplate;
 
-	// @Value("${app.rabbitmq.exchange}")
-	// private String exchange;
-
-	// @Value("${app.rabbitmq.routingkey}")
-	// private String routingkey;
-
-	// private final static String CREATE_TENANT_QUEUE = "create-tenant";
-
 	public void sendEvent(String queueName, Event<? extends IMessage> event) {
 		rabbitTemplate.convertAndSend(queueName, event);
 	}
@@ -32,9 +24,5 @@ public class TaskProducer {
 		rabbitTemplate.convertAndSend(TaskConstants.TASK_QUEUE_NAME, event);
 
 	}
-
-	// public void sendCreateTenantEvent(Event<? extends IMessage> event) {
-	// rabbitTemplate.convertAndSend(CREATE_TENANT_QUEUE, event);
-	// }
 
 }

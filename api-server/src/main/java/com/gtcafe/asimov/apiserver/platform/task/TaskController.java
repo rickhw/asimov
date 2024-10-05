@@ -1,17 +1,15 @@
 package com.gtcafe.asimov.apiserver.platform.task;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.core.event.EventType;
-import com.gtcafe.asimov.core.event.Event;
-import com.gtcafe.asimov.core.event.IMessage;
-
-import com.gtcafe.asimov.apiserver.platform.task.operation.*;
+import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
+import com.gtcafe.asimov.apiserver.platform.task.pojo.TaskDomainObject;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController
@@ -21,33 +19,37 @@ public class TaskController {
   @Autowired
   TaskService _service;
 
-  @GetMapping(value = "", produces = { "application/json" })
-  public ResponseEntity<String> rootPath() {
-    return ResponseEntity.ok("ok");
-  }
+  @Autowired
+  TaskDataTransferObject _dto;
 
-  @PostMapping(value = "", produces = { "application/json" })
-  public ResponseEntity<RetrieveTaskResponse> createTaskAsync(
-        @RequestBody CreateTaskRequest request) {
+  // @GetMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
+  // public ResponseEntity<String> rootPath() {
+  //   return ResponseEntity.ok("ok");
+  // }
+
+  // @PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
+  // public ResponseEntity<RetrieveTaskResponse> createTaskAsync(
+  //       @RequestBody CreateTaskRequest request) {
+
+  //   RetrieveTaskResponse response = new RetrieveTaskResponse();
+
+  //   return ResponseEntity.ok(response);
+  // }
 
 
-    RetrieveTaskResponse response = new RetrieveTaskResponse();
-
-    return ResponseEntity.ok(response);
-  }
-
-
-  @GetMapping(value = "/{id}", produces = { "application/json" })
-  public ResponseEntity<String> retrieve(@PathVariable String id) {
+  @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+  public ResponseEntity<RetrieveTaskResponse> retrieve(@PathVariable String id) {
     // 1. validate: is not exist or expire.
 
-    // 2. find
+    // 2. find the id in cache
+    TaskDomainObject tdo = _service.retriveTask(id);
+    RetrieveTaskResponse res = _dto.convertToTaskResponse(tdo);
 
     // return ResponseEntity.ok(new RetrieveTaskResponse(id));
-    return ResponseEntity.ok("ok");
+    return ResponseEntity.ok(res);
   }
 
-  // @DeleteMapping(value = "/{id}", produces = { "application/json" })
+  // @DeleteMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
   // public ResponseEntity<String> deleteAsync(@PathVariable String id) {
 
   //   Event<DeleteTenantMessage> event = _producer.sendDeleteEvent(id);

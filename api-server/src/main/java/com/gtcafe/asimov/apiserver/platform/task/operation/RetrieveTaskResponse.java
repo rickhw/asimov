@@ -1,5 +1,6 @@
 package com.gtcafe.asimov.apiserver.platform.task.operation;
 
+import com.gtcafe.asimov.apiserver.platform.task.pojo.TaskDomainObject;
 
 public class RetrieveTaskResponse {
 
@@ -8,11 +9,20 @@ public class RetrieveTaskResponse {
     // pending, running, complete, failure
     private String state;
 
-    private String kind;
+    // private String kind;
 
-    private String operationId;
+    // private String operationId;
 
-    private String data;
+    private Object data;
+
+    public RetrieveTaskResponse() {}
+
+    public RetrieveTaskResponse(TaskDomainObject tdo) {
+        this.id = tdo.getTaskId();
+        this.state = tdo.getMetadata().get_state().toString();
+        this.data = tdo.getSpec();
+
+    }
 
     public String getId() {
         return id;
@@ -30,27 +40,27 @@ public class RetrieveTaskResponse {
         this.state = state;
     }
 
-    public String getKind() {
-        return kind;
-    }
+    // public String getKind() {
+    //     return kind;
+    // }
 
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
+    // public void setKind(String kind) {
+    //     this.kind = kind;
+    // }
 
-    public String getOperationId() {
-        return operationId;
-    }
+    // public String getOperationId() {
+    //     return operationId;
+    // }
 
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
-    }
+    // public void setOperationId(String operationId) {
+    //     this.operationId = operationId;
+    // }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }

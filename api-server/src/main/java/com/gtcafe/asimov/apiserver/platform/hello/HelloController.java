@@ -5,7 +5,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.gtcafe.asimov.apiserver.platform.task.TaskDomainObject;
+import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
+import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
+import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.constants.HttpHeaderConstants;
 
 import jakarta.validation.Valid;
@@ -30,7 +32,7 @@ public class HelloController {
       @RequestHeader(value = HttpHeaderConstants.X_REQUEST_MODE, required = false) String requestMode) {
 
     if (HttpHeaderConstants.ASYNC_MODE.equalsIgnoreCase(requestMode)) {
-      TaskDomainObject res = _service.handlerAsync(request.getMessage());
+      RetrieveTaskResponse res = _service.handlerAsync(request.getMessage());
       return ResponseEntity.ok(res);
     } else {
       HelloResponse res = _service.handler(request);

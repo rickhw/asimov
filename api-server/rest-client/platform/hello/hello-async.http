@@ -12,6 +12,10 @@ X-Request-Mode: async
   "message": "Hello, Asimov"
 }
 
+### abnormal case#1: no attribute
+GET {{hostname}}/api/tasks/343a4951-42fd-4ea9-8562-53e91896b3e3
+
+
 # -----------------------------------------------------------------------------
 ### abnormal case#1: no attribute
 POST {{hostname}}/api/hello

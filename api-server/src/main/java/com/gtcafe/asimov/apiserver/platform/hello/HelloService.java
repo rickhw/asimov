@@ -3,8 +3,11 @@ package com.gtcafe.asimov.apiserver.platform.hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.apiserver.platform.task.TaskDomainObject;
+import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
+import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
 import com.gtcafe.asimov.apiserver.platform.task.TaskProducer;
+import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
+import com.gtcafe.asimov.apiserver.platform.task.pojo.TaskDomainObject;
 import com.gtcafe.asimov.apiserver.utils.Slogan;
 import com.gtcafe.asimov.core.platform.SayHelloMessage;
 
@@ -29,8 +32,6 @@ public class HelloService {
   public HelloResponse handler(HelloRequest request) {
     HelloResponse res = new HelloResponse(request.getMessage());
 
-
-
     return res;
   }
 
@@ -45,16 +46,21 @@ public class HelloService {
   }
 
   // ----
-  public TaskDomainObject handlerAsync(String message) {
+  public RetrieveTaskResponse handlerAsync(String message) {
     // HelloResponse res = new HelloResponse(message);
     TaskDomainObject taskObj = new TaskDomainObject();
+    taskObj.setSpec(message);
 
     SayHelloMessage sayHello = new SayHelloMessage(message);
 
     _producer.sentSayHelloEvent(sayHello);
     _taskProducer.sendEvent(sayHello);
 
-    return taskObj;
+
+    RetrieveTaskResponse res = new RetrieveTaskResponse(taskObj);
+
+
+    return res;
   }
 
 

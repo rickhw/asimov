@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.platform.hello;
+package com.gtcafe.asimov.apiserver.platform.hello.operation;
 
 import java.util.Date;
 
