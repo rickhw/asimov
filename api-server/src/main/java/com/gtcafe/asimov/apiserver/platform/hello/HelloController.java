@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.gtcafe.asimov.apiserver.platform.task.TaskDomainObject;
 import com.gtcafe.asimov.core.constants.HttpHeaderConstants;
 
 import jakarta.validation.Valid;
@@ -24,21 +25,24 @@ public class HelloController {
   }
 
   @PostMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
-  public ResponseEntity<HelloResponse> helloAsync(
-      @Valid @RequestBody HelloRequest request
-      // @RequestHeader String requestMode
-      ) {
+  public ResponseEntity<Object> hello(
+      @Valid @RequestBody HelloRequest request,
+      @RequestHeader(value = HttpHeaderConstants.X_REQUEST_MODE, required = false) String requestMode) {
 
-      // if (HttpHeaderConstants.X_REQUEST_MODE.equals(requestMode))
-    HelloResponse res = _service.handler(request);
+    if (HttpHeaderConstants.ASYNC_MODE.equalsIgnoreCase(requestMode)) {
+      TaskDomainObject res = _service.handlerAsync(request.getMessage());
+      return ResponseEntity.ok(res);
+    } else {
+      HelloResponse res = _service.handler(request);
 
-    return ResponseEntity.ok(res);
+      return ResponseEntity.ok(res);
+    }
   }
 
   // @GetMapping(value = "/", produces = { "application/json" })
   // public ResponseEntity<String> helloAsync() {
 
-  //   return ResponseEntity.ok("ok");
+  // return ResponseEntity.ok("ok");
   // }
 
 }

@@ -4,6 +4,9 @@ public class HttpHeaderConstants {
     // Request
     public final static String X_REQUEST_MODE = "X-Request-Mode";   // async, sync
 
+    public final static String ASYNC_MODE = "async";
+    public final static String SYNC_MODE = "sync";
+
     public final static String X_CALLBACK_URL = "X-Callback-Url";   //
     public final static String X_CALLBACK_TOKEN = "X-Callback-Token";   //
     public final static String X_REQUEST_ID = "X-Request-Id";

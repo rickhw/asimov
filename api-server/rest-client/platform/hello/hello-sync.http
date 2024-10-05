@@ -1,0 +1,41 @@
+@contentType = application/json
+@hostname = http://localhost:8080
+
+## -----
+### create a task: core.Hello::sayHello
+# GET {{hostname}}/api/hello
+# content-type: {{contentType}}
+
+### normal case#1:
+POST {{hostname}}/api/hello
+content-type: {{contentType}}
+
+{
+  "message": "Hello, Asimov"
+}
+
+### abnormal case#1: no attribute
+POST {{hostname}}/api/hello
+content-type: {{contentType}}
+
+{
+
+}
+
+
+### abnormal case#2: empty content 2
+POST {{hostname}}/api/hello
+content-type: {{contentType}}
+
+{
+  "message": ""
+}
+
+
+### abnormal case#3: invalid payload format
+POST {{hostname}}/api/hello
+content-type: {{contentType}}
+
+{
+  "message": "Hello, Asimov
+}

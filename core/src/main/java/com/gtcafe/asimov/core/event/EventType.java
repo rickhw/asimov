@@ -5,5 +5,11 @@ public enum EventType {
     DELETE_CONTAINER,
 
     REGISTER_TENANT,
-    DEREGISTER_TENANT
+    DEREGISTER_TENANT,
+
+    // platform
+    SAY_HELLO,
+
+    // system
+    ASYNC_TASK,
 }

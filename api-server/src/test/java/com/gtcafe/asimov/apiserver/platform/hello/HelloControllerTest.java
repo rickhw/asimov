@@ -28,7 +28,7 @@ public class HelloControllerTest {
     // @Autowired
     // private ObjectMapper objectMapper;  // 用於解析 JSON
 
-    private static final String TEST_DATA_PATH = "src/test/resources/test-data/hello";
+    private static final String TEST_DATA_PATH = "src/test/resources/test-data/hello/sync";
     private static final String API_URI = "/api/hello";
 
 
