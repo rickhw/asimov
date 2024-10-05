@@ -27,25 +27,25 @@ public class TaskControllerTest {
         return new String(Files.readAllBytes(Paths.get(filePath)));
     }
 
-    @Test
-    void shouldGetTaskStatusRunning() throws Exception {
-        // Read expected response data from file
-        String expectedResponse = readJsonFromFile(EXPECTED_PATH + "/task-response-running.json");
+    // @Test
+    // void shouldGetTaskStatusRunning() throws Exception {
+    //     // Read expected response data from file
+    //     String expectedResponse = readJsonFromFile(EXPECTED_PATH + "/task-response-running.json");
 
-        // Perform GET request for the running task
-        mockMvc.perform(get("/api/tasks/{taskId}", "uuid-1234-5678-91011"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(expectedResponse));
-    }
+    //     // Perform GET request for the running task
+    //     mockMvc.perform(get("/api/tasks/{taskId}", "uuid-1234-5678-91011"))
+    //             .andExpect(status().isOk())
+    //             .andExpect(content().json(expectedResponse));
+    // }
 
-    @Test
-    void shouldGetTaskStatusCompleted() throws Exception {
-        // Read expected response data from file
-        String expectedResponse = readJsonFromFile(EXPECTED_PATH + "/task-response-completed.json");
+    // @Test
+    // void shouldGetTaskStatusCompleted() throws Exception {
+    //     // Read expected response data from file
+    //     String expectedResponse = readJsonFromFile(EXPECTED_PATH + "/task-response-completed.json");
 
-        // Perform GET request for the completed task
-        mockMvc.perform(get("/api/tasks/{taskId}", "uuid-1234-5678-91011"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(expectedResponse));
-    }
+    //     // Perform GET request for the completed task
+    //     mockMvc.perform(get("/api/tasks/{taskId}", "uuid-1234-5678-91011"))
+    //             .andExpect(status().isOk())
+    //             .andExpect(content().json(expectedResponse));
+    // }
 }

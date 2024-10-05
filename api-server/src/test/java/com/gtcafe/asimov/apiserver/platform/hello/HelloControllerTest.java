@@ -1,74 +1,86 @@
 package com.gtcafe.asimov.apiserver.platform.hello;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.StreamUtils;
-import org.springframework.http.MediaType;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+// @WebMvcTest(HelloController.class)
 public class HelloControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    private String TEST_DATA_PATH = "src/test/resources/test-data/hello";
+    // @Autowired
+    // private ObjectMapper objectMapper;  // 用於解析 JSON
 
-    // Utility method to read file content
-    private String readJsonFromFile(String filePath) throws Exception {
-        return new String(Files.readAllBytes(Paths.get(filePath)));
-    }
+    private static final String TEST_DATA_PATH = "src/test/resources/test-data/hello";
+    private static final String API_URI = "/api/hello";
+
 
     @Test
     void testHelloPost() throws Exception {
-        // 讀取 request-payload.json
         String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-sync.json"), StandardCharsets.UTF_8);
 
-        // 讀取 expected-payload.json
-        String expectedPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/expected-payload.json"), StandardCharsets.UTF_8).trim();
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders
+                    .post(API_URI)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(requestPayload)
+                )
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.message").value("Hello, Asimov"))  // 驗證靜態部分
+            .andExpect(jsonPath("$.launchTime", notNullValue()))      // 驗證時間部分存在
+            .andExpect(jsonPath("$.launchTime", containsString("2024"))); // 檢查時間大致正確
+            // .andExpect(content().string(expectedPayload));  // 驗證回應的內容
+    }
 
-        // 模擬 POST 請求，並比較返回的內容是否符合預期
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/hello")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestPayload))
-                .andExpect(status().isOk())
-                .andExpect(content().string(expectedPayload));  // 驗證回應的內容
+    @Test
+    void testHelloPost_AbnormalCase1() throws Exception {
+        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-abnormal-case1.json"), StandardCharsets.UTF_8);
+
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders
+                    .post(API_URI)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(requestPayload)
+            )
+            .andExpect(
+                status().isBadRequest()
+            );
+    }
+
+    @Test
+    void testHelloPost_AbnormalCase2() throws Exception {
+        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-abnormal-case2.json"), StandardCharsets.UTF_8);
+
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders
+                    .post(API_URI)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(requestPayload)
+            )
+            .andExpect(
+                status().isBadRequest()
+            );
     }
 
 
-    // @Test
-    // void callHelloSync() throws Exception {
-    //     // Read expected response data from file
-    //     String expectedResponse = readJsonFromFile(EXPECTED_PATH + "/hello-get-sync.json");
-
-    //     // Perform GET request for the running task
-    //     mockMvc.perform(get("/api/hello", "uuid-1234-5678-91011"))
-    //             .andExpect(status().isOk())
-    //             .andExpect(content().json(expectedResponse));
-    // }
-
-    // @Test
-    // void shouldGetTaskStatusCompleted() throws Exception {
-    //     // Read expected response data from file
-    //     String expectedResponse = readJsonFromFile(EXPECTED_PATH + "/task-response-completed.json");
-
-    //     // Perform GET request for the completed task
-    //     mockMvc.perform(get("/api/tasks/{taskId}", "uuid-1234-5678-91011"))
-    //             .andExpect(status().isOk())
-    //             .andExpect(content().json(expectedResponse));
-    // }
 }

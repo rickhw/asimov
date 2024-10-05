@@ -6,12 +6,18 @@
 GET {{hostname}}/api/hello
 content-type: {{contentType}}
 
-
-
-### error#0: invalid json
+### case#2:
 POST {{hostname}}/api/hello
 content-type: {{contentType}}
 
 {
   "message": "Hello, Asimov"
+}
+
+### abnormal case#2:
+POST {{hostname}}/api/hello
+content-type: {{contentType}}
+
+{
+
 }

@@ -19,7 +19,7 @@ public class HelloService {
   public HelloResponse handler(HelloRequest request) {
     HelloResponse res = new HelloResponse(request.getMessage());
 
-    // 處理核心商業邏輯
+
 
     return res;
   }

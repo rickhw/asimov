@@ -1,30 +1,29 @@
 package com.gtcafe.asimov.apiserver.platform.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.gtcafe.asimov.apiserver.utils.Slogan;
-
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
 public class HelloController {
 
-
   @Autowired
   private HelloService _service;
 
-
-  @GetMapping(value = "/hello", produces = { "application/json" })
+  @GetMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<HelloResponse> helloSync() {
 
-    HelloResponse res = _service.handler("Hello Get");
+    HelloResponse res = _service.handler("Hello World");
     return ResponseEntity.ok(res);
   }
 
-  @PostMapping(value = "/hello", produces = { "application/json" })
-  public ResponseEntity<HelloResponse> helloAsync(@RequestBody HelloRequest request) {
+  @PostMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
+  public ResponseEntity<HelloResponse> helloAsync(
+      @Valid @RequestBody HelloRequest request) {
 
     HelloResponse res = _service.handler(request);
 
