@@ -5,6 +5,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.gtcafe.asimov.core.constants.HttpHeaderConstants;
+
 import jakarta.validation.Valid;
 
 @RestController
@@ -23,8 +25,11 @@ public class HelloController {
 
   @PostMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<HelloResponse> helloAsync(
-      @Valid @RequestBody HelloRequest request) {
+      @Valid @RequestBody HelloRequest request
+      // @RequestHeader String requestMode
+      ) {
 
+      // if (HttpHeaderConstants.X_REQUEST_MODE.equals(requestMode))
     HelloResponse res = _service.handler(request);
 
     return ResponseEntity.ok(res);
