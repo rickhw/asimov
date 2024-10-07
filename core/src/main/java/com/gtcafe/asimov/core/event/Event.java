@@ -2,7 +2,7 @@ package com.gtcafe.asimov.core.event;
 
 import java.util.UUID;
 
-public class Event<T extends IMessage> {
+public class Event<T extends IMessage>  {
     private final String id;
     private final EventType eventType;
     private final T data;

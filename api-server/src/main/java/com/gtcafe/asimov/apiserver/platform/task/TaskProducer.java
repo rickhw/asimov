@@ -1,5 +1,7 @@
 package com.gtcafe.asimov.apiserver.platform.task;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import com.gtcafe.asimov.core.event.IMessage;
 
 @Service
 public class TaskProducer {
+
+	private static final Logger logger = LoggerFactory.getLogger(TaskProducer.class);
 
 	@Autowired
 	private AmqpTemplate rabbitTemplate;
@@ -23,6 +27,7 @@ public class TaskProducer {
 		Event<IMessage> event = new Event<>(EventType.ASYNC_TASK, message);
 		rabbitTemplate.convertAndSend(TaskConstants.TASK_QUEUE_NAME, event);
 
+		logger.info("Push message to queue: [{}]", TaskConstants.TASK_QUEUE_NAME);
 	}
 
 }

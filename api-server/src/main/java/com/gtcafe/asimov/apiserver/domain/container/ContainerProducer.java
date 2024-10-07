@@ -19,11 +19,11 @@ public class ContainerProducer {
     @Autowired
 	private AmqpTemplate rabbitTemplate;
 
-	@Value("${app.rabbitmq.exchange}")
-	private String exchange;
+	// @Value("${app.rabbitmq.exchange}")
+	// private String exchange;
 
-	@Value("${app.rabbitmq.routingkey}")
-	private String routingkey;
+	// @Value("${app.rabbitmq.routingkey}")
+	// private String routingkey;
 
 	public void sendEvent(Event<? extends IMessage> event) {
 		rabbitTemplate.convertAndSend("eventExchange", "eventRoutingKey", event);
