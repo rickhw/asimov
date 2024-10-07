@@ -68,12 +68,31 @@ logging:
 # Application
 # -----------------------------------------------------------------------------
 
+# app:
+#   rabbitmq:
+#     exchange: app.exchange1.topic1
+#     queue: app.queue
+#     routingkey: app.routingkey
+
 app:
   rabbitmq:
-    exchange: app.exchange1.topic1
-    queue: app.queue
-    routingkey: app.routingkey
+    ## ATTENTTION: DON't CHANG the queueName, due to they are as the key in code
+    queues:
+    - name: sys.tasks
+      exchange: directExchange
+      routingKey: sys-task
+    
+    - name: platform.sayHello
+      exchange: directExchange
+      routingKey: platform-sayHello
 
+    - name: platform.tenant
+      exchange: directExchange
+      routingKey: platform-tenant
+
+    # - name: platform.tenant
+    #   exchange: fanoutExchange
+    #   routing-key: "" # Fanout exchange doesn't need routing key
 
 # -----------------------------------------------------------------------------
 # Security: JWT

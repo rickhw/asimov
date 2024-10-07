@@ -3,6 +3,7 @@ package com.gtcafe.asimov.apiserver.platform.task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gtcafe.asimov.apiserver.platform.MessageProducer;
 import com.gtcafe.asimov.apiserver.platform.task.pojo.TaskDomainObject;
 
 
@@ -10,7 +11,7 @@ import com.gtcafe.asimov.apiserver.platform.task.pojo.TaskDomainObject;
 public class TaskService {
 
   @Autowired
-  TaskProducer _producer;
+  MessageProducer _producer;
 
 
   public void createTaskAsync() {

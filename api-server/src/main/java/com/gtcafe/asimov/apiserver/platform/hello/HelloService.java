@@ -3,22 +3,24 @@ package com.gtcafe.asimov.apiserver.platform.hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gtcafe.asimov.apiserver.platform.MessageProducer;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
-import com.gtcafe.asimov.apiserver.platform.task.TaskProducer;
+import com.gtcafe.asimov.apiserver.platform.task.TaskConstants;
 import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.apiserver.platform.task.pojo.TaskDomainObject;
 import com.gtcafe.asimov.apiserver.utils.Slogan;
+import com.gtcafe.asimov.core.event.EventType;
 import com.gtcafe.asimov.core.platform.SayHelloMessage;
 
 @Service
 public class HelloService {
 
-  @Autowired
-  private HelloProducer _producer;
+  // @Autowired
+  // private HelloProducer _producer;
 
   @Autowired
-  private TaskProducer _taskProducer;
+  MessageProducer _producer;
 
 
   @Autowired
@@ -48,13 +50,19 @@ public class HelloService {
   // ----
   public RetrieveTaskResponse handlerAsync(String message) {
     // HelloResponse res = new HelloResponse(message);
+
+    // 1-1. constract task object
     TaskDomainObject taskObj = new TaskDomainObject();
     taskObj.setSpec(message);
 
+    // 1-2. constract domain object 
     SayHelloMessage sayHello = new SayHelloMessage(message);
 
-    _producer.sentSayHelloEvent(sayHello);
-    _taskProducer.sendEvent(sayHello);
+    // 2-1. sent message to queue
+    _producer.sendEvent(HelloConstants.SAY_HELLO_QUEUE_NAME, EventType.REGISTER_TENANT, sayHello);
+    _producer.sendTaskEvent(taskObj);
+
+    // 3-1. store data to cache
 
 
     RetrieveTaskResponse res = new RetrieveTaskResponse(taskObj);
