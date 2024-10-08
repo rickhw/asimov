@@ -1,6 +1,18 @@
 
 # User Story
 
+## Hello API
+
+- [x] sync
+- [ ] async
+  - [ ] producer
+    - [x] rabbitMQ multiple config
+    - [ ] common message producer
+    - [ ] common constants and model
+    - [ ] task object
+    - [ ] store to cache
+  - [ ] concumser
+
 ## Tenant Users
 
 - [ ] Apply an new tenant

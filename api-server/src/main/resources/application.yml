@@ -70,7 +70,8 @@ logging:
 
 app:
   rabbitmq:
-    ## ATTENTTION: DON't CHANG the queueName, due to they are as the key in code
+    ## ATTENTTION: DON't CHANGE the queueName, due to they are as the key in code
+    ## TODO: move to core
     queues:
     - name: sys.tasks
       exchange: directExchange

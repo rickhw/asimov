@@ -4,21 +4,19 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.apiserver.utils.Slogan;
+import com.gtcafe.asimov.apiserver.system.utils.Slogan;
 
 @Service
-public class InitializerHook implements CommandLineRunner, ApplicationRunner  {
+public class InitializerHook implements ApplicationRunner  {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitializerHook.class);
+    // private static final Logger logger = LoggerFactory.getLogger(InitializerHook.class);
 
     @Autowired
     private Slogan utils;
@@ -29,29 +27,31 @@ public class InitializerHook implements CommandLineRunner, ApplicationRunner  {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
-
     private final Environment env;
 
     public InitializerHook(Environment env) {
         this.env = env;
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        logger.info("CommandLineRunner.run()");
-        logger.info("JAVA_HOME: [{}]", env.getProperty("JAVA_HOME"));
-        logger.info("APP_NAME: [{}]", env.getProperty("APP_NAME"));
-        logger.info("app.name: [{}]", env.getProperty("app.name"));
-    }
+    // @Override
+    // public void run(String... args) throws Exception {
+    //     // logger.info("CommandLineRunner.run()");
+    //     System.out.printf("JAVA_HOME: [%s]\n", env.getProperty("JAVA_HOME"));
+    //     System.out.printf("APP_NAME: [%s]\n", env.getProperty("APP_NAME"));
+    //     System.out.printf("app.name: [%s]\n", env.getProperty("app.name"));
+    // }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        logger.info("ApplicationRunner.run()");
+        // logger.info("ApplicationRunner.run()");
         // 1. show environment variables of application
+        System.out.printf("JAVA_HOME: [%s]\n", env.getProperty("JAVA_HOME"));
+        System.out.printf("APP_NAME: [%s]\n", env.getProperty("APP_NAME"));
+        // System.out.printf("app.name: [%s]\n", env.getProperty("app.name"));
 
         // 2. show config path from ...
-        System.out.println(String.format("Datasource: [%s]", dataSource));
-        System.out.println(String.format("Message: [%s]", rabbitTemplate));
+        System.out.printf("Datasource: [%s]\n", dataSource.getConnection().toString());
+        System.out.printf("MessageQueue: [%s}]\n", rabbitTemplate.toString());
 
         // 3. show slogan, and tell user the application is ready.
         System.out.println(utils.slogan());

@@ -1,17 +1,18 @@
 package com.gtcafe.asimov.apiserver.platform.tenant;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.core.event.EventType;
-import com.gtcafe.asimov.core.event.Event;
-import com.gtcafe.asimov.core.event.IMessage;
-
-import com.gtcafe.asimov.apiserver.platform.tenant.operation.*;
+import com.gtcafe.asimov.apiserver.platform.tenant.operation.CreateTenantRequest;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController
@@ -21,12 +22,12 @@ public class TenantController {
   @Autowired
   TenantService _service;
 
-  @GetMapping(value = "", produces = { "application/json" })
+  @GetMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<String> rootPath() {
     return ResponseEntity.ok("ok");
   }
 
-  @PostMapping(value = "", produces = { "application/json" })
+  @PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<String> registerAsync(
       @RequestBody
 			@Validated
@@ -47,12 +48,12 @@ public class TenantController {
     return ResponseEntity.ok("ok");
   }
 
-  @GetMapping(value = "/{id}", produces = { "application/json" })
+  @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<String> retrieve(@PathVariable String id) {
     return ResponseEntity.ok("ok");
   }
 
-  @DeleteMapping(value = "/{id}", produces = { "application/json" })
+  @DeleteMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<String> deregisterAsync(@PathVariable String id) {
 
     // 1. validate id

@@ -1,19 +1,16 @@
 package com.gtcafe.asimov.apiserver.platform.tenant;
 
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.core.event.Event;
-import com.gtcafe.asimov.core.event.IMessage;
-import com.gtcafe.asimov.apiserver.platform.tenant.operation.*;
+import com.gtcafe.asimov.apiserver.platform.tenant.operation.CreateTenantRequest;
+import com.gtcafe.asimov.apiserver.system.MessageProducer;
 
 @Service
 public class TenantService {
 
 	@Autowired
-	TenantProducer _producer;
+	MessageProducer _producer;
 
 	public void registerTenantAsync(CreateTenantRequest request) {
 		// 1. create task

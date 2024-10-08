@@ -3,12 +3,18 @@ package com.gtcafe.asimov.apiserver.platform.hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
-import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
-import com.gtcafe.asimov.core.constants.HttpHeaderConstants;
+import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
+
+import com.gtcafe.asimov.core.system.HttpHeaderConstants;
 
 import jakarta.validation.Valid;
 
