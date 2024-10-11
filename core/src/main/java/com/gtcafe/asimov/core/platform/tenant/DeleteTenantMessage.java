@@ -1,6 +1,6 @@
 package com.gtcafe.asimov.core.platform.tenant;
 
-import com.gtcafe.asimov.core.event.IMessage;
+import com.gtcafe.asimov.core.domain.event.IMessage;
 
 public class DeleteTenantMessage implements IMessage {
     private final String content;

@@ -44,7 +44,8 @@ services:
     ports:
         - 9998:80
     environment:
-      REDIS_1_HOST: host.docker.internal
+      # REDIS_1_HOST: host.docker.internal
+      REDIS_1_HOST: cache_redis
       REDIS_1_NAME: localhost
 
   queue_rabbitmq:

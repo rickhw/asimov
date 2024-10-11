@@ -1,0 +1,17 @@
+{
+    "id": "uuid-1234-5678-91011",
+    "key": "this-is-a-tenant-uniqu",
+    "apiVersion": "v1alpha",           
+    "metadata": {   // write once, read manay by system
+        "_kind": "platform.Tenant",
+        "_state": "active",    //
+        "_type": "record",   // resource, record, processing (cpu-bound)
+        "_creationTime": "2024-10-10T13:41:58+00:00",    //
+        "_lastModified": "2024-10-10T13:41:58+00:00",    //
+        "_finishedTime": "2024-10-10T13:41:58+00:00"   // resource, record, processing (cpu-bound)
+    },
+    "data": {
+        "description": "test",
+        "rootAccount": "rick@abc.com"
+    }
+}

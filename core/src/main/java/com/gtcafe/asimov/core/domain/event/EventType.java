@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.event;
+package com.gtcafe.asimov.core.domain.event;
 
 public enum EventType {
     CREATE_CONTAINER,

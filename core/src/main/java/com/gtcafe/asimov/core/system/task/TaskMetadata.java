@@ -59,6 +59,4 @@ public class TaskMetadata {
 	public void set_lastModified(String _lastModified) {
 		this._lastModified = _lastModified;
 	}
-
-
 }

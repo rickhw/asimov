@@ -27,7 +27,6 @@ public class HelloController {
 
   @GetMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<HelloResponse> helloSync() {
-
     HelloResponse res = _service.handler("Hello World");
     return ResponseEntity.ok(res);
   }
@@ -41,16 +40,9 @@ public class HelloController {
       RetrieveTaskResponse res = _service.handlerAsync(request.getMessage());
       return ResponseEntity.ok(res);
     } else {
-      HelloResponse res = _service.handler(request);
+      HelloResponse res = _service.handler(request.getMessage());
 
       return ResponseEntity.ok(res);
     }
   }
-
-  // @GetMapping(value = "/", produces = { "application/json" })
-  // public ResponseEntity<String> helloAsync() {
-
-  // return ResponseEntity.ok("ok");
-  // }
-
 }

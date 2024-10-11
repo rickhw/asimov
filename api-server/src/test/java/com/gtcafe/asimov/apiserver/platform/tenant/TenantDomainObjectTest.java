@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import com.gtcafe.asimov.core.platform.KindConstants;
+import com.gtcafe.asimov.core.platform.PlatformKind;
 
 public class TenantDomainObjectTest {
 
@@ -22,6 +22,6 @@ public class TenantDomainObjectTest {
         assertEquals(TenantDomainObject.State.PENDING, tenant.getMetadata().get_state());  // 檢查 state 初始值
 
         // Optional: 檢查其他屬性的初始值，如 kind 是否正確
-        assertEquals(KindConstants.PLATFORM_TENANT, tenant.getKind());
+        assertEquals(PlatformKind.PLATFORM_TENANT, tenant.getKind());
     }
 }

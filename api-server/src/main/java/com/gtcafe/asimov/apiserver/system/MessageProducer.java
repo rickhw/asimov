@@ -2,19 +2,20 @@ package com.gtcafe.asimov.apiserver.system;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.core.model.RabbitQueueConfig;
-import com.gtcafe.asimov.core.event.Event;
-import com.gtcafe.asimov.core.event.EventType;
-import com.gtcafe.asimov.core.event.IMessage;
-import com.gtcafe.asimov.core.system.QueueNameConstants;
-
 import com.gtcafe.asimov.apiserver.system.config.RabbitConfig;
+import com.gtcafe.asimov.core.domain.event.Event;
+import com.gtcafe.asimov.core.domain.event.EventType;
+import com.gtcafe.asimov.core.domain.event.IMessage;
+import com.gtcafe.asimov.core.model.RabbitQueueConfig;
+import com.gtcafe.asimov.core.platform.PlatformQueueName;
+import com.gtcafe.asimov.core.platform.SayHelloMessage;
+import com.gtcafe.asimov.core.system.QueueNameConstants;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+
 
 @Service
 public class MessageProducer {
@@ -30,6 +31,19 @@ public class MessageProducer {
 	public void sendEvent(String queueName, Event<? extends IMessage> event) {
 		rabbitTemplate.convertAndSend(queueName, event);
 	}
+
+	public void sendPlatformEvent(String queneName, SayHelloMessage message) {
+		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(queneName);
+
+		rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), message);
+	}
+
+	public void sayHelloEvent(SayHelloMessage message) {
+		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(PlatformQueueName.SAY_HELLO_QUEUE_NAME);
+
+		rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), message);
+	}
+
 
 	public Event<IMessage> sendEvent(String queneName, EventType type, IMessage message) {
 

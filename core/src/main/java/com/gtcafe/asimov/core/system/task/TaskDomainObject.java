@@ -63,8 +63,5 @@ public class TaskDomainObject {
 	public void setSpec(Object spec) {
 		this.spec = spec;
 	}
-
-
-
 }
 

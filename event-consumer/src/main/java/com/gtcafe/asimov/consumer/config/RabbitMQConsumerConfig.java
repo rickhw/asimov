@@ -15,20 +15,25 @@ public class RabbitMQConsumerConfig implements RabbitListenerConfigurer {
 
     // 定義一個 Listener 的 Container 工廠，並使用 JSON 消息轉換器
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory,
-                                                                               Jackson2JsonMessageConverter converter) {
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
+            ConnectionFactory connectionFactory,
+            Jackson2JsonMessageConverter converter) {
+
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(converter);
         factory.setAcknowledgeMode(AcknowledgeMode.AUTO);  // 自動確認
+
         return factory;
     }
 
     @Bean
     public SimpleMessageListenerContainer simpleMessageListenerContainer(ConnectionFactory connectionFactory) {
+        
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setAcknowledgeMode(AcknowledgeMode.AUTO); // 設定自動確認
+
         return container;
     }
 

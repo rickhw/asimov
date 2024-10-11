@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.core.domain.container.DeleteContainerMessage;
-import com.gtcafe.asimov.core.event.Event;
-import com.gtcafe.asimov.core.event.IMessage;
+import com.gtcafe.asimov.core.domain.event.Event;
+import com.gtcafe.asimov.core.domain.event.IMessage;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController

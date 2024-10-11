@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.event;
+package com.gtcafe.asimov.core.domain.event;
 
 import java.util.UUID;
 

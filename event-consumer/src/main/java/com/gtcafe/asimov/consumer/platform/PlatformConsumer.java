@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.consumer.system;
+package com.gtcafe.asimov.consumer.platform;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 
 
 @Service
-public class MessageConsumer { // implements MessageListener {
+public class PlatformConsumer { // implements MessageListener {
 
     @Autowired
     TaskEventHandler _taskHandler;
