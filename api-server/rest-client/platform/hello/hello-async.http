@@ -11,3 +11,7 @@ X-Request-Mode: async
 {
   "message": "Hello, Asimov"
 }
+
+
+### get status
+GET {{hostname}}/api/tasks/b6c3cc26-4b4b-4849-9f48-e2b052fe5aa3

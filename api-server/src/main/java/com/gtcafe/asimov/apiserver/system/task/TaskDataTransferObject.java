@@ -13,6 +13,8 @@ public class TaskDataTransferObject {
 	public RetrieveTaskResponse convertToTaskResponse(TaskDomainObject tdo) {
 		RetrieveTaskResponse obj = new RetrieveTaskResponse();
 		obj.setId(tdo.getTaskId());
+		obj.setState(tdo.getMetadata().get_state().toString());
+		obj.setData(tdo.getSpec());
 
 		return obj;
 	}
