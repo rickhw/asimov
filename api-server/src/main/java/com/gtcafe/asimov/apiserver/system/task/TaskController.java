@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.gtcafe.asimov.apiserver.system.CacheRepository;
 import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+import com.gtcafe.asimov.core.utils.JsonUtils;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController
@@ -28,12 +27,16 @@ public class TaskController {
   @Autowired
   TaskDataTransferObject _dto;
 
-  private final ObjectMapper objectMapper;
+  @Autowired
+  private JsonUtils jsonUtils;
+
+
+  // private final ObjectMapper objectMapper;
   
-  public TaskController() {
-    this.objectMapper = new ObjectMapper();
-    this.objectMapper.registerModule(new JavaTimeModule());
-  }
+  // public TaskController() {
+  //   this.objectMapper = new ObjectMapper();
+  //   this.objectMapper.registerModule(new JavaTimeModule());
+  // }
 
 
   @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -43,7 +46,8 @@ public class TaskController {
     // 2. find the id in cache
     String jsonString = _repos.retrieveObject(id);
     logger.info("TaskObject: {}", jsonString);
-    TaskDomainObject tdo = objectMapper.convertValue(jsonString, TaskDomainObject.class);
+    // TaskDomainObject tdo = objectMapper.convertValue(jsonString, TaskDomainObject.class);
+    TaskDomainObject tdo = jsonUtils.jsonStringToModel(jsonString, TaskDomainObject.class);
 
     // 3. DTO
     RetrieveTaskResponse res = _dto.convertToTaskResponse(tdo);

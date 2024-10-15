@@ -11,34 +11,3 @@ X-Request-Mode: async
 {
   "message": "Hello, Asimov"
 }
-
-### abnormal case#1: no attribute
-GET {{hostname}}/api/tasks/88386aab-11a5-4d24-9a4b-13679087734f
-
-
-# -----------------------------------------------------------------------------
-### abnormal case#1: no attribute
-POST {{hostname}}/api/hello
-content-type: {{contentType}}
-
-{
-
-}
-
-
-### abnormal case#2: empty content 2
-POST {{hostname}}/api/hello
-content-type: {{contentType}}
-
-{
-  "message": ""
-}
-
-
-### abnormal case#3: invalid payload format
-POST {{hostname}}/api/hello
-content-type: {{contentType}}
-
-{
-  "message": "Hello, Asimov
-}

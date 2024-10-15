@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class CacheRepositoryV1 {
+public class CacheObjectRepository {
 
   // @Autowired
   private final RedisTemplate<String, Object> _redisTemplate;
   private final ValueOperations<String, Object> _valueOps;
 
   @Autowired
-  public CacheRepositoryV1(RedisTemplate<String, Object> redisTemplate) {
+  public CacheObjectRepository(RedisTemplate<String, Object> redisTemplate) {
     this._redisTemplate = redisTemplate;
     this._valueOps = redisTemplate.opsForValue();
   }

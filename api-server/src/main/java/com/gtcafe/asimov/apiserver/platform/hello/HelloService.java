@@ -3,58 +3,44 @@ package com.gtcafe.asimov.apiserver.platform.hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
-import com.gtcafe.asimov.apiserver.system.CacheRepositoryV1;
+import com.gtcafe.asimov.apiserver.system.CacheRepository;
 import com.gtcafe.asimov.apiserver.system.MessageProducer;
 import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.apiserver.system.utils.Slogan;
 import com.gtcafe.asimov.core.platform.SayHelloMessage;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+import com.gtcafe.asimov.core.utils.JsonUtils;
 
-// 專注處理 Biz Logic,
-// 1. 不處理組 DTO 的任務
-// 2. 應該沒有其他的 import, 只有 POJO
+import java.util.Date;
 
 @Service
 public class HelloService {
 
-  // @Autowired
-  // private HelloProducer _producer;
-
   @Autowired
   MessageProducer _producer;
 
-  // @Autowired
-  // RedisTemplate<String, Object> _redisTemplate;
+  @Autowired
+  CacheRepository _cacheRepos;
 
   @Autowired
-  CacheRepositoryV1 _cacheRepos;
+  private Slogan _slogon;
 
   @Autowired
-  private Slogan utils;
+  private JsonUtils jsonUtils;
 
-  private final ObjectMapper objectMapper;
-
-  public HelloService() {
-    this.objectMapper = new ObjectMapper();
-    this.objectMapper.registerModule(new JavaTimeModule());
-  }
+  public HelloService() {}
 
   // TODO: 把 HTTP Messsage (Request/Response) 的東西搬出去
-  public HelloResponse handler(String message) {
-    HelloResponse res = new HelloResponse(message);
-
+  public HelloResponse handlerSync(String message) {
     // 處理核心商業邏輯
+    message += ", " + new Date().toString();
+    HelloResponse res = new HelloResponse(message);
 
     return res;
   }
 
-  // ----
   public RetrieveTaskResponse handlerAsync(String message) {
-    // HelloResponse res = new HelloResponse(message);
 
     // 1-1. assemble task object
     TaskDomainObject taskObj = new TaskDomainObject();
@@ -68,14 +54,9 @@ public class HelloService {
     _producer.sendTaskEvent(taskObj);
 
     // 3-1. store task to cache
-    try {
-      String taskJson = objectMapper.writeValueAsString(taskObj);
-      // _redisTemplate.opsForValue().set(taskObj.getTaskId(), taskJson);
-
-      _cacheRepos.saveOrUpdateObject(taskObj.getTaskId(), taskJson);
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
+    String taskJsonString = jsonUtils.modelToJsonString(taskObj);
+    _cacheRepos.saveOrUpdateObject(taskObj.getTaskId(), taskJsonString);
+    
 
     RetrieveTaskResponse res = new RetrieveTaskResponse(taskObj);
     return res;
