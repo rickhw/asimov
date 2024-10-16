@@ -47,6 +47,7 @@ public class HelloService {
     taskObj.setSpec(message);
 
     // 1-2. assemble domain object
+    // TODO: Message needs to bind the taskId?
     SayHelloMessage sayHello = new SayHelloMessage(message);
 
     // 2-1. sent message to queue

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CacheRepository {
 
-  // @Autowired
   private final RedisTemplate<String, String> _redisTemplate;
   private final ValueOperations<String, String> _valueOps;
 
@@ -20,8 +19,8 @@ public class CacheRepository {
   }
 
   // Create or Update any type of DomainObject
-  public void saveOrUpdateObject(String key, String object) {
-    this._valueOps.set(key, object);
+  public void saveOrUpdateObject(String key, String value) {
+    this._valueOps.set(key, value);
 
     // Optional: Set expiration time if needed
     // valueOps.set(key, domainObject, 1, TimeUnit.HOURS);
@@ -37,9 +36,9 @@ public class CacheRepository {
 
 
   // Update any type of DomainObject
-  public void updateObject(String key, String object) {
+  public void updateObject(String key, String value) {
     if (Boolean.TRUE.equals(_redisTemplate.hasKey(key))) {
-        _valueOps.set(key, object);
+        _valueOps.set(key, value);
     } else {
         throw new RuntimeException("DomainObject not found for key: " + key);
     }
