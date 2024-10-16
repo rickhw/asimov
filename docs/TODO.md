@@ -7,11 +7,13 @@
 - [ ] async
   - [ ] producer
     - [x] rabbitMQ multiple config
-    - [ ] common message producer
+    - [v] common message producer
     - [ ] common constants and model
     - [ ] task object
     - [ ] store to cache
   - [ ] concumser
+    - [ ] common consummer
+  - [ ] log
 
 ## Tenant Users
 

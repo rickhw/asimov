@@ -1,5 +1,6 @@
 package com.gtcafe.asimov.apiserver.platform.hello;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class HelloController {
 
   @Autowired

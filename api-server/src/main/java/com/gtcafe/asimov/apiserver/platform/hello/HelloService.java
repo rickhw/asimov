@@ -1,5 +1,7 @@
 package com.gtcafe.asimov.apiserver.platform.hello;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import com.gtcafe.asimov.core.utils.JsonUtils;
 import java.util.Date;
 
 @Service
+@Slf4j
 public class HelloService {
 
   @Autowired
