@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.platform;
+package com.gtcafe.asimov.core.platform.hello;
 
 public class SayHelloMessage { // implements IMessage {
     private final String content;

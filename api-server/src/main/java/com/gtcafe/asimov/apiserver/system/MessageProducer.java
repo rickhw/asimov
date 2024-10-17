@@ -2,18 +2,18 @@ package com.gtcafe.asimov.apiserver.system;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.apiserver.system.config.RabbitConfig;
+import com.gtcafe.asimov.core.constants.QueueName;
 import com.gtcafe.asimov.core.domain.event.Event;
 import com.gtcafe.asimov.core.domain.event.EventType;
 import com.gtcafe.asimov.core.domain.event.IMessage;
 import com.gtcafe.asimov.core.model.RabbitQueueConfig;
-import com.gtcafe.asimov.core.platform.PlatformQueueName;
-import com.gtcafe.asimov.core.platform.SayHelloMessage;
-import com.gtcafe.asimov.core.system.QueueNameConstants;
+import com.gtcafe.asimov.core.platform.hello.SayHelloMessage;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 
 
@@ -39,7 +39,7 @@ public class MessageProducer {
 	}
 
 	public void sayHelloEvent(SayHelloMessage message) {
-		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(PlatformQueueName.SAY_HELLO_QUEUE_NAME);
+		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(QueueName.SAY_HELLO_QUEUE_NAME);
 
 		rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), message);
 	}
@@ -71,7 +71,7 @@ public class MessageProducer {
 		// Event<IMessage> event = new Event<>(type, message);
 
 		// Get RabbitMQ config for the "platform.sayHello" queue
-		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(QueueNameConstants.TASK_QUEUE_NAME);
+		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(QueueName.TASK_QUEUE_NAME);
 
 		// TODO: add exception handler: HTTP 500 internal error
 		if (queueConfig == null) {

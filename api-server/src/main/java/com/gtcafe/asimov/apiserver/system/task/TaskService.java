@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.apiserver.system.CacheRepository;
+import com.gtcafe.asimov.core.cache.CacheRepository;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 

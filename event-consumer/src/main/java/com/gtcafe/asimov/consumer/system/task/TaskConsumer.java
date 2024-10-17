@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.core.system.QueueNameConstants;
+import com.gtcafe.asimov.core.constants.QueueName;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 import com.gtcafe.asimov.core.system.task.TaskState;
 import com.gtcafe.asimov.core.utils.JsonUtils;
@@ -21,7 +21,7 @@ public class TaskConsumer { // implements MessageListener {
   @Autowired
   private JsonUtils _jsonUtils;
 
-  @RabbitListener(queues = QueueNameConstants.TASK_QUEUE_NAME)
+  @RabbitListener(queues = QueueName.TASK_QUEUE_NAME)
   public void receiveEvent(String message) {
     TaskDomainObject tdo = _jsonUtils.jsonStringToModel(message, TaskDomainObject.class);
 

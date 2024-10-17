@@ -2,7 +2,7 @@ package com.gtcafe.asimov.apiserver.platform.tenant;
 
 import java.util.UUID;
 
-import com.gtcafe.asimov.core.platform.PlatformKind;
+import com.gtcafe.asimov.core.constants.Kind;
 // POJO: w/o any anotation.
 
 // {
@@ -30,7 +30,7 @@ public class TenantDomainObject {
 	private Spec spec;
 
 	public TenantDomainObject() {
-		this.kind = PlatformKind.PLATFORM_TENANT;
+		this.kind = Kind.PLATFORM_TENANT;
 		this.metadata = new Metadata();
 		this.spec = new Spec();
 	}
