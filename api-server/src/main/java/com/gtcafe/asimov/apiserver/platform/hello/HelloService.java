@@ -54,6 +54,7 @@ public class HelloService {
     SayHelloMessage sayHello = new SayHelloMessage(message);
 
     // 2-1. sent message to queue
+    // TODO: put two messages ??? or single message?
     _producer.sayHelloEvent(sayHello);
     _producer.sendTaskEvent(taskObj);
 
