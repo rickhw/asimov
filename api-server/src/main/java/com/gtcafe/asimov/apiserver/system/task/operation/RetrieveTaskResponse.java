@@ -20,7 +20,7 @@ public class RetrieveTaskResponse {
     public RetrieveTaskResponse(TaskDomainObject tdo) {
         this.id = tdo.getTaskId();
         this.state = tdo.getMetadata().get_state().toString();
-        this.data = tdo.getSpec();
+        this.data = tdo.getData();
 
     }
 

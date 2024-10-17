@@ -30,10 +30,10 @@ public class TaskEventHandler {
         String taskJsonString = _jsonUtils.modelToJsonString(tdo);
         _cacheRepos.saveOrUpdateObject(tdo.getTaskId(), taskJsonString);
 
-        // 3. store task to database
+        // 3. store task to database？
 
         // 4. log the status
-        log.info("TaskID: [{}], State: [{}], Spec: [{}]", tdo.getTaskId(), tdo.getMetadata().get_state(), tdo.getSpec());
+        log.info("TaskID: [{}], State: [{}], Data: [{}]", tdo.getTaskId(), tdo.getMetadata().get_state(), tdo.getData());
 
         System.out.printf("Update status from PENDING to RUNNING");
 

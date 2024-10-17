@@ -11,7 +11,7 @@ public class TaskDomainObject {
 	private String kind;
 	private String taskId;
 	private TaskMetadata metadata;
-	private Object spec;
+	private String data;
 
 	public TaskDomainObject() {
 		this.taskId = UUID.randomUUID().toString();
@@ -36,12 +36,12 @@ public class TaskDomainObject {
 		this.metadata = metadata;
 	}
 
-	public Object getSpec() {
-		return spec;
+	public Object getData() {
+		return data;
 	}
 
-	public void setSpec(Object spec) {
-		this.spec = spec;
+	public void setData(String data) {
+		this.data = data;
 	}
 }
 

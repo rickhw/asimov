@@ -15,6 +15,7 @@ import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
 import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.constants.HttpHeaderConstants;
+import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 
 import jakarta.validation.Valid;
 
@@ -28,7 +29,8 @@ public class HelloController {
 
   @GetMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<HelloResponse> helloSync() {
-    HelloResponse res = _service.handlerSync("Hello World");
+    String message = _service.handlerSync("Hello World");
+    HelloResponse res = new HelloResponse(message);
     return ResponseEntity.ok(res);
   }
 
@@ -39,11 +41,14 @@ public class HelloController {
 
     if (HttpHeaderConstants.ASYNC_MODE.equalsIgnoreCase(requestMode)) {
 
-      RetrieveTaskResponse res = _service.handlerAsync(request.getMessage());
+      TaskDomainObject tdo = _service.handlerAsync(request.getMessage());
+      RetrieveTaskResponse res = new RetrieveTaskResponse(tdo);
+
       return ResponseEntity.ok(res);
     } else {
 
-      HelloResponse res = _service.handlerSync(request.getMessage());
+      String message = _service.handlerSync(request.getMessage());
+      HelloResponse res = new HelloResponse(message);
 
       return ResponseEntity.ok(res);
     }

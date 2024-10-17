@@ -14,7 +14,7 @@ public class TaskDataTransferObject {
 		RetrieveTaskResponse obj = new RetrieveTaskResponse();
 		obj.setId(tdo.getTaskId());
 		obj.setState(tdo.getMetadata().get_state().toString());
-		obj.setData(tdo.getSpec());
+		obj.setData(tdo.getData());
 
 		return obj;
 	}

@@ -35,37 +35,35 @@ public class HelloService {
 
   public HelloService() {}
 
-  // TODO: 把 HTTP Messsage (Request/Response) 的東西搬出去
-  public HelloResponse handlerSync(String message) {
+  public String handlerSync(String message) {
     // 處理核心商業邏輯
     message += ", " + new Date().toString();
-    HelloResponse res = new HelloResponse(message);
-
-    return res;
+    
+    return message;
   }
 
-  public RetrieveTaskResponse handlerAsync(String message) {
+  public TaskDomainObject handlerAsync(String message) {
 
-    // 1-1. assemble task object
-    TaskDomainObject taskObj = new TaskDomainObject();
-    taskObj.setSpec(message);
-
-    // 1-2. assemble domain object
+    // 1-1. assemble domain object
     // TODO: Message needs to bind the taskId?
     SayHelloMessage sayHello = new SayHelloMessage(message);
+    String sayHelloString = jsonUtils.modelToJsonString(sayHello);
 
+    // 1-2. assemble task object
+    TaskDomainObject taskObj = new TaskDomainObject();
+    taskObj.setData(sayHelloString);
+    
     // 2-1. sent message to queue
     // TODO: put two messages ??? or single message?
-    _producer.sayHelloEvent(sayHello);
-    _producer.sendTaskEvent(taskObj);
+    // _producer.sayHelloEvent(sayHello);
+    _producer.sendMessage(taskObj);
 
     // 3-1. store task to cache
     String taskJsonString = jsonUtils.modelToJsonString(taskObj);
     _cacheRepos.saveOrUpdateObject(taskObj.getTaskId(), taskJsonString);
     
-
-    RetrieveTaskResponse res = new RetrieveTaskResponse(taskObj);
-    return res;
+    // RetrieveTaskResponse res = new RetrieveTaskResponse(taskObj);
+    return taskObj;
   }
 
 }

@@ -21,8 +21,15 @@ public class PlatformConsumer { // implements MessageListener {
   @RabbitListener(queues = QueueName.SAY_HELLO_QUEUE_NAME)
   public void receiveEvent(String message) {
 
-    // _taskHandler.handle(event);
-    System.out.println("message: " + message);
+    // I/O blocking
+    try {
+      // _taskHandler.handle(event);
+      Thread.sleep(10000);
+      System.out.println("message: " + message);
+
+    } catch (Exception ex) {
+
+    }
 
     // update status
   }

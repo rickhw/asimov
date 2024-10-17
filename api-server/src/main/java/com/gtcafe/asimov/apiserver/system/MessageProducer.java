@@ -28,43 +28,43 @@ public class MessageProducer {
 	@Autowired
 	private RabbitConfig rabbitConfig;
 
-	public void sendEvent(String queueName, Event<? extends IMessage> event) {
-		rabbitTemplate.convertAndSend(queueName, event);
-	}
+	// public void sendEvent(String queueName, Event<? extends IMessage> event) {
+	// 	rabbitTemplate.convertAndSend(queueName, event);
+	// }
 
-	public void sendPlatformEvent(String queneName, SayHelloMessage message) {
-		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(queneName);
+	// public void sendPlatformEvent(String queneName, SayHelloMessage message) {
+	// 	RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(queneName);
 
-		rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), message);
-	}
+	// 	rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), message);
+	// }
 
-	public void sayHelloEvent(SayHelloMessage message) {
-		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(QueueName.SAY_HELLO_QUEUE_NAME);
+	// public void sayHelloEvent(SayHelloMessage message) {
+	// 	RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(QueueName.SAY_HELLO_QUEUE_NAME);
 
-		rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), message);
-	}
+	// 	rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), message);
+	// }
 
 
-	public Event<IMessage> sendEvent(String queneName, EventType type, IMessage message) {
+	// public Event<IMessage> sendEvent(String queneName, EventType type, IMessage message) {
 
-		Event<IMessage> event = new Event<>(type, message);
+	// 	Event<IMessage> event = new Event<>(type, message);
 
-		// Get RabbitMQ config for the "platform.sayHello" queue
-		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(queneName);
+	// 	// Get RabbitMQ config for the "platform.sayHello" queue
+	// 	RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(queneName);
 
-		// TODO: add exception handler: HTTP 500 internal error
-		if (queueConfig == null) {
-			logger.error("Queue config not found for platform.sayHello");
-			return null;
-		}
+	// 	// TODO: add exception handler: HTTP 500 internal error
+	// 	if (queueConfig == null) {
+	// 		logger.error("Queue config not found for platform.sayHello");
+	// 		return null;
+	// 	}
 
-		// Send event to the queue using dynamic exchange and routing key
-		rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), event);
+	// 	// Send event to the queue using dynamic exchange and routing key
+	// 	rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), event);
 
-		logger.info("Push message to queue: [{}], exchange: [{}], routingKey: [{}]", queueConfig.getName(), queueConfig.getExchange(), queueConfig.getRoutingKey());
+	// 	logger.info("Push message to queue: [{}], exchange: [{}], routingKey: [{}]", queueConfig.getName(), queueConfig.getExchange(), queueConfig.getRoutingKey());
 
-		return event;
-	}
+	// 	return event;
+	// }
 
 	public TaskDomainObject sendTaskEvent(TaskDomainObject tdo) {
 
@@ -88,5 +88,26 @@ public class MessageProducer {
 
 	}
 
+	public TaskDomainObject sendMessage(TaskDomainObject tdo) {
+
+		// Event<IMessage> event = new Event<>(type, message);
+
+		// Get RabbitMQ config for the "platform.sayHello" queue
+		RabbitQueueConfig queueConfig = rabbitConfig.getQueueConfig(QueueName.TASK_QUEUE_NAME);
+
+		// TODO: add exception handler: HTTP 500 internal error
+		if (queueConfig == null) {
+			logger.error("Queue config not found for platform.sayHello");
+			return null;
+		}
+
+		// Send event to the queue using dynamic exchange and routing key
+		rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), tdo);
+
+		logger.info("Push message to queue: [{}], exchange: [{}], routingKey: [{}]", queueConfig.getName(), queueConfig.getExchange(), queueConfig.getRoutingKey());
+
+		return tdo;
+
+	}
 
 }

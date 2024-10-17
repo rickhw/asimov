@@ -6,8 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-    "com.gtcafe.asimov.apiserver", // 主應用包
-    "com.gtcafe.asimov.core.utils"  // 指定 jsonUtils 包
+    "com.gtcafe.asimov.apiserver",
+    "com.gtcafe.asimov.core.*"
+    // "com.gtcafe.asimov.core.utils",
 })
 public class Main {
     public static void main(String[] args) {
