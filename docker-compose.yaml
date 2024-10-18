@@ -1,5 +1,19 @@
 version: "3.2"
 services:
+  api-gateway_apache-apisix:
+    image: apache/apisix:3.11  # 使用 Apache APISIX 作為 API Gateway
+    ports:
+      - 9080:9080  # HTTP 端口
+      - 9443:9443  # HTTPS 端口
+    volumes:
+      - ./api-gateway/config/config.standalone.yaml:/usr/local/apisix/conf/config.yaml  # 加入 APISIX 的配置檔案
+    depends_on:
+      rdb_mysql:
+        condition: service_healthy
+      queue_rabbitmq:
+        condition: service_healthy
+
+
   rdb_mysql:
     image: mysql:8.0
     environment:
@@ -13,6 +27,7 @@ services:
       retries: 5
     volumes:
       - ./.docker-data/rdb_mysql:/var/lib/mysql
+      - ./init-scripts/init.ddl.sql:/docker-entrypoint-initdb.d/init.ddl.sql  # 加入初始化 SQL 檔案
     # networks:
     #   - service-network
 
@@ -30,7 +45,6 @@ services:
 
   cache_redis:
     image: redis:7.2-alpine
-    # container_name: 'redis-7.2'
     ports:
         - 6379:6379
     volumes:
@@ -38,19 +52,15 @@ services:
         - ./.docker-data/cache_redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
 
   cache-adminer_phpRedisAdmin:
-    # https://github.com/erikdubbelboer/phpRedisAdmin
     image: erikdubbelboer/phpredisadmin:1.19
-    # container_name: 'cache_adminer'
     ports:
         - 9998:80
     environment:
-      # REDIS_1_HOST: host.docker.internal
       REDIS_1_HOST: cache_redis
       REDIS_1_NAME: localhost
 
   queue_rabbitmq:
     image: rabbitmq:3.12-management-alpine
-    # container_name: 'rabbitmq'
     ports:
         - 5672:5672
         - 15672:15672
@@ -60,8 +70,4 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: root
       RABBITMQ_DEFAULT_PASS: password
-
-
-
-
 
