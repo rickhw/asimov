@@ -8,7 +8,6 @@ import com.gtcafe.asimov.core.cache.CacheRepository;
 import com.gtcafe.asimov.core.constants.QueueName;
 import com.gtcafe.asimov.core.domain.event.IMessage;
 import com.gtcafe.asimov.core.platform.hello.HelloEventV3;
-import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 import com.gtcafe.asimov.core.platform.hello.SayHelloMessage;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 import com.gtcafe.asimov.core.system.task.TaskState;
@@ -31,7 +30,7 @@ public class PlatformConsumer { // implements MessageListener {
   HelloEventHandler _handler;
   
   @RabbitListener(queues = QueueName.SAY_HELLO_QUEUE_NAME)
-  public void receiveEvent(String eventString) {
+  public void receiveHelloEvent(String eventString) {
     HelloEventV3 event = _jsonUtils.jsonStringToModel(eventString, HelloEventV3.class);
     
     System.out.println("eventString: " + eventString);
