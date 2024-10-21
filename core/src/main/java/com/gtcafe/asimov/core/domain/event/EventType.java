@@ -1,6 +1,7 @@
 package com.gtcafe.asimov.core.domain.event;
 
 public enum EventType {
+    // Domain
     CREATE_CONTAINER,
     DELETE_CONTAINER,
 

@@ -17,6 +17,7 @@ public class JsonUtils {
         try {
             return objectMapper.readValue(jsonString, clazz);
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -25,7 +26,9 @@ public class JsonUtils {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             return null;
+            
         }
     }
 }

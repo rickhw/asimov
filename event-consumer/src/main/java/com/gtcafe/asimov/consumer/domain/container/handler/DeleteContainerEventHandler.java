@@ -10,6 +10,6 @@ public class DeleteContainerEventHandler implements IEventHandler<DeleteContaine
 
     @Override
     public void handle(DeleteContainerMessage message) {
-        System.out.println("Handling Type A Message: " + message.getContent());
+        System.out.println("Handling Type A Message: " + message.getData());
     }
 }

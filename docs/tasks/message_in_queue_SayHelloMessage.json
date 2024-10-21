@@ -1,0 +1,20 @@
+{
+    "eventType": "SAY_HELLO",
+    "task": {
+        "kind": "sys.Task",
+        "taskId": "80ac8e8c-ad92-4ac8-a46b-2cc68de9751d",
+        "metadata": {
+            "_apiVersion": "v1alpha",
+            "_state": "PENDING",
+            "_creationTime": "Sun Oct 20 11:30:44 UTC 2024",
+            "_lastModified": "Sun Oct 20 11:30:44 UTC 2024"
+        },
+        "data": null
+    },
+    "data": {
+        "id": null,
+        "kind": null,
+        "data": "Hello, Asimov"
+    },
+    "eventId": "05fda9fe-5cd8-421d-aca7-bc8510b72dd9"
+}
