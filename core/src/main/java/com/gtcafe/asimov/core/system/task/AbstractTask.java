@@ -34,5 +34,8 @@ public abstract class AbstractTask {
 		this.lastModified = TimeUtils.timeIso8601(new Date());
 	}
 
+	public void updateLastModified() {
+		this.lastModified = TimeUtils.timeIso8601(new Date());
+	}
 }
 

@@ -1,37 +1,115 @@
 
-
-AbstractTaskMessage
-
-SayHelloMessage
-
+## Message Structure
 
 ```json
 {
-    "id": "uuid-1234-5678-91011",
-    "task": {
-        "id": "uuid-1234-5678-91011",
-        "apiVersion": "v1alpha",           
-        "metadata": {  
-            "_kind": "platform.Task",
-            "_state": "running",  
-            "_type": "processing",
-            "_creationTime": "2024-10-10T13:41:58+00:00"  
-        }
+    "apiVersion": "v1alpha",
+    "kind": "platform.Task",
+    "id": "uuid-1234-5678-91011",   // write once, read many
+    "key": "system-item",           // write once, read many (optional)
+    "metadata": {        
+        "_state": "running",        // state machine
+        "_type": "processing",      // resource, record, processing (cpu-bound)
+        "_creationTime": "2024-10-10T13:41:58+00:00",
+        "_lastModified": "2024-10-10T13:41:58+00:00"  
     },
-    "domainObject": {
-        "id": "88386aab-11a5-4d24-9a4b-13679087734f",
-        "metadata": {
-            "_kind": "platform.SayHello",
-            "_state": "completed",
-            "_type": "processing",
-            "_creationTime": "2024-10-10T13:41:58+00:00",
-            "_finishedTime": "2024-10-10T13:42:58+00:00"
-        },
-        "data": {
-            "message": "Hello, Master Asimov"
-        }
+    "data": {
     }
 }
 ```
 
 
+## Task Message
+
+```json
+{
+    "apiVersion": "v1alpha",
+    "kind": "platform.Task",
+    "id": "uuid-1234-5678-91011",   // write once, read many
+    //"key": "system-item",           // write once, read many (optional)
+    "metadata": {        
+        "_state": "RUNNING",        // state machine
+        "_type": "processing",      // resource, record, processing (cpu-bound)
+        "_creationTime": "2024-10-10T13:41:58+00:00",
+        "_lastModified": "2024-10-10T13:41:58+00:00"  
+    },
+    "data": {
+    }
+}
+```
+
+simple:
+
+```json
+{
+    "id": "uuid-1234-5678-91011",   // write once, read many
+    "_state": "RUNNING",        // state machine
+    "_creationTime": "2024-10-10T13:41:58+00:00",
+    "_lastModified": "2024-10-10T13:41:58+00:00",
+    "data": {
+    }
+}```
+
+## Hello Message
+
+```json
+{
+    "apiVersion": "v1alpha",
+    "kind": "platform.Hello",
+    "id": "uuid-1234-5678-91011",   // write once, read many
+    //"key": "system-item",           // write once, read many (optional)
+    "metadata": {        
+        "_state": "RUNNING",        // state machine
+        "_type": "processing",      // resource, record, processing (cpu-bound)
+        "_creationTime": "2024-10-10T13:41:58+00:00",
+        "_lastModified": "2024-10-10T13:41:58+00:00"  
+    },
+    "data": {
+        "message": "Hi Asimov"
+    }
+}
+```
+
+simple:
+
+```json
+{
+    "message": "Hi Asimov"
+}
+```
+
+
+
+## Async Hello Message
+
+```json
+{
+    "apiVersion": "v1alpha",
+    "kind": "platform.Task",
+    "id": "uuid-1234-5678-91011",   // write once, read many
+    //"key": "system-item",           // write once, read many (optional)
+    "metadata": {        
+        "_state": "RUNNING",        // state machine
+        "_type": "processing",      // resource, record, processing (cpu-bound)
+        "_creationTime": "2024-10-10T13:41:58+00:00",
+        "_lastModified": "2024-10-10T13:41:58+00:00"  
+    },
+    "data": {
+        {
+            "apiVersion": "v1alpha",
+            "kind": "platform.Hello",
+            "id": "uuid-1234-5678-91011",   // write once, read many
+            //"key": "system-item",           // write once, read many (optional)
+            "metadata": {        
+                "_state": "RUNNING",        // state machine
+                "_type": "processing",      // resource, record, processing (cpu-bound)
+                "_creationTime": "2024-10-10T13:41:58+00:00",
+                "_lastModified": "2024-10-10T13:41:58+00:00"  
+            },
+            "data": {
+                "message": "Hi Asimov"
+            }
+        }
+    }
+}
+```

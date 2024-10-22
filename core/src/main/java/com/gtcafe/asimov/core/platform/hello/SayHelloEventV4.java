@@ -25,5 +25,6 @@ public class SayHelloEventV4 extends AbstractTask  {
 
     public void transit(TaskState toState) {
         setState(toState);
+        updateLastModified();
     }
 }

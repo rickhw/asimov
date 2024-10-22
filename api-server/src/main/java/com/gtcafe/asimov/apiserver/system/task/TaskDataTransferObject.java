@@ -24,6 +24,10 @@ public class TaskDataTransferObject {
 		RetrieveTaskResponse obj = new RetrieveTaskResponse();
 		obj.setId(tdo.getId());
 		obj.setState(tdo.getState().toString());
+		
+		obj.setCreationTime(tdo.getCreationTime());
+		obj.setLastModified(tdo.getLastModified());
+
 		obj.setData(tdo.getData());
 
 		return obj;

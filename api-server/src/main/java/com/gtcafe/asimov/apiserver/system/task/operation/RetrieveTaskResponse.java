@@ -1,18 +1,33 @@
 package com.gtcafe.asimov.apiserver.system.task.operation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
+
+import lombok.Getter;
+import lombok.Setter;
+
 
 public class RetrieveTaskResponse {
 
+    @Getter @Setter
     private String id;
 
-    // pending, running, complete, failure
+    @Getter @Setter
     private String state;
+
+    @Getter @Setter
+    @JsonProperty("_creationTime")
+    private String creationTime;
+
+    @Getter @Setter
+    @JsonProperty("_lastModified")
+    private String lastModified;
 
     // private String kind;
 
     // private String operationId;
 
+    @Getter @Setter
     private Object data;
 
     public RetrieveTaskResponse() {}
@@ -22,46 +37,8 @@ public class RetrieveTaskResponse {
         this.id = tdo.getId();
         this.state = tdo.getState().toString();
         this.data = tdo.getData();
-
+        this.creationTime = tdo.getCreationTime();
+        this.lastModified = tdo.getLastModified();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    // public String getKind() {
-    //     return kind;
-    // }
-
-    // public void setKind(String kind) {
-    //     this.kind = kind;
-    // }
-
-    // public String getOperationId() {
-    //     return operationId;
-    // }
-
-    // public void setOperationId(String operationId) {
-    //     this.operationId = operationId;
-    // }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
 }
