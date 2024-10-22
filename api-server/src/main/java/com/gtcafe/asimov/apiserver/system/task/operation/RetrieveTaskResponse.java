@@ -1,6 +1,6 @@
 package com.gtcafe.asimov.apiserver.system.task.operation;
 
-import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
 
 public class RetrieveTaskResponse {
 
@@ -17,9 +17,10 @@ public class RetrieveTaskResponse {
 
     public RetrieveTaskResponse() {}
 
-    public RetrieveTaskResponse(TaskDomainObject tdo) {
-        this.id = tdo.getTaskId();
-        this.state = tdo.getMetadata().get_state().toString();
+    // public RetrieveTaskResponse(TaskDomainObject tdo) {
+    public RetrieveTaskResponse(SayHelloEventV4 tdo) {
+        this.id = tdo.getId();
+        this.state = tdo.getState().toString();
         this.data = tdo.getData();
 
     }

@@ -15,6 +15,7 @@ import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
 import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.constants.HttpHeaderConstants;
+import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 
 import jakarta.validation.Valid;
@@ -41,7 +42,7 @@ public class HelloController {
 
     if (HttpHeaderConstants.ASYNC_MODE.equalsIgnoreCase(requestMode)) {
 
-      TaskDomainObject tdo = _service.handlerAsync(request.getMessage());
+      SayHelloEventV4 tdo = _service.handlerAsync(request.getMessage());
       RetrieveTaskResponse res = new RetrieveTaskResponse(tdo);
 
       return ResponseEntity.ok(res);

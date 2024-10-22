@@ -1,6 +1,6 @@
 package com.gtcafe.asimov.core.constants;
 
-public final class Kind {
+public final class KindConstants {
 
 	// Platform
 	public final static String PLATFORM_SAYHELLO = "platform.SayHello";

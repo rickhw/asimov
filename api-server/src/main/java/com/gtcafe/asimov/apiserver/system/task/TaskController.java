@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
+import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
 import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 
 // @Tag(name = "API Metadata", description = "")
@@ -31,10 +32,10 @@ public class TaskController {
     // 1. validate: is not exist or expire.
 
     // 2. find the id in cache
-    TaskDomainObject tdo = _service.retrieve(id);
+    SayHelloEventV4 tdo = _service.retrieveV4(id);
 
     // 3. DTO
-    RetrieveTaskResponse res = _dto.convertToTaskResponse(tdo);
+    RetrieveTaskResponse res = _dto.convertToTaskV4Response(tdo);
 
     return ResponseEntity.ok(res);
   }

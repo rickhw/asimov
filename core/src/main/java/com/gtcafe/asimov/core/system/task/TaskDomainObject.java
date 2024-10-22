@@ -2,7 +2,7 @@ package com.gtcafe.asimov.core.system.task;
 
 import java.util.UUID;
 
-import com.gtcafe.asimov.core.constants.Kind;
+import com.gtcafe.asimov.core.constants.KindConstants;
 
 // POJO: w/o any anotation.
 
@@ -15,7 +15,7 @@ public class TaskDomainObject {
 
 	public TaskDomainObject() {
 		this.taskId = UUID.randomUUID().toString();
-		this.kind = Kind.SYS_TASK;
+		this.kind = KindConstants.SYS_TASK;
 		this.metadata = new TaskMetadata();
 		// this.spec = new Spec();
 	}

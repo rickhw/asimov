@@ -3,9 +3,19 @@ package com.gtcafe.asimov.core.platform.hello;
 import com.gtcafe.asimov.core.domain.event.IMessage;
 import java.util.UUID;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
 public class SayHelloMessage implements IMessage {
+    @Getter @Setter
     private String id;
+
+    @Getter @Setter
     private String kind;
+
+    @Getter @Setter
     private String data;
 
     public SayHelloMessage(String data) {
@@ -18,30 +28,4 @@ public class SayHelloMessage implements IMessage {
         this.id = null;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    @Override
-    public String getKind() {
-        return this.kind;
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
-    public String getData() {
-        return this.data;
-    }
 }
