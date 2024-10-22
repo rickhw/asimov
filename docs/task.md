@@ -8,8 +8,10 @@ POST /api/tasks
 Content-Type: application/json
 
 {
+    "apiVersion": "v1alpha",
+    "kind": "platform.Hello",
     "data": {
-      "message": "Hello"
+        "message": "Hello"
     }
 }
 ```
@@ -21,15 +23,15 @@ HTTP/1.1 200
 
 {
     "id": "uuid-1234-5678-91011",
-    "apiVersion": "v1alpha",           
+    "apiVersion": "v1alpha",  
+    "kind": "platform.Hello",
     "metadata": {  
-        "_kind": "platform.Task",
-        "_state": "pending",  
+        "_state": "PENDING",  
         "_type": "processing",
         "_creationTime": "2024-10-10T13:41:58+00:00"  
     },
     "data": {
-      "message": "Hello"
+        "message": "Hello"
     }
 }
 ```
@@ -49,15 +51,15 @@ HTTP/1.1 200
 
 {
     "id": "uuid-1234-5678-91011",
-    "apiVersion": "v1alpha",           
+    "apiVersion": "v1alpha",      
+    "kind": "platform.Hello",     
     "metadata": {  
-        "_kind": "platform.Task",
-        "_state": "running",  
+        "_state": "RUNNING",  
         "_type": "processing",
         "_creationTime": "2024-10-10T13:41:58+00:00"  
     },
     "data": {
-      "message": "Hello"
+        "message": "Hello"
     }
 }
 ```
@@ -69,16 +71,16 @@ HTTP/1.1 200
 
 {
     "id": "uuid-1234-5678-91011",
-    "apiVersion": "v1alpha",           
+    "apiVersion": "v1alpha",      
+    "kind": "platform.Hello",     
     "metadata": {  
-        "_kind": "platform.Task",
-        "_state": "completed",  
+        "_state": "COMPLETED",  
         "_type": "processing",
-        "_creationTime": "2024-10-10T13:41:58+00:00",
-        "_finishedTime": "2024-10-10T13:42:58+00:00"
+        "_creationTime": "2024-10-10T13:41:48+00:00",
+        "_lastModified": "2024-10-10T13:41:58+00:00"  
     },
     "data": {
-      "message": "Hello"
+        "message": "Hello 2024-10-10T13:41:58+00:00"
     }
 }
 ```
