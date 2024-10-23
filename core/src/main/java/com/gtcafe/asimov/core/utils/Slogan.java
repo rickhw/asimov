@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.system.utils;
+package com.gtcafe.asimov.core.utils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-import com.gtcafe.asimov.apiserver.system.model.Releng;
+import com.gtcafe.asimov.core.model.Releng;
 
 @Configuration
 public class Slogan {

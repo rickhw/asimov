@@ -22,7 +22,7 @@ HTTP/1.1 202 Accepted
 {
     "id": "88386aab-11a5-4d24-9a4b-13679087734f",
     "apiVersion": "v1alpha",  
-    "kind": "platform.Hello",
+    "kind": "platform.Task",
     "metadata": {  
         "_state": "PENDING",  
         "_type": "processing",
@@ -34,13 +34,10 @@ HTTP/1.1 202 Accepted
 }
 ```
 
-## Message Structure
-
 get the stats from task api.
 
 ```bash
 GET /api/tasks/88386aab-11a5-4d24-9a4b-13679087734f
-X-Message-Struct: fully
 ```
 
 response:
@@ -49,18 +46,21 @@ response:
 HTTP/1.1 200
 
 {
-  "id": "88386aab-11a5-4d24-9a4b-13679087734f",
-  "metadata": {
-    "_kind": "platform.SayHello",
-    "_state": "running",
-    "_type": "processing",
-    "_creationTime": "2024-10-10T13:41:58+00:00"
-  },
-  "data": {
-    "message": "Hello, Master Asimov"
-  }
+    "id": "88386aab-11a5-4d24-9a4b-13679087734f",
+    "apiVersion": "v1alpha",  
+    "kind": "platform.Task",
+    "metadata": {  
+        "_state": "RUNNING",  
+        "_type": "processing",
+        "_creationTime": "2024-10-10T13:41:58+00:00"  
+    },
+    "data": {
+        "message": "Hello, Master Asimov"
+    }
 }
 ```
+
+## Simple Mode (Default)
 
 Retrive the by task with simple mode (default)
 
@@ -76,10 +76,16 @@ HTTP/1.1 200
 
 {
   "id": "88386aab-11a5-4d24-9a4b-13679087734f",
-  "_state": "RUNNING",
-  "message": "Hello, Master Asimov",
-  "_creationTime": "2024-10-10T13:41:58+00:00",
-  "_lastModified": "2024-10-22T20:48:59.642Z"
+  "metadata": {
+    "_kind": "platform.SayHello",
+    "_state": "RUNNING",
+    "_type": "processing",
+    "_creationTime": "2024-10-10T13:41:58+00:00",
+    "_lastModified": "2024-10-10T13:41:58+00:00"  
+  },
+  "data": {
+    "message": "Hello, Master Asimov"
+  }
 }
 ```
 
@@ -90,13 +96,21 @@ HTTP/1.1 200
 
 {
   "id": "88386aab-11a5-4d24-9a4b-13679087734f",
-  "_state": "COMPLETED",
-  "message": "Hello, Master Asimov",
-  "_creationTime": "2024-10-10T13:41:58+00:00",
-  "_lastModified": "2024-10-22T20:58:59.642Z"
+  "metadata": {
+    "_kind": "platform.SayHello",
+    "_state": "COMPLETED",
+    "_type": "processing",
+    "_creationTime": "2024-10-10T13:41:58+00:00",
+    "_lastModified": "2024-10-10T13:41:58+00:00"  
+  },
+  "data": {
+    "message": "Hello, Master Asimov"
+  }
 }
 ```
 
+
+## Fully mode
 
 Retrive the by task with fully mode
 

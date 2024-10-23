@@ -9,7 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.apiserver.system.utils.Slogan;
+import com.gtcafe.asimov.core.utils.Slogan;
 
 @Service
 public class InitializerHook implements ApplicationRunner  {

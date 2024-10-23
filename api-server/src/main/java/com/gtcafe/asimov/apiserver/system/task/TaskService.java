@@ -1,7 +1,5 @@
 package com.gtcafe.asimov.apiserver.system.task;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +7,11 @@ import com.gtcafe.asimov.core.cache.CacheRepository;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class TaskService {
-  private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
 
   @Autowired
   CacheRepository _repos;
@@ -41,7 +41,7 @@ public class TaskService {
     String jsonString = _repos.retrieveObject(id);
     SayHelloEvent tdo = jsonUtils.jsonStringToModel(jsonString, SayHelloEvent.class);
 
-    logger.info("SayHelloEventV4: {}", jsonString);
+    log.info("SayHelloEventV4: {}", jsonString);
 
     return tdo;
   }
