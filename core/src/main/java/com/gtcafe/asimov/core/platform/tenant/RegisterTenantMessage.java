@@ -20,16 +20,17 @@ public class RegisterTenantMessage implements IMessage {
     @Getter @Setter
     private String data;
 
+
     public RegisterTenantMessage(String data) {
-        this.data = data;
-        this.kind = KindConstants.PLATFORM_SAYHELLO;
+        this.kind = KindConstants.PLATFORM_TENANT;
         this.id = UUID.randomUUID().toString();
+        this.data = data;
     }
 
     public RegisterTenantMessage() {
         this.id = UUID.randomUUID().toString();
+        this.kind = KindConstants.PLATFORM_TENANT;
         this.data = null;
-        this.kind = KindConstants.PLATFORM_SAYHELLO;
     }
 
 }

@@ -2,6 +2,7 @@ package com.gtcafe.asimov.apiserver.system.task.operation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
+import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,17 +24,14 @@ public class RetrieveTaskResponse {
     @JsonProperty("_lastModified")
     private String lastModified;
 
-    // private String kind;
-
-    // private String operationId;
 
     @Getter @Setter
     private Object data;
 
     public RetrieveTaskResponse() {}
 
-    // public RetrieveTaskResponse(TaskDomainObject tdo) {
-    public RetrieveTaskResponse(SayHelloEvent tdo) {
+    // TODO: convert as generic
+    public RetrieveTaskResponse(RegisterTenantEvent tdo) {
         this.id = tdo.getId();
         this.state = tdo.getState().toString();
         this.data = tdo.getData();
@@ -41,4 +39,11 @@ public class RetrieveTaskResponse {
         this.lastModified = tdo.getLastModified();
     }
 
+    public RetrieveTaskResponse(SayHelloEvent tdo) {
+        this.id = tdo.getId();
+        this.state = tdo.getState().toString();
+        this.data = tdo.getData();
+        this.creationTime = tdo.getCreationTime();
+        this.lastModified = tdo.getLastModified();
+    }
 }

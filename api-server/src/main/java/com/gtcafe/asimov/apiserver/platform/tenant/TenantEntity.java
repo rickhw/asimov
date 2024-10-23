@@ -1,44 +1,44 @@
 package com.gtcafe.asimov.apiserver.platform.tenant;
 
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tenants")
 public class TenantEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-	private long id;
+	@Setter @Getter
+	private String id;
 
 	// for display only, modifiable
 	@Column(name = "display_name")
+	@Setter @Getter
 	private String displayName;
 
 	// a key value, unique, non-modifiable
 	@Column(name = "tenant_key")
+	@Setter @Getter
 	private String tenantKey;
 
+	// a key value, unique, non-modifiable
+	@Column(name = "root_account")
+	@Setter @Getter
+	private String rootAccount;
+	
 	@Column(name = "description")
+	@Setter @Getter
 	private String description;
 
-	// @OneToOne(cascade = CascadeType.ALL)
-	// @MapsId
-	// @JoinColumn(name = "rootAccount")
-  	// private AccountEntity rootAccount;
-
-
-	public TenantEntity() {}
-
-	// public TenantEntity(String tenantKey, String rootAccount) {
-	// 	this.tenantKey = tenantKey;
-	// 	this.displayName = tenantKey;
-	// 	// this.rootAccount = rootAccount;
-	// }
+	public TenantEntity() {
+		this.id = UUID.randomUUID().toString();
+	}
 
 }

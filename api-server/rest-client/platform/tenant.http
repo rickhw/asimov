@@ -1,29 +1,24 @@
 @contentType = application/json
-@hostname = http://localhost:8080/api/tenants
+@hostname = http://localhost:8080/api
 
 
 ### apply a new tenant
-POST {{hostname}}
+POST {{hostname}}/tenants
 content-type: {{contentType}}
 
 {
-  "tenantKey": "this-is-a-tenant-uniqu",
-  "description": "test",
+  "tenantKey": "Tears-of-The-Kingdom",
+  "displayName": "Tear of the Kingdom",
+  "description": "王國之淚",
   "rootAccount": "rick@abc.com"
 }
 
-### error#0: invalid json
-POST {{hostname}}/container
+
+### get tenant status
+GET {{hostname}}/tenants/this-is-a-tenant-uniqu
 content-type: {{contentType}}
 
-{
-  "accountName": "test",
-}
-
-### error#1: miss field
-POST {{hostname}}/container
+### get by task
+GET {{hostname}}/tasks/1e37839e-f81c-44e6-acbf-1efc8633acdf
 content-type: {{contentType}}
 
-{
-  "accountName": "test"
-}

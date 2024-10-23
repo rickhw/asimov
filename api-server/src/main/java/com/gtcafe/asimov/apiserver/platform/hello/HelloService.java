@@ -32,14 +32,14 @@ public class HelloService {
 
   public HelloService() {}
 
-  public String handlerSync(String message) {
+  public String sayHelloSync(String message) {
     // 處理核心商業邏輯
     message += ", " + new Date().toString();
     
     return message;
   }
 
-  public SayHelloEvent handlerAsync(String message) {
+  public SayHelloEvent sayHelloAsync(String message) {
 
     // 1. assemble domain object
     // SayHelloEvent event = new SayHelloEvent(message);

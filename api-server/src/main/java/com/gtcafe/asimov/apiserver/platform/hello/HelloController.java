@@ -29,7 +29,7 @@ public class HelloController {
 
   @GetMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<HelloResponse> helloSync() {
-    String message = _service.handlerSync("Hello World");
+    String message = _service.sayHelloSync("Hello World");
     HelloResponse res = new HelloResponse(message);
     return ResponseEntity.ok(res);
   }
@@ -37,17 +37,18 @@ public class HelloController {
   @PostMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<Object> hello(
       @Valid @RequestBody HelloRequest request,
-      @RequestHeader(value = HttpHeaderConstants.X_REQUEST_MODE, required = false) String requestMode) {
+      @RequestHeader(value = HttpHeaderConstants.X_REQUEST_MODE, required = false) String requestMode
+  ) {
 
     if (HttpHeaderConstants.ASYNC_MODE.equalsIgnoreCase(requestMode)) {
 
-      SayHelloEvent tdo = _service.handlerAsync(request.getMessage());
-      RetrieveTaskResponse res = new RetrieveTaskResponse(tdo);
+      SayHelloEvent event = _service.sayHelloAsync(request.getMessage());
+      RetrieveTaskResponse res = new RetrieveTaskResponse(event);
 
       return ResponseEntity.ok(res);
     } else {
 
-      String message = _service.handlerSync(request.getMessage());
+      String message = _service.sayHelloSync(request.getMessage());
       HelloResponse res = new HelloResponse(message);
 
       return ResponseEntity.ok(res);
