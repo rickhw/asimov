@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.platform.hello;
+package com.gtcafe.asimov.core.platform.tenant;
 
 import com.gtcafe.asimov.core.system.task.AbstractTask;
 import com.gtcafe.asimov.core.system.task.TaskState;
@@ -8,19 +8,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class SayHelloEventV4 extends AbstractTask  {
+public class RegisterTenantEvent extends AbstractTask  {
 
     @Getter @Setter
-    private SayHelloMessage data;
+    private RegisterTenantMessage data;
 
-    public SayHelloEventV4() {
+    public RegisterTenantEvent() {
         super();
-        this.data = new SayHelloMessage();
+        this.data = new RegisterTenantMessage();
     }
 
-    public SayHelloEventV4(String message) {
+    public RegisterTenantEvent(String message) {
         super();
-        this.data = new SayHelloMessage(message);
+        this.data = new RegisterTenantMessage(message);
     }
 
     public void transit(TaskState toState) {

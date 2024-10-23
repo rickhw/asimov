@@ -1,6 +1,5 @@
 package com.gtcafe.asimov.apiserver.platform.hello;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +14,10 @@ import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
 import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.constants.HttpHeaderConstants;
-import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
-import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api")
@@ -42,7 +41,7 @@ public class HelloController {
 
     if (HttpHeaderConstants.ASYNC_MODE.equalsIgnoreCase(requestMode)) {
 
-      SayHelloEventV4 tdo = _service.handlerAsync(request.getMessage());
+      SayHelloEvent tdo = _service.handlerAsync(request.getMessage());
       RetrieveTaskResponse res = new RetrieveTaskResponse(tdo);
 
       return ResponseEntity.ok(res);

@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.core.cache.CacheRepository;
-import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
-import com.gtcafe.asimov.core.platform.hello.SayHelloMessage;
-import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 import com.gtcafe.asimov.core.system.task.TaskState;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 
@@ -22,32 +20,12 @@ public class HelloEventHandler {
     @Autowired
     CacheRepository _cacheRepos;
 
+    private static final int SIMULATE_DELAY = 10_000;
 
-    public void sayHello(SayHelloMessage message, TaskDomainObject tdo) {
-
-        try {
-            Thread.sleep(10000);
-            System.out.println("message: " + message.getData());
-
-            // send event.
-
-            // sequence
-            // 1. Change Task State from PENDING to RUNNING
-            // TaskDomainObject tdo = event.getTask();
-            tdo.getMetadata().set_state(TaskState.COMPLETED);
-
-            // 1.1 Update to cache
-            String taskJsonString = _jsonUtils.modelToJsonString(tdo);
-            _cacheRepos.saveOrUpdateObject(tdo.getTaskId(), taskJsonString);
-    
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void sayHelloV4(SayHelloEventV4 event) {
+    public void handleSayHelloEvent(SayHelloEvent event) {
 
         try {
+            log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
             Thread.sleep(10000);
             System.out.println("message: " + event.getData());
 
@@ -55,8 +33,8 @@ public class HelloEventHandler {
             event.transit(TaskState.COMPLETED);
 
             // 1.1 Update to cache
-            String taskJsonString = _jsonUtils.modelToJsonString(event);
-            _cacheRepos.saveOrUpdateObject(event.getId(), taskJsonString);
+            String jsonString = _jsonUtils.modelToJsonString(event);
+            _cacheRepos.saveOrUpdateObject(event.getId(), jsonString);
     
         } catch (Exception ex) {
             ex.printStackTrace();

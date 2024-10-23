@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.apiserver.platform.tenant.operation.CreateTenantRequest;
+import com.gtcafe.asimov.apiserver.platform.tenant.operation.RegisterTenantRequest;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController
@@ -31,7 +31,7 @@ public class TenantController {
   public ResponseEntity<String> registerAsync(
       @RequestBody
 			@Validated
-			CreateTenantRequest request) {
+			RegisterTenantRequest request) {
 
     // 1. validate the request --> by spring-boot-starter-validation
 

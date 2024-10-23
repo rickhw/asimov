@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.core.cache.CacheRepository;
-import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
-import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 
 @Service
@@ -23,24 +22,24 @@ public class TaskService {
   @Autowired
   private JsonUtils jsonUtils;
 
-  public TaskDomainObject retrieve(String id) {
+  // public TaskDomainObject retrieve(String id) {
+  //   // 1. validate: is not exist or expire.
+
+  //   // 2. find the id in cache
+  //   String jsonString = _repos.retrieveObject(id);
+  //   TaskDomainObject tdo = jsonUtils.jsonStringToModel(jsonString, TaskDomainObject.class);
+
+  //   logger.info("TaskObject: {}", jsonString);
+
+  //   return tdo;
+  // }
+
+  public SayHelloEvent retrieveV4(String id) {
     // 1. validate: is not exist or expire.
 
     // 2. find the id in cache
     String jsonString = _repos.retrieveObject(id);
-    TaskDomainObject tdo = jsonUtils.jsonStringToModel(jsonString, TaskDomainObject.class);
-
-    logger.info("TaskObject: {}", jsonString);
-
-    return tdo;
-  }
-
-  public SayHelloEventV4 retrieveV4(String id) {
-    // 1. validate: is not exist or expire.
-
-    // 2. find the id in cache
-    String jsonString = _repos.retrieveObject(id);
-    SayHelloEventV4 tdo = jsonUtils.jsonStringToModel(jsonString, SayHelloEventV4.class);
+    SayHelloEvent tdo = jsonUtils.jsonStringToModel(jsonString, SayHelloEvent.class);
 
     logger.info("SayHelloEventV4: {}", jsonString);
 

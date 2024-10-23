@@ -1,40 +1,30 @@
 package com.gtcafe.asimov.core.platform.hello;
 
-import java.util.UUID;
-
-import com.gtcafe.asimov.core.domain.event.EventType;
-import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+import com.gtcafe.asimov.core.system.task.AbstractTask;
+import com.gtcafe.asimov.core.system.task.TaskState;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class SayHelloEvent  {
-    @Getter @Setter
-    private String id;
-
-    @Getter @Setter
-    private EventType eventType;
-
-    @Getter @Setter
-    private TaskDomainObject task;
+public class SayHelloEvent extends AbstractTask  {
 
     @Getter @Setter
     private SayHelloMessage data;
 
-    public SayHelloEvent(String message) {
-        this.id = UUID.randomUUID().toString();
-        this.task = new TaskDomainObject();
-        this.eventType = EventType.SAY_HELLO;
-        this.data = new SayHelloMessage(message);
-    }
-
     public SayHelloEvent() {
-        this.id = UUID.randomUUID().toString();
-        this.task = new TaskDomainObject();
-        this.eventType = EventType.SAY_HELLO;
+        super();
         this.data = new SayHelloMessage();
     }
 
+    public SayHelloEvent(String message) {
+        super();
+        this.data = new SayHelloMessage(message);
+    }
+
+    public void transit(TaskState toState) {
+        setState(toState);
+        updateLastModified();
+    }
 }

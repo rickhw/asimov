@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.platform.hello;
+package com.gtcafe.asimov.core.platform.tenant;
 
 import java.util.UUID;
 
@@ -10,7 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class SayHelloMessage implements IMessage {
+public class RegisterTenantMessage implements IMessage {
     @Getter @Setter
     private String id;
 
@@ -20,13 +20,13 @@ public class SayHelloMessage implements IMessage {
     @Getter @Setter
     private String data;
 
-    public SayHelloMessage(String data) {
+    public RegisterTenantMessage(String data) {
         this.data = data;
         this.kind = KindConstants.PLATFORM_SAYHELLO;
         this.id = UUID.randomUUID().toString();
     }
 
-    public SayHelloMessage() {
+    public RegisterTenantMessage() {
         this.id = UUID.randomUUID().toString();
         this.data = null;
         this.kind = KindConstants.PLATFORM_SAYHELLO;

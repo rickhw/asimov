@@ -1,7 +1,5 @@
 package com.gtcafe.asimov.apiserver.system.task;
 
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
-import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
-import com.gtcafe.asimov.core.system.task.TaskDomainObject;
+import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
+
+import lombok.extern.slf4j.Slf4j;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController
@@ -32,7 +31,7 @@ public class TaskController {
     // 1. validate: is not exist or expire.
 
     // 2. find the id in cache
-    SayHelloEventV4 tdo = _service.retrieveV4(id);
+    SayHelloEvent tdo = _service.retrieveV4(id);
 
     // 3. DTO
     RetrieveTaskResponse res = _dto.convertToTaskV4Response(tdo);

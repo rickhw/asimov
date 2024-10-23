@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.domain.event;
+package com.gtcafe.asimov.core.system.event;
 
 public enum EventType {
     // Domain

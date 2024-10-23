@@ -10,9 +10,6 @@ import com.gtcafe.asimov.apiserver.system.utils.Slogan;
 import com.gtcafe.asimov.core.cache.CacheRepository;
 import com.gtcafe.asimov.core.constants.QueueName;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
-import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
-import com.gtcafe.asimov.core.platform.hello.SayHelloMessage;
-import com.gtcafe.asimov.core.system.task.TaskDomainObject;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,14 +39,14 @@ public class HelloService {
     return message;
   }
 
-  public SayHelloEventV4 handlerAsync(String message) {
+  public SayHelloEvent handlerAsync(String message) {
 
     // 1. assemble domain object
     // SayHelloEvent event = new SayHelloEvent(message);
-    SayHelloEventV4 event = new SayHelloEventV4(message);
+    SayHelloEvent event = new SayHelloEvent(message);
     
     // 2. sent message to queue, put to dedicated queue
-    _producer.sendEventV4(event, QueueName.SAY_HELLO_QUEUE_NAME);
+    _producer.sendSayHelloEvent(event, QueueName.SAY_HELLO_QUEUE_NAME);
 
     // 3. store task to cache
     // TaskDomainObject tdo = event.getTask();

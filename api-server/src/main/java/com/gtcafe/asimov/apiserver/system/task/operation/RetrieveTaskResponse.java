@@ -1,7 +1,7 @@
 package com.gtcafe.asimov.apiserver.system.task.operation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gtcafe.asimov.core.platform.hello.SayHelloEventV4;
+import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +33,7 @@ public class RetrieveTaskResponse {
     public RetrieveTaskResponse() {}
 
     // public RetrieveTaskResponse(TaskDomainObject tdo) {
-    public RetrieveTaskResponse(SayHelloEventV4 tdo) {
+    public RetrieveTaskResponse(SayHelloEvent tdo) {
         this.id = tdo.getId();
         this.state = tdo.getState().toString();
         this.data = tdo.getData();
