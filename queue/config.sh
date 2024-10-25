@@ -8,4 +8,4 @@ RABBITMQ_PORT=15672
 
 
 # 要清空的 Queue 列表
-QUEUES=("queue1" "queue2" "queue3")
+QUEUES=("platform.sayHello" "queue2" "queue3")

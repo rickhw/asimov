@@ -15,10 +15,10 @@ content-type: {{contentType}}
 
 
 ### get tenant status
-GET {{hostname}}/tenants/this-is-a-tenant-uniqu
+GET {{hostname}}/tenants/Tears-of-The-Kingdom
 content-type: {{contentType}}
 
 ### get by task
-GET {{hostname}}/tasks/1e37839e-f81c-44e6-acbf-1efc8633acdf
+GET {{hostname}}/tasks/8f72bf5c-697a-4bc3-975e-64a75f854a77
 content-type: {{contentType}}
 
