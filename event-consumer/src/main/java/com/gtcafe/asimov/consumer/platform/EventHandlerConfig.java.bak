@@ -1,0 +1,29 @@
+// package com.gtcafe.asimov.consumer.platform;
+
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.context.annotation.Configuration;
+
+// import com.gtcafe.asimov.core.platform.hello.SayHelloMessage;
+// import com.gtcafe.asimov.core.platform.tenant.RegisterTenantMessage;
+// import com.gtcafe.asimov.core.system.event.EventHandlerRegistry;
+
+// import jakarta.annotation.PostConstruct;
+
+// @Configuration
+// public class EventHandlerConfig {
+
+//     @Autowired
+//     EventHandlerRegistry eventHandlerRegistry;
+
+//     @Autowired
+//     HelloEventHandler helloEventHandler;
+
+//     @Autowired
+//     TenantEventHandler tenantEventHandler;
+
+//     @PostConstruct
+//     public void registerHandlers() {
+//         eventHandlerRegistry.registerHandler(SayHelloMessage.class, helloEventHandler);
+//         eventHandlerRegistry.registerHandler(RegisterTenantMessage.class, tenantEventHandler);
+//     }
+// }

@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.core.cache.CacheRepository;
-import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
+import com.gtcafe.asimov.core.platform.hello.SayHelloMessage;
+import com.gtcafe.asimov.core.system.event.Event;
+import com.gtcafe.asimov.core.system.event.EventHandler;
 import com.gtcafe.asimov.core.system.task.TaskState;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 
@@ -12,29 +14,27 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class HelloEventHandler {
+public class HelloEventHandler implements EventHandler<SayHelloMessage> {
 
     @Autowired
-    private JsonUtils _jsonUtils;
+    private JsonUtils jsonUtils;
 
     @Autowired
-    CacheRepository _cacheRepos;
+    CacheRepository cacheRepos;
 
     private static final int SIMULATE_DELAY = 10_000;
 
-    public void handleSayHelloEvent(SayHelloEvent event) {
-
+    @Override
+    public void handleEvent(Event<SayHelloMessage> event) {
+    // public void handleEvent(Event<SayHelloMessage> event) {
         try {
             log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
-            Thread.sleep(10000);
+            Thread.sleep(SIMULATE_DELAY);
             System.out.println("message: " + event.getData());
 
-            // TaskDomainObject tdo = event.getTask();
+            // 更新狀態至 COMPLETED 並更新 cache
             event.transit(TaskState.COMPLETED);
-
-            // 1.1 Update to cache
-            String jsonString = _jsonUtils.modelToJsonString(event);
-            _cacheRepos.saveOrUpdateObject(event.getId(), jsonString);
+            cacheRepos.saveOrUpdateObject(event.getId(), jsonUtils.modelToJsonString(event));
     
         } catch (Exception ex) {
             ex.printStackTrace();

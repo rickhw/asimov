@@ -1,30 +1,18 @@
 package com.gtcafe.asimov.core.platform.tenant;
 
-import com.gtcafe.asimov.core.system.task.AbstractTask;
-import com.gtcafe.asimov.core.system.task.TaskState;
+import com.gtcafe.asimov.core.system.event.Event;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class RegisterTenantEvent extends AbstractTask  {
-
-    @Getter @Setter
-    private RegisterTenantMessage data;
-
+public class RegisterTenantEvent extends Event<RegisterTenantMessage> {
     public RegisterTenantEvent() {
         super();
-        this.data = new RegisterTenantMessage();
+        setData(new RegisterTenantMessage());
     }
 
     public RegisterTenantEvent(String message) {
         super();
-        this.data = new RegisterTenantMessage(message);
-    }
-
-    public void transit(TaskState toState) {
-        setState(toState);
-        updateLastModified();
+        setData(new RegisterTenantMessage(message));
     }
 }

@@ -1,0 +1,21 @@
+// package com.gtcafe.asimov.core.system.event;
+
+// import java.util.HashMap;
+// import java.util.Map;
+
+// import org.springframework.stereotype.Component;
+
+// @Component
+// public class EventHandlerRegistry {
+
+//     private final Map<Class<? extends IMessage>, EventHandler<? extends IMessage>> handlers = new HashMap<>();
+
+//     public <T extends IMessage> void registerHandler(Class<T> eventType, EventHandler<T> handler) {
+//         handlers.put(eventType, handler);
+//     }
+
+//     @SuppressWarnings("unchecked")
+//     public <T extends IMessage> EventHandler<T> getHandler(Class<T> eventType) {
+//         return (EventHandler<T>) handlers.get(eventType);
+//     }
+// }

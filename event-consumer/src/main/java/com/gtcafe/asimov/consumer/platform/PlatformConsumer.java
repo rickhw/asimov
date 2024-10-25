@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.gtcafe.asimov.core.cache.CacheRepository;
 import com.gtcafe.asimov.core.constants.QueueName;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
-import com.gtcafe.asimov.core.platform.hello.SayHelloMessage;
+import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
 import com.gtcafe.asimov.core.system.event.IMessage;
 import com.gtcafe.asimov.core.system.task.TaskState;
 import com.gtcafe.asimov.core.utils.JsonUtils;
@@ -16,37 +16,55 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class PlatformConsumer { // implements MessageListener {
+public class PlatformConsumer {
 
-  @Autowired
-  private JsonUtils _jsonUtils;
+    @Autowired
+    private JsonUtils jsonUtils;
 
-  @Autowired
-  CacheRepository _cacheRepos;
+    @Autowired
+    CacheRepository cacheRepos;
 
-  @Autowired
-  HelloEventHandler _handler;
+    @Autowired
+    HelloEventHandler eventHandler;
 
-  @RabbitListener(queues = QueueName.SAY_HELLO_QUEUE_NAME)
-  public void receiveHelloEventV4(String eventString) {
-    SayHelloEvent event = _jsonUtils.jsonStringToModel(eventString, SayHelloEvent.class);
+    // @Autowired
+    // EventHandlerRegistry eventHandlerRegistry;  // 使用事件處理器的註冊中心
 
-    System.out.println("eventString: " + eventString);
-    System.out.println("eventObject: " + event);
+    @RabbitListener(queues = QueueName.SAY_HELLO_QUEUE_NAME)
+    public <T extends IMessage> void receiveEvent(String eventString) {
+        SayHelloEvent event = jsonUtils.jsonStringToModel(eventString, SayHelloEvent.class);
 
-    // 1. Change Task State from PENDING to RUNNING
-    event.transit(TaskState.RUNNING);
+        // 變更 Task 狀態至 RUNNING 並更新 cache
+        event.transit(TaskState.RUNNING);
+        cacheRepos.saveOrUpdateObject(event.getId(), jsonUtils.modelToJsonString(event));
 
-    // 1.1 Update to cache
-    String jsonString = _jsonUtils.modelToJsonString(event);
-    _cacheRepos.saveOrUpdateObject(event.getId(), jsonString);
-
-    // 2. handle biz logic
-    IMessage message = event.getData();
-
-    if (message instanceof SayHelloMessage) {
-      _handler.handleSayHelloEvent(event);
+        eventHandler.handleEvent(event);
+        // 根據 data 類型取得相應的處理器並執行處理邏輯
+        // SayHelloMessage data = event.getData();
+        // EventHandler<T> handler = eventHandlerRegistry.getHandler(data.getClass());
+        // if (handler != null) {
+        //     handler.handleEvent(event);
+        // } else {
+        //     log.warn("No handler found for event type: {}", data.getClass());
+        // }
     }
 
-  }
+    @RabbitListener(queues = QueueName.DEREGISTER_TENANT_QUEUE_NAME)
+    public void receiveTenantEvent(String eventString) {
+        RegisterTenantEvent event = jsonUtils.jsonStringToModel(eventString, RegisterTenantEvent.class);
+
+        // 變更 Task 狀態至 RUNNING 並更新 cache
+        event.transit(TaskState.RUNNING);
+        cacheRepos.saveOrUpdateObject(event.getId(), jsonUtils.modelToJsonString(event));
+
+        // eventHandler.handleEvent(event);
+        // 根據 data 類型取得相應的處理器並執行處理邏輯
+        // SayHelloMessage data = event.getData();
+        // EventHandler<T> handler = eventHandlerRegistry.getHandler(data.getClass());
+        // if (handler != null) {
+        //     handler.handleEvent(event);
+        // } else {
+        //     log.warn("No handler found for event type: {}", data.getClass());
+        // }
+    }
 }
