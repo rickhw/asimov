@@ -2,10 +2,18 @@ package com.gtcafe.asimov.core.system.event2.tenant;
 
 import com.gtcafe.asimov.core.system.event2.Attribute;
 
-public class TenantAttribute extends Attribute {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    public TenantAttribute() {
-        this.put("tenantName", "DefaultTenant");
-        this.put("region", "DefaultRegion");
-    }
+// public class TenantAttribute extends Attribute {
+@NoArgsConstructor
+public class TenantAttribute {
+
+    @Getter @Setter
+    private String description;
+
+    @Getter @Setter
+    private String rootAccount;
+
 }

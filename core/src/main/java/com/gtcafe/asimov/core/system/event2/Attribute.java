@@ -1,9 +1,9 @@
 package com.gtcafe.asimov.core.system.event2;
 
-import java.util.HashMap;
+import lombok.NoArgsConstructor;
 
-public class Attribute extends HashMap<String, String> {
+// public class Attribute extends HashMap<String, String> {
+@NoArgsConstructor
+public class Attribute  {
 
-    public Attribute() {
-    }
 }
