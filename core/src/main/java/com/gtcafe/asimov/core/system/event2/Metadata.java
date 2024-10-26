@@ -4,19 +4,21 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gtcafe.asimov.core.system.task.TaskState;
 import com.gtcafe.asimov.core.utils.TimeUtils;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class EventV2<T> {
+// public class Metadata<T> {
+public class Metadata {
 
     @Getter @Setter
+    @JsonProperty("_id")
     private String id;
 
     @Getter @Setter
-    private TaskState state;
+    //private T state;
+    private Enum<?> state;
 
     @Getter @Setter
     @JsonProperty("_creationTime")
@@ -26,12 +28,8 @@ public class EventV2<T> {
     @JsonProperty("_lastModified")
     private String lastModified;
 
-    @Getter @Setter
-    private T data;
-
-    public EventV2() {
+    public Metadata() {
         this.id = UUID.randomUUID().toString();
-        this.state = TaskState.PENDING;
         this.creationTime = TimeUtils.timeIso8601(new Date());
         this.lastModified = TimeUtils.timeIso8601(new Date());
     }
@@ -40,7 +38,7 @@ public class EventV2<T> {
         this.lastModified = TimeUtils.timeIso8601(new Date());
     }
 
-    public void transit(TaskState toState) {
+    public void transit(Enum<?> toState) {
         this.state = toState;
         updateLastModified();
     }
