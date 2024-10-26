@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CacheRepository {
 
-  // @Autowired
   private final RedisTemplate<String, String> _redisTemplate;
   private final ValueOperations<String, String> _valueOps;
 

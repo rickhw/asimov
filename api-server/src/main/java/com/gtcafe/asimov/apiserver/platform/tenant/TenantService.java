@@ -32,7 +32,7 @@ public class TenantService {
         RegisterTenantEvent event = new RegisterTenantEvent();
         event.getData().setId(request.getTenantKey());
 
-        producer.sendEvent(event, QueueName.REGISTER_TENANT_QUEUE_NAME);
+        producer.sendEvent(event, QueueName.REGISTER_TENANT);
 
         String taskJsonString = jsonUtils.modelToJsonString(event);
         cacheRepos.saveOrUpdateObject(event.getId(), taskJsonString);

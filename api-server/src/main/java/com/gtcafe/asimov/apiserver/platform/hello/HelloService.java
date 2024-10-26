@@ -30,17 +30,17 @@ public class HelloService {
 
     // String taskJsonString = jsonUtils.modelToJsonString(event);
     // cacheRepos.saveOrUpdateObject(event.getId(), taskJsonString);
-    
+
     return message;
 }
 
   public SayHelloEvent sayHelloAsync(String message) {
       SayHelloEvent event = new SayHelloEvent(message);
-      producer.sendEvent(event, QueueName.SAY_HELLO_QUEUE_NAME);
+      producer.sendEvent(event, QueueName.SAY_HELLO);
 
       String taskJsonString = jsonUtils.modelToJsonString(event);
       cacheRepos.saveOrUpdateObject(event.getId(), taskJsonString);
-      
+
       return event;
   }
 }

@@ -26,7 +26,6 @@ public class HelloEventHandler implements EventHandler<SayHelloMessage> {
 
     @Override
     public void handleEvent(Event<SayHelloMessage> event) {
-    // public void handleEvent(Event<SayHelloMessage> event) {
         try {
             log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
             Thread.sleep(SIMULATE_DELAY);
@@ -35,7 +34,7 @@ public class HelloEventHandler implements EventHandler<SayHelloMessage> {
             // 更新狀態至 COMPLETED 並更新 cache
             event.transit(TaskState.COMPLETED);
             cacheRepos.saveOrUpdateObject(event.getId(), jsonUtils.modelToJsonString(event));
-    
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

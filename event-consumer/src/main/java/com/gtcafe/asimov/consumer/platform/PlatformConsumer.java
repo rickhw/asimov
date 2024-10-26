@@ -27,15 +27,13 @@ public class PlatformConsumer {
     @Autowired
     HelloEventHandler eventHandler;
 
-    // @Autowired
-    // EventHandlerRegistry eventHandlerRegistry;  // 使用事件處理器的註冊中心
-
-    @RabbitListener(queues = QueueName.SAY_HELLO_QUEUE_NAME)
+    @RabbitListener(queues = QueueName.SAY_HELLO)
     public <T extends IMessage> void receiveEvent(String eventString) {
         SayHelloEvent event = jsonUtils.jsonStringToModel(eventString, SayHelloEvent.class);
 
         // 變更 Task 狀態至 RUNNING 並更新 cache
         event.transit(TaskState.RUNNING);
+
         cacheRepos.saveOrUpdateObject(event.getId(), jsonUtils.modelToJsonString(event));
 
         eventHandler.handleEvent(event);
@@ -49,7 +47,7 @@ public class PlatformConsumer {
         // }
     }
 
-    @RabbitListener(queues = QueueName.DEREGISTER_TENANT_QUEUE_NAME)
+    @RabbitListener(queues = QueueName.REGISTER_TENANT)
     public void receiveTenantEvent(String eventString) {
         RegisterTenantEvent event = jsonUtils.jsonStringToModel(eventString, RegisterTenantEvent.class);
 

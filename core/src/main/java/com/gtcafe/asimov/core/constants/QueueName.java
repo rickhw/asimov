@@ -4,12 +4,12 @@ package com.gtcafe.asimov.core.constants;
 public final class QueueName {
 
 	// Domains
-	public final static String REGISTER_TENANT_QUEUE_NAME = "platform.tenant.register";
-	public final static String DEREGISTER_TENANT_QUEUE_NAME = "platform.tenant.deregister-tenant";
-	
-	// Platform
-	public final static String SAY_HELLO_QUEUE_NAME = "platform.sayHello";
+	public final static String REGISTER_TENANT = "platform.tenant.pending-to-active";
+	public final static String DEREGISTER_TENANT = "platform.tenant.active-to-inactive";
 
-	public final static String TASK_QUEUE_NAME = "sys.tasks";
+	// Platform
+	public final static String SAY_HELLO = "platform.sayHello";
+
+	public final static String TASK_QUEUE = "sys.tasks";
 }
 

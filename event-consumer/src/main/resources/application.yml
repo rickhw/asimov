@@ -74,21 +74,21 @@ logging:
 #     queue: app.queue
 #     routingkey: app.routingkey
 
-app:
-  rabbitmq:
-    ## ATTENTTION: DON't CHANG the queueName, due to they are as the key in code
-    queues:
-    - name: sys.tasks
-      exchange: directExchange
-      routingKey: sys-task
-    
-    - name: platform.sayHello
-      exchange: directExchange
-      routingKey: platform-sayHello
+# app:
+#   rabbitmq:
+#     ## ATTENTTION: DON't CHANG the queueName, due to they are as the key in code
+#     queues:
+#     - name: sys.tasks
+#       exchange: directExchange
+#       routingKey: sys-task
 
-    - name: platform.tenant
-      exchange: directExchange
-      routingKey: platform-tenant
+#     - name: platform.sayHello
+#       exchange: directExchange
+#       routingKey: platform-sayHello
+
+#     - name: platform.tenant
+#       exchange: directExchange
+#       routingKey: platform-tenant
 
     # - name: platform.tenant
     #   exchange: fanoutExchange
