@@ -1,7 +1,5 @@
 package com.gtcafe.asimov.core.system.event2.tenant;
 
-import com.gtcafe.asimov.core.system.event2.Attribute;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +7,9 @@ import lombok.Setter;
 // public class TenantAttribute extends Attribute {
 @NoArgsConstructor
 public class TenantAttribute {
+
+    @Getter @Setter
+    private String displayName;
 
     @Getter @Setter
     private String description;
