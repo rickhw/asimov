@@ -53,7 +53,7 @@ POST /api/tenants
 Content-Type: application/json
 
 {
-  "tenantKey": "Tears-of-The-Kingdom",
+  "uniqueKey": "Tears-of-The-Kingdom",
   "displayName": "Tear of the Kingdom",
   "description": "王國之淚",
   "rootAccount": "rick@abc.com"
@@ -76,7 +76,7 @@ HTTP/1.1 202 Accepted
         "_creationTime": "2024-10-10T13:41:58+00:00",
         "_lastModified": "2024-10-10T13:41:58+00:00"
     },
-    "data": {
+    "attributes": {
         "displayName": "Tear of the Kingdom",
         "description": "王國之淚",
         "rootAccount": "rick@abc.com",
@@ -104,7 +104,7 @@ response
         "_creationTime": "2024-10-10T13:41:58+00:00",
         "_lastModified": "2024-10-10T13:41:58+00:00"
     },
-    "data": {
+    "attributes": {
         "displayName": "Tear of the Kingdom",
         "description": "王國之淚",
         "rootAccount": "rick@abc.com",
