@@ -70,6 +70,9 @@ logging:
 
 app:
   rabbitmq:
+    autoInit: true
+    # reset: true
+    
     ## ATTENTTION: DON't CHANGE the queueName, due to they are as the key in code
     ## TODO: move to core
     queues:
@@ -88,6 +91,7 @@ app:
     # - name: platform.tenant
     #   exchange: fanoutExchange
     #   routing-key: "" # Fanout exchange doesn't need routing key
+
 
 
 # -----------------------------------------------------------------------------

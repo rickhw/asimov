@@ -1,31 +1,31 @@
-package com.gtcafe.asimov.core.model;
+// package com.gtcafe.asimov.core.model;
 
-public class RabbitQueueConfig {
-    private String name;
-    private String exchange;
-    private String routingKey;
+// public class RabbitQueueConfig {
+//     private String name;
+//     private String exchange;
+//     private String routingKey;
 
-    public String getName() {
-        return name;
-    }
+//     public String getName() {
+//         return name;
+//     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//     public void setName(String name) {
+//         this.name = name;
+//     }
 
-    public String getExchange() {
-        return exchange;
-    }
+//     public String getExchange() {
+//         return exchange;
+//     }
 
-    public void setExchange(String exchange) {
-        this.exchange = exchange;
-    }
+//     public void setExchange(String exchange) {
+//         this.exchange = exchange;
+//     }
 
-    public String getRoutingKey() {
-        return routingKey;
-    }
+//     public String getRoutingKey() {
+//         return routingKey;
+//     }
 
-    public void setRoutingKey(String routingKey) {
-        this.routingKey = routingKey;
-    }
-}
+//     public void setRoutingKey(String routingKey) {
+//         this.routingKey = routingKey;
+//     }
+// }

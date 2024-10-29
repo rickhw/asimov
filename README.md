@@ -6,20 +6,29 @@ Code Name: Asimov (艾希莫夫)
 ## Concepts - Code Features
 
 - multi-tenancy
-- extension services, marketplace
+- extension services
+- marketplace
 
 
 ## Code Functions
 
-- SSO
-- IAM
+- On / Off Boarding 
+- Tenant Profile
+- Servie Quota
+- IAM / SSO
 - Usage Status
 - Isolation Factor
     - Shared, Dedicate
-- multi-version, depolyment
-- Global Architecture - Multiple site
+- multi-version
+
+## System Architecture
+
+- Global Architecture
+- Message
+- depolyment
+- Multiple site
     - Main Site
-    - Branch Site
+    - Branch Sites
 
 
 ## Keyword
