@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.cache;
+package com.gtcafe.asimov.core.system.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.constants;
+package com.gtcafe.asimov.core.system.constants;
 
 public final class KindConstants {
 

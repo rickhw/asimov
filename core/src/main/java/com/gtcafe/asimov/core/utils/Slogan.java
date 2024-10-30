@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-import com.gtcafe.asimov.core.model.Releng;
+import com.gtcafe.asimov.core.system.model.Releng;
 
 @Configuration
 public class Slogan {

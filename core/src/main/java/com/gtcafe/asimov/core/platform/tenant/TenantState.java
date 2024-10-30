@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.system.event2.tenant;
+package com.gtcafe.asimov.core.platform.tenant;
 
 public enum TenantState {
     PENDING,

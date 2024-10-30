@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import com.gtcafe.asimov.core.constants.KindConstants;
+import com.gtcafe.asimov.core.system.constants.KindConstants;
 
 public class TenantDomainObjectTest {
 

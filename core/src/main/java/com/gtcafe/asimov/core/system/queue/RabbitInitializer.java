@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.queue;
+package com.gtcafe.asimov.core.system.queue;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +17,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-
-import com.gtcafe.asimov.core.queue.QueueConfig;
 
 @Configuration
 @ConfigurationProperties(prefix = "app.rabbitmq")

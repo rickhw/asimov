@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.cache;
+package com.gtcafe.asimov.core.system.cache;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

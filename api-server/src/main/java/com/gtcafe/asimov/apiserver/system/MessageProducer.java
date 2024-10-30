@@ -4,9 +4,9 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.core.queue.QueueConfig;
-import com.gtcafe.asimov.core.queue.RabbitInitializer;
 import com.gtcafe.asimov.core.system.event.Event;
+import com.gtcafe.asimov.core.system.queue.QueueConfig;
+import com.gtcafe.asimov.core.system.queue.RabbitInitializer;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +19,13 @@ public class MessageProducer {
     private AmqpTemplate rabbitTemplate;
 
     @Autowired
-    private RabbitInitializer rabbitConfig;
+    private RabbitInitializer rabbitInitizlizer;
 
     @Autowired
     private JsonUtils jsonUtils;
 
     public <T extends Event<?>> T sendEvent(T event, String queueName) {
-        QueueConfig queueConfig = rabbitConfig.getQueueConfig(queueName);
+        QueueConfig queueConfig = rabbitInitizlizer.getQueueConfig(queueName);
 
         if (queueConfig == null) {
             log.error("Queue config not found for {}", queueName);

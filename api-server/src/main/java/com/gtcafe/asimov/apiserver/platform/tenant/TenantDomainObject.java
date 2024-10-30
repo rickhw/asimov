@@ -2,8 +2,7 @@ package com.gtcafe.asimov.apiserver.platform.tenant;
 
 import java.util.UUID;
 
-import com.gtcafe.asimov.core.constants.KindConstants;
-// POJO: w/o any anotation.
+import com.gtcafe.asimov.core.system.constants.KindConstants;
 
 // {
 //     "kind": "core.Tenant",

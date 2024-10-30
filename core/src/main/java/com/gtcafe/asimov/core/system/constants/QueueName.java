@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.constants;
+package com.gtcafe.asimov.core.system.constants;
 
 // Queue Name, align with application.yml
 public final class QueueName {

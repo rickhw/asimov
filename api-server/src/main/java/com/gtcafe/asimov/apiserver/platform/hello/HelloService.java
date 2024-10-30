@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.apiserver.system.MessageProducer;
-import com.gtcafe.asimov.core.cache.CacheRepository;
-import com.gtcafe.asimov.core.constants.QueueName;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
+import com.gtcafe.asimov.core.system.cache.CacheRepository;
+import com.gtcafe.asimov.core.system.constants.QueueName;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;

@@ -3,8 +3,8 @@ package com.gtcafe.asimov.consumer.platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.core.cache.CacheRepository;
 import com.gtcafe.asimov.core.platform.hello.SayHelloMessage;
+import com.gtcafe.asimov.core.system.cache.CacheRepository;
 import com.gtcafe.asimov.core.system.event.Event;
 import com.gtcafe.asimov.core.system.event.EventHandler;
 import com.gtcafe.asimov.core.system.task.TaskState;

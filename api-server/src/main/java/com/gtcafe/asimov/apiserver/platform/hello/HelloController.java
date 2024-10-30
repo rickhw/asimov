@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
 import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
 import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
-import com.gtcafe.asimov.core.constants.HttpHeaderConstants;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
+import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
