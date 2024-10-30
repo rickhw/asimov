@@ -22,7 +22,7 @@ import com.gtcafe.asimov.core.queue.QueueConfig;
 
 @Configuration
 @ConfigurationProperties(prefix = "app.rabbitmq")
-public class RabbitMqInitializer {
+public class RabbitInitializer {
 
     @Value("${app.rabbitmq.autoInit:true}")
     private boolean autoInit;

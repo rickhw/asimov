@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.core.queue.QueueConfig;
-import com.gtcafe.asimov.core.queue.RabbitMqInitializer;
+import com.gtcafe.asimov.core.queue.RabbitInitializer;
 import com.gtcafe.asimov.core.system.event.Event;
 import com.gtcafe.asimov.core.utils.JsonUtils;
 
@@ -19,7 +19,7 @@ public class MessageProducer {
     private AmqpTemplate rabbitTemplate;
 
     @Autowired
-    private RabbitMqInitializer rabbitConfig;
+    private RabbitInitializer rabbitConfig;
 
     @Autowired
     private JsonUtils jsonUtils;
