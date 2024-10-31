@@ -1,6 +1,6 @@
 package com.gtcafe.asimov.core.system.event2;
 
-public enum EventTypeV2 {
+public enum EventType {
     // Domain
     CREATE_CONTAINER,
     DELETE_CONTAINER,

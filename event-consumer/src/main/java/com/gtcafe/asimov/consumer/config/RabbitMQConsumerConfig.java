@@ -8,6 +8,8 @@ import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// @TODO: to be removed
+@Deprecated
 @Configuration
 public class RabbitMQConsumerConfig implements RabbitListenerConfigurer {
 

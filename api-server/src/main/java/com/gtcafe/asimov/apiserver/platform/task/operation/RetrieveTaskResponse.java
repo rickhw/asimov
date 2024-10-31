@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.system.task.operation;
+package com.gtcafe.asimov.apiserver.platform.task.operation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;

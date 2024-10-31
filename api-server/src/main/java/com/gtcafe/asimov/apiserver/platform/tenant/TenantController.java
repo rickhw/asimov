@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.apiserver.platform.tenant.operation.RegisterTenantRequest;
-import com.gtcafe.asimov.apiserver.system.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
 
 // @Tag(name = "API Metadata", description = "")

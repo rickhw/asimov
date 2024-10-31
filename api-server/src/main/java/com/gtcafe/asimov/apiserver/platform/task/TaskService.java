@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.system.task;
+package com.gtcafe.asimov.apiserver.platform.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
