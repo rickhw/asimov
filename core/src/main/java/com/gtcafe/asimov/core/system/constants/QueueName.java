@@ -11,5 +11,9 @@ public final class QueueName {
 	public final static String SAY_HELLO = "platform.sayHello";
 
 	public final static String TASK_QUEUE = "sys.tasks";
+
+	public final static String FANOUT_EXCHANGE = "asimov.fanoutExchange";
+    public final static String DIRECT_EXCHANGE = "asimov.directExchange";
+
 }
 

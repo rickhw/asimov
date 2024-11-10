@@ -10,13 +10,14 @@ import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+
+import com.gtcafe.asimov.core.system.constants.QueueName;
 
 @Configuration
 @ConfigurationProperties(prefix = "app.rabbitmq")
@@ -27,6 +28,10 @@ public class RabbitInitializer {
 
     @Value("${app.rabbitmq.reset:false}")
     private boolean reset;
+
+    // @Value("${app.rabbitmq.prefixName:asimov}")
+    // private String prefixName;
+    
 
     private List<QueueConfig> queues;
     private Map<String, QueueConfig> queueMap = new HashMap<>();
@@ -64,7 +69,7 @@ public class RabbitInitializer {
 
                     System.out.printf("  - Set Queue: [%s], exchange: [%s].\n", config.getName(), config.getExchange());
 
-                    if ("fanoutExchange".equals(config.getExchange())) {
+                    if (QueueName.FANOUT_EXCHANGE.equals(config.getExchange())) {
                         FanoutExchange exchange = new FanoutExchange(config.getExchange());
                         rabbitAdmin.declareExchange(exchange);
                         rabbitAdmin.declareBinding(BindingBuilder.bind(queue).to(exchange));

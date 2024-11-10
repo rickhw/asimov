@@ -47,13 +47,13 @@ spring:
     username: root
     password: password
 
-  # data:
-  #   redis:
-  #     database: 0
-  #     host: localhost
-  #     port: 6379
-  #     # password: password
-  #     # timeout: 60000
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+      password: password
+      # timeout: 60000
 
 
 # -----------------------------------------------------------------------------
@@ -61,42 +61,31 @@ spring:
 # -----------------------------------------------------------------------------
 logging:
   path: ./logs
-  level.com.gtcafe.asimov.apiserver: INFO
+  level.com.gtcafe.asimov.consumer.hello: INFO
 
 
 # -----------------------------------------------------------------------------
 # Application
 # -----------------------------------------------------------------------------
 
-# app:
-#   rabbitmq:
-#     exchange: app.exchange1.topic1
-#     queue: app.queue
-#     routingkey: app.routingkey
 
-# app:
-#   rabbitmq:
-#     ## ATTENTTION: DON't CHANG the queueName, due to they are as the key in code
-#     queues:
-#     - name: sys.tasks
-#       exchange: directExchange
-#       routingKey: sys-task
+app:
+  rabbitmq:
+    autoInit: false
+    
+    queues:
+    - name: sys.tasks
+      exchange: directExchange
+      routingKey: sys-task
 
-#     - name: platform.sayHello
-#       exchange: directExchange
-#       routingKey: platform-sayHello
+    - name: platform.sayHello
+      exchange: directExchange
+      routingKey: platform-sayHello
 
-#     - name: platform.tenant
-#       exchange: directExchange
-#       routingKey: platform-tenant
+    - name: platform.tenant
+      exchange: directExchange
+      routingKey: platform-tenant
 
     # - name: platform.tenant
     #   exchange: fanoutExchange
     #   routing-key: "" # Fanout exchange doesn't need routing key
-
-# -----------------------------------------------------------------------------
-# Security: JWT
-# -----------------------------------------------------------------------------
-# gtcafe.app.jwtCookieName=gtcafe
-# gtcafe.app.jwtSecret= ======================Gtcafe=Spring===========================
-# gtcafe.app.jwtExpirationMs=86400000

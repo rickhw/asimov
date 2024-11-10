@@ -47,22 +47,13 @@ public class PlatformConsumer {
         // }
     }
 
-    @RabbitListener(queues = QueueName.REGISTER_TENANT)
-    public void receiveTenantEvent(String eventString) {
-        RegisterTenantEvent event = jsonUtils.jsonStringToModel(eventString, RegisterTenantEvent.class);
+    // @RabbitListener(queues = QueueName.REGISTER_TENANT)
+    // public void receiveTenantEvent(String eventString) {
+    //     RegisterTenantEvent event = jsonUtils.jsonStringToModel(eventString, RegisterTenantEvent.class);
 
-        // 變更 Task 狀態至 RUNNING 並更新 cache
-        event.transit(TaskState.RUNNING);
-        cacheRepos.saveOrUpdateObject(event.getId(), jsonUtils.modelToJsonString(event));
+    //     // 變更 Task 狀態至 RUNNING 並更新 cache
+    //     event.transit(TaskState.RUNNING);
+    //     cacheRepos.saveOrUpdateObject(event.getId(), jsonUtils.modelToJsonString(event));
 
-        // eventHandler.handleEvent(event);
-        // 根據 data 類型取得相應的處理器並執行處理邏輯
-        // SayHelloMessage data = event.getData();
-        // EventHandler<T> handler = eventHandlerRegistry.getHandler(data.getClass());
-        // if (handler != null) {
-        //     handler.handleEvent(event);
-        // } else {
-        //     log.warn("No handler found for event type: {}", data.getClass());
-        // }
-    }
+    // }
 }
