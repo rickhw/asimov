@@ -1,16 +1,15 @@
-package com.gtcafe.asimov.apiserver.system.entry;
+package com.gtcafe.asimov.apiserver.system.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class EntryController {
+import lombok.extern.slf4j.Slf4j;
 
-    Logger logger = LoggerFactory.getLogger(EntryController.class);
+@RestController
+@Slf4j
+public class EntryController {
 
     // @Autowired
     // private Utils utils;
@@ -19,7 +18,7 @@ public class EntryController {
     public ResponseEntity<String> getRootMessage() {
 
             // String reqId = response.getHeader(HttpHeaderConstants.R_REQUEST_ID);
-        logger.info("Entry Controller");
+        log.info("Entry Controller");
 
         return ResponseEntity.ok("ok");
     }

@@ -1,9 +1,11 @@
-package com.gtcafe.asimov.apiserver.platform.tenant;
+package com.gtcafe.asimov.apiserver.platform.tenant.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.apiserver.platform.tenant.operation.RegisterTenantRequest;
+import com.gtcafe.asimov.apiserver.platform.tenant.TenantEntity;
+import com.gtcafe.asimov.apiserver.platform.tenant.TenantRepository;
+import com.gtcafe.asimov.apiserver.platform.tenant.dto.RegisterTenantDTO;
 import com.gtcafe.asimov.apiserver.system.MessageProducer;
 import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
 import com.gtcafe.asimov.core.system.cache.CacheRepository;
@@ -28,7 +30,7 @@ public class TenantService {
     @Autowired
     private JsonUtils jsonUtils;
 
-    public RegisterTenantEvent registerTenantAsync(RegisterTenantRequest request) {
+    public RegisterTenantEvent registerTenantAsync(RegisterTenantDTO request) {
         RegisterTenantEvent event = new RegisterTenantEvent();
         event.getData().setId(request.getTenantKey());
 

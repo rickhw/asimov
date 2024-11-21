@@ -1,11 +1,11 @@
-package com.gtcafe.asimov.apiserver.platform.tenant.operation;
+package com.gtcafe.asimov.apiserver.platform.tenant.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-public class RegisterTenantRequest {
+public class RegisterTenantDTO {
 
 	@NotBlank(message = "tenantKey cannot empty")
     @Size(max = 50, message = "tenantKey max lenght is 50.")

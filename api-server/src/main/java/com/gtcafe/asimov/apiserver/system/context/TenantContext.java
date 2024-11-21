@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.system;
+package com.gtcafe.asimov.apiserver.system.context;
 
 import lombok.Getter;
 import lombok.Setter;

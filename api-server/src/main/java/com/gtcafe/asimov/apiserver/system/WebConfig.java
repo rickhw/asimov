@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.gtcafe.asimov.apiserver.system.interceptor.TenantContextInterceptor;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -14,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(@SuppressWarnings("null") InterceptorRegistry registry) {
         registry.addInterceptor(tenantContextInterceptor)
                 .addPathPatterns("/**")  // 攔截所有請求
                 .excludePathPatterns("/health", "/metrics");  // 排除

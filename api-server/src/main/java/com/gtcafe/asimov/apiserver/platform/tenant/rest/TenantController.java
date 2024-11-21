@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.platform.tenant;
+package com.gtcafe.asimov.apiserver.platform.tenant.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
-import com.gtcafe.asimov.apiserver.platform.tenant.operation.RegisterTenantRequest;
+import com.gtcafe.asimov.apiserver.platform.tenant.domain.TenantService;
+import com.gtcafe.asimov.apiserver.platform.tenant.dto.RegisterTenantDTO;
 import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
 
 // @Tag(name = "API Metadata", description = "")
@@ -30,7 +31,7 @@ public class TenantController {
 
   @PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<RetrieveTaskResponse> registerAsync(
-      @RequestBody @Validated RegisterTenantRequest request) {
+      @RequestBody @Validated RegisterTenantDTO request) {
 
     // 1. validate the request --> by spring-boot-starter-validation
 
