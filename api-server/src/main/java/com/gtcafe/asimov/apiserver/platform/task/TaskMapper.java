@@ -7,17 +7,7 @@ import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 
 @Service
-public class TaskDataTransferObject {
-
-	// TODO
-	// public RetrieveTaskResponse convertToTaskResponse(TaskDomainObject tdo) {
-	// 	RetrieveTaskResponse obj = new RetrieveTaskResponse();
-	// 	obj.setId(tdo.getTaskId());
-	// 	obj.setState(tdo.getMetadata().get_state().toString());
-	// 	obj.setData(tdo.getData());
-
-	// 	return obj;
-	// }
+public class TaskMapper {
 
 	public RetrieveTaskResponse convertToTaskV4Response(SayHelloEvent tdo) {
 		RetrieveTaskResponse obj = new RetrieveTaskResponse();

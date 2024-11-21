@@ -17,7 +17,7 @@ public class TaskService {
   CacheRepository _repos;
 
   @Autowired
-  TaskDataTransferObject _dto;
+  TaskMapper _dto;
 
   @Autowired
   private JsonUtils jsonUtils;

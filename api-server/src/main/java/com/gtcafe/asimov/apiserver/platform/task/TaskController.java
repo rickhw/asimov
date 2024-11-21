@@ -24,7 +24,7 @@ public class TaskController {
   TaskService _service;
 
   @Autowired
-  TaskDataTransferObject _dto;
+  TaskMapper _dto;
 
   @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<RetrieveTaskResponse> retrieve(@PathVariable String id) {

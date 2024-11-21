@@ -2,10 +2,18 @@ package com.gtcafe.asimov.apiserver.platform.tenant.domain.model;
 
 import com.gtcafe.asimov.core.system.constants.KindConstants;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Tenant {
 
+	@Setter @Getter
 	private String kind;
+
+	@Setter @Getter
 	private Metadata metadata;
+
+	@Setter @Getter
 	private Spec spec;
 
 	public Tenant() {
@@ -13,29 +21,6 @@ public class Tenant {
 		this.metadata = new Metadata();
 		this.spec = new Spec();
 	}
-
-	public String getKind() {
-		return kind;
-	}
-
-	// public void setKind(String kind) {
-	// 	this.kind = kind;
-	// }
-
-	public Metadata getMetadata() {
-		return metadata;
-	}
-
-	public void setMetadata(Metadata metadata) {
-		this.metadata = metadata;
-	}
-
-	public Spec getSpec() {
-		return spec;
-	}
-
-	public void setSpec(Spec spec) {
-		this.spec = spec;
-	}
 }
+
 
