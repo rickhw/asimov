@@ -33,12 +33,15 @@ public class TenantService {
     public RegisterTenantEvent registerTenantAsync(RegisterTenantDTO request) {
         RegisterTenantEvent event = new RegisterTenantEvent();
         event.getData().setId(request.getTenantKey());
+        String taskJsonString = jsonUtils.modelToJsonString(event);
 
+        // 1. send the event to the queue
         producer.sendEvent(event, QueueName.REGISTER_TENANT);
 
-        String taskJsonString = jsonUtils.modelToJsonString(event);
+        // 2. store the task in the cache
         cacheRepos.saveOrUpdateObject(event.getId(), taskJsonString);
 
+        // 3. store the tenant in the database
         TenantEntity entity = new TenantEntity();
         entity.setTenantKey(request.getTenantKey());
         entity.setDisplayName(request.getDisplayName());
