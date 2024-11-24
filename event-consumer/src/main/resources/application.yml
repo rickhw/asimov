@@ -71,21 +71,27 @@ logging:
 
 app:
   rabbitmq:
-    autoInit: false
+    autoInit: true
+    reset: true
+    # prefixName: asimov
     
+    ## ATTENTTION: DON't CHANGE the queueName, due to they are as the key in code
+    ## TODO: move to core
+
     queues:
-    - name: sys.tasks
-      exchange: directExchange
-      routingKey: sys-task
+    - name: asimov.platform.task
+      exchange: asimov.directExchange
+      routingKey: platform-task
+    
+    - name: asimov.platform.hello
+      exchange: asimov.directExchange
+      routingKey: platform-hello
 
-    - name: platform.sayHello
-      exchange: directExchange
-      routingKey: platform-sayHello
-
-    - name: platform.tenant
-      exchange: directExchange
+    - name: asimov.platform.tenant
+      exchange: asimov.directExchange
       routingKey: platform-tenant
 
     # - name: platform.tenant
     #   exchange: fanoutExchange
     #   routing-key: "" # Fanout exchange doesn't need routing key
+

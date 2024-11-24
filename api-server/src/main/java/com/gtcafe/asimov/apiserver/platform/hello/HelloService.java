@@ -36,7 +36,7 @@ public class HelloService {
 
   public SayHelloEvent sayHelloAsync(String message) {
       SayHelloEvent event = new SayHelloEvent(message);
-      producer.sendEvent(event, QueueName.SAY_HELLO);
+      producer.sendEvent(event, QueueName.HELLO_QUEUE);
 
       String taskJsonString = jsonUtils.modelToJsonString(event);
       cacheRepos.saveOrUpdateObject(event.getId(), taskJsonString);
