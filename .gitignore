@@ -18,6 +18,7 @@ npm-debug.log
 *.jar
 *.class
 target/
+current.log
 
 ## Gradle
 .gradle
