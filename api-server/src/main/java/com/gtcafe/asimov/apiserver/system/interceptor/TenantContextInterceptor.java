@@ -8,8 +8,10 @@ import com.gtcafe.asimov.apiserver.system.context.TenantContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class TenantContextInterceptor implements HandlerInterceptor {
 
     private static final String TENANT_ID_HEADER = "X-Tenant-Id";
@@ -22,6 +24,12 @@ public class TenantContextInterceptor implements HandlerInterceptor {
         @SuppressWarnings("null") HttpServletResponse response,  
         @SuppressWarnings("null") Object handler
     ) {
+
+        // // 如果是 POST /api/tenants，直接放行
+        // if ("POST".equals(request.getMethod()) && "/api/tenants".equals(request.getRequestURI())) {
+        //     return true;
+        // }
+
         String tenantId = request.getHeader(TENANT_ID_HEADER);
         String appName = request.getHeader(APP_NAME_HEADER);
         String roleName = request.getHeader(ROLE_NAME_HEADER);

@@ -3,10 +3,16 @@
 
 ## -----
 GET {{hostname}}/api/hello
+X-Tenant-Id: t-123
+X-AppName: asimov
+X-RoleName: admin
 
 ### normal case#1:
 POST {{hostname}}/api/hello
 content-type: {{contentType}}
+X-Tenant-Id: t-123
+X-AppName: asimov
+X-RoleName: admin
 
 {
   "message": "Hello, Asimov"

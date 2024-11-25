@@ -37,7 +37,7 @@ routes:
     upstream:
       type: roundrobin
       nodes:
-        "127.0.0.1:8081": 1  # 對應的後端服務地址
+        "127.0.0.1:8080": 1  # 對應的後端服務地址
 
   # Task API Route
   - uri: /task
@@ -48,7 +48,7 @@ routes:
     upstream:
       type: roundrobin
       nodes:
-        "127.0.0.1:8082": 1  # 對應的後端服務地址
+        "127.0.0.1:8080": 1  # 對應的後端服務地址
 
 consumers:
   # Consumer 1
