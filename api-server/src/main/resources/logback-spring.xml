@@ -31,7 +31,7 @@
         </rollingPolicy>
 
         <encoder>
-            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{36}.%M\(%line\) %message%n</pattern>
+            <pattern>{ "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSS}", "level": "%level", "thread": "%thread", "class": "%logger", "method": "%M", "message": "%message" }%n</pattern>
         </encoder>
     </appender>
 
