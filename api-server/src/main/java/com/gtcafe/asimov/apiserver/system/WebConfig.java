@@ -1,26 +1,36 @@
 package com.gtcafe.asimov.apiserver.system;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.gtcafe.asimov.apiserver.system.interceptor.TenantContextInterceptor;
+import com.gtcafe.asimov.core.common.interceptor.HttpRequestContextInterceptor;
+import com.gtcafe.asimov.core.common.interceptor.TenantContextInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     private final TenantContextInterceptor tenantContextInterceptor;
+    private final HttpRequestContextInterceptor httpRequestContextInterceptor;
 
-    public WebConfig(TenantContextInterceptor tenantContextInterceptor) {
+    public WebConfig(TenantContextInterceptor tenantContextInterceptor, HttpRequestContextInterceptor httpRequestContextInterceptor) {
         this.tenantContextInterceptor = tenantContextInterceptor;
+        this.httpRequestContextInterceptor = httpRequestContextInterceptor;
     }
 
     @Override
     public void addInterceptors(@SuppressWarnings("null") InterceptorRegistry registry) {
+        // 需要產生 TenantContextInterceptor 的 Bean
         registry.addInterceptor(tenantContextInterceptor)
                 .addPathPatterns("/**")  // 攔截所有請求
-                .excludePathPatterns("/health", "/metrics")  // 排除
-                .excludePathPatterns("/api/tenants");  // 只排除 POST /api/tenants
-    }
+                // 底下是不需要 API Key 的 URI
+                .excludePathPatterns("/health", "/metrics", "/version")
+                .excludePathPatterns("/swagger-ui/**", "/v3/api-docs/**")
+                .excludePathPatterns("/api/tenants");
+
+        // 需要產生 HttpRequestContextInterceptor 的 Bean --> 全部
+        registry.addInterceptor(httpRequestContextInterceptor)
+                .addPathPatterns("/**");
+
+            }
 }

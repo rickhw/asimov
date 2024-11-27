@@ -3,8 +3,9 @@ package com.gtcafe.asimov.apiserver.platform.task;
 
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
+import com.gtcafe.asimov.apiserver.platform.task.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
+
 
 @Service
 public class TaskMapper {

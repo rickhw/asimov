@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gtcafe.asimov.core.utils.TimeUtils;
+import com.gtcafe.asimov.core.common.utils.TimeUtils;
 
 import lombok.Getter;
 import lombok.Setter;

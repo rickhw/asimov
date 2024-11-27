@@ -31,7 +31,7 @@
         </rollingPolicy>
 
         <encoder>
-            <pattern>{ "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSS}", "level": "%level", "thread": "%thread", "class": "%logger", "method": "%M", "message": "%message" }%n</pattern>
+            <pattern>{ "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSS}", "level": "%level", "thread": "%thread", "class": "%logger", "method": "%M", "message": "%message", "X-Tenant-Id": "%X{X-Tenant-Id}" }%n</pattern>
         </encoder>
     </appender>
 

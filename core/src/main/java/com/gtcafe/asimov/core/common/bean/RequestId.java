@@ -1,8 +1,8 @@
-package com.gtcafe.asimov.core.system.bean;
+package com.gtcafe.asimov.core.common.bean;
 
-public class RequestIdBean {
+public class RequestId {
     private final String requestId;
-    public RequestIdBean() {
+    public RequestId() {
         this.requestId = java.util.UUID.randomUUID().toString();
     }
 

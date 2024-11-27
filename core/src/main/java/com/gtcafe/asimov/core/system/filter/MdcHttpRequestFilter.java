@@ -1,12 +1,12 @@
-package com.gtcafe.asimov.core.filter;
+package com.gtcafe.asimov.core.system.filter;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.gtcafe.asimov.core.common.bean.HttpRequestContextBean;
 import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
 
 import jakarta.servlet.Filter;
@@ -16,9 +16,11 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Order(1)
+@Slf4j
 public class MdcHttpRequestFilter implements Filter {
 
     // ref: https://stackoverflow.com/questions/29910074/how-to-get-client-ip-address-in-java-httpservletrequest
@@ -37,6 +39,13 @@ public class MdcHttpRequestFilter implements Filter {
         "REMOTE_ADDR" 
     };
 
+    private final HttpRequestContextBean httpRequestContextBean;
+
+    public MdcHttpRequestFilter(HttpRequestContextBean httpRequestContextBean) {
+        this.httpRequestContextBean = httpRequestContextBean;
+        log.info("MdcHttpRequestFilter created");
+    }
+
     @Override
     public void doFilter(
             ServletRequest request,
@@ -46,6 +55,8 @@ public class MdcHttpRequestFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+
+        log.info("request.getRequestURI(): [{}]", req.getRequestURI());
 
         handleRequestId(req, res);
         handleRequestClientIp(req, res);
@@ -61,7 +72,7 @@ public class MdcHttpRequestFilter implements Filter {
     private void handleRequestId(HttpServletRequest req, HttpServletResponse res) {
         String requestId = req.getHeader(HttpHeaderConstants.X_REQUEST_ID);
         if (requestId == null || requestId.isEmpty()) {
-            requestId = UUID.randomUUID().toString();
+            requestId = httpRequestContextBean.getRequestId().getRequestId();
         }
         res.setHeader(HttpHeaderConstants.X_REQUEST_ID, requestId);
 
@@ -76,7 +87,7 @@ public class MdcHttpRequestFilter implements Filter {
 
         for (String header : HEADERS_TO_TRY) {
             clientIp = req.getHeader(header);
-            System.out.printf("  - %s: [%s]\n", header, clientIp);
+            log.debug("{}: [{}]", header, clientIp);
             
             if (clientIp != null && clientIp.length() != 0 && !"unknown".equalsIgnoreCase(clientIp)) {
                 break;
@@ -84,7 +95,7 @@ public class MdcHttpRequestFilter implements Filter {
         }
 
         if (clientIp == null || clientIp.isEmpty()) {
-            System.out.printf("  - req.getRemoteAddr(): [%s]\n", req.getRemoteAddr());
+            log.debug("req.getRemoteAddr(): [{}]", req.getRemoteAddr());
             clientIp = req.getRemoteAddr();
         }
             
@@ -94,9 +105,9 @@ public class MdcHttpRequestFilter implements Filter {
     private void handleRequestProtocol(HttpServletRequest req, HttpServletResponse res) {
         String proto = "";
         
-        System.out.printf("req.getScheme(): [%s]\n", req.getScheme());
-        System.out.printf("x-forwarded-proto: [%s]\n", req.getHeader("x-forwarded-proto"));
-        System.out.printf("cloudfront-forwarded-proto: [%s]\n", req.getHeader("cloudfront-forwarded-proto"));
+        log.debug("req.getScheme(): [{}]", req.getScheme());
+        log.debug("x-forwarded-proto: [{}]", req.getHeader("x-forwarded-proto"));
+        log.debug("cloudfront-forwarded-proto: [{}]", req.getHeader("cloudfront-forwarded-proto"));
 
         if ("".equals(proto)) {
             proto = req.getScheme();

@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.utils;
+package com.gtcafe.asimov.core.common.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

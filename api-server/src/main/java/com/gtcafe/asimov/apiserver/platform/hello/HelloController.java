@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloRequest;
-import com.gtcafe.asimov.apiserver.platform.hello.operation.HelloResponse;
-import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
+import com.gtcafe.asimov.apiserver.platform.hello.dto.HelloDto;
+import com.gtcafe.asimov.apiserver.platform.hello.response.HelloResponse;
+import com.gtcafe.asimov.apiserver.platform.task.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
 
@@ -36,7 +36,7 @@ public class HelloController {
 
   @PostMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<Object> hello(
-      @Valid @RequestBody HelloRequest request,
+      @Valid @RequestBody HelloDto request,
       @RequestHeader(value = HttpHeaderConstants.X_REQUEST_MODE, required = false) String requestMode
   ) {
 

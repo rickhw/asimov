@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.apiserver.platform.task.operation.RetrieveTaskResponse;
+import com.gtcafe.asimov.apiserver.platform.task.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 
 import lombok.extern.slf4j.Slf4j;

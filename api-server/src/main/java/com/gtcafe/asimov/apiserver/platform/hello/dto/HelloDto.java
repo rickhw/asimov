@@ -1,8 +1,8 @@
-package com.gtcafe.asimov.apiserver.platform.hello.operation;
+package com.gtcafe.asimov.apiserver.platform.hello.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class HelloRequest {
+public class HelloDto {
 
     @NotBlank(message = "message cannot empty")
     private String message;

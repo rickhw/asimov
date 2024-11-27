@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.system.model;
+package com.gtcafe.asimov.core.common.model;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
