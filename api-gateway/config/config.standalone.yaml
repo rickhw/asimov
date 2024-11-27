@@ -17,38 +17,50 @@ plugins:
   - api-key-auth  # 啟用 API Key 驗證插件
 
 routes:
-  # Hello API Route
-  - uri: /hello
+  - id: root
+    uri: /
     methods: [GET]
-    plugins:
-      api-key-auth:  # 啟用 API Key 驗證
-        key: customer-1-api-key
-    upstream:
-      type: roundrobin
-      nodes:
-        "127.0.0.1:8080": 1  # 對應的後端服務地址
-
-  # Tenant API Route
-  - uri: /tenant
-    methods: [POST]
-    plugins:
-      api-key-auth:  # 啟用 API Key 驗證
-        key: customer-2-api-key
-    upstream:
-      type: roundrobin
-      nodes:
-        "127.0.0.1:8080": 1  # 對應的後端服務地址
-
-  # Task API Route
-  - uri: /task
-    methods: [GET, POST, PUT]
     plugins:
       api-key-auth:  # 啟用 API Key 驗證
         key: customer-3-api-key
     upstream:
       type: roundrobin
       nodes:
-        "127.0.0.1:8080": 1  # 對應的後端服務地址
+        "192.168.64.18:8080/version": 1  # 對應的後端服務地址
+
+  # # Hello API Route
+  # - uri: /hello
+  #   methods: [GET]
+  #   plugins:
+  #     api-key-auth:  # 啟用 API Key 驗證
+  #       key: customer-1-api-key
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "127.0.0.1:8080": 1  # 對應的後端服務地址
+
+  # # Tenant API Route
+  # - uri: /tenant
+  #   methods: [POST]
+  #   plugins:
+  #     api-key-auth:  # 啟用 API Key 驗證
+  #       key: customer-2-api-key
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "127.0.0.1:8080": 1  # 對應的後端服務地址
+
+  # # Task API Route
+  # - uri: /task
+  #   methods: [GET, POST, PUT]
+  #   plugins:
+  #     api-key-auth:  # 啟用 API Key 驗證
+  #       key: customer-3-api-key
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "127.0.0.1:8080": 1  # 對應的後端服務地址
+
 
 consumers:
   # Consumer 1

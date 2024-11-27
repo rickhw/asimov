@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.core.common.utils.Slogan;
+import com.gtcafe.asimov.core.system.context.ApiMetadataContext;
 import com.gtcafe.asimov.core.system.context.HttpRequestContext;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,8 @@ public class EntryController {
 
     @GetMapping(value = "/version", produces = { MediaType.TEXT_PLAIN_VALUE })
     public ResponseEntity<String> getSlogon() {
+        ApiMetadataContext ctx = ApiMetadataContext.getCurrentContext();
+        log.info("API Metadata: kind: [{}], opId: [{}]", ctx.getKind(), ctx.getOperationId());
         return ResponseEntity.ok(slogan.apiSlogan(HttpRequestContext.getCurrentContext().getRequestId()));
     }
 
