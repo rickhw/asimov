@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.system.task;
+package com.gtcafe.asimov.core.platform.task;
 
 public enum TaskState {
 	PENDING,

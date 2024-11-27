@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.core.common.context.HttpRequestContext;
 import com.gtcafe.asimov.core.common.utils.Slogan;
+import com.gtcafe.asimov.core.system.context.HttpRequestContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,9 +28,9 @@ public class EntryController {
         return ResponseEntity.ok(slogan.apiSlogan(HttpRequestContext.getCurrentContext().getRequestId()));
     }
 
-    @GetMapping(value = "/metric", produces = { MediaType.TEXT_PLAIN_VALUE })
+    @GetMapping(value = "/metrics", produces = { MediaType.TEXT_PLAIN_VALUE })
     public ResponseEntity<String> metric() {
-        return ResponseEntity.ok("metric");
+        return ResponseEntity.ok("metrics");
     }
 
     @GetMapping(value = "/health", produces = { MediaType.TEXT_PLAIN_VALUE })

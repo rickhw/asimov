@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.common.context;
+package com.gtcafe.asimov.core.system.context;
 
 import lombok.Getter;
 import lombok.Setter;

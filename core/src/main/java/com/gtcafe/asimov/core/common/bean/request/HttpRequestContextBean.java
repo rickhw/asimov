@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.common.bean;
+package com.gtcafe.asimov.core.common.bean.request;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;

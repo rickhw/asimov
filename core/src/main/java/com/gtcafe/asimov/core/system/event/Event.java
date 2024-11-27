@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gtcafe.asimov.core.common.utils.TimeUtils;
-import com.gtcafe.asimov.core.system.task.TaskState;
+import com.gtcafe.asimov.core.platform.task.TaskState;
 
 import lombok.Getter;
 import lombok.Setter;

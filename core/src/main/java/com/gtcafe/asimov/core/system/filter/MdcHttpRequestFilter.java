@@ -6,7 +6,7 @@ import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.gtcafe.asimov.core.common.bean.HttpRequestContextBean;
+import com.gtcafe.asimov.core.common.bean.request.HttpRequestContextBean;
 import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
 
 import jakarta.servlet.Filter;

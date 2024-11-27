@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.core.common.bean;
+package com.gtcafe.asimov.core.common.bean.request;
 
 public class RequestId {
     private final String requestId;

@@ -1,11 +1,11 @@
-package com.gtcafe.asimov.core.common.interceptor;
+package com.gtcafe.asimov.core.system.interceptor;
 
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.gtcafe.asimov.core.common.context.TenantContext;
+import com.gtcafe.asimov.core.system.context.TenantContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
