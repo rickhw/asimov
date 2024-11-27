@@ -1,8 +1,6 @@
 package com.gtcafe.asimov.core.system.interceptor;
 
-import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.gtcafe.asimov.core.system.context.ApiMetadataContext;
@@ -31,7 +29,7 @@ public class ApiMetadataContextInterceptor implements HandlerInterceptor {
 
         log.info("method: [{}], uri: [{}]", method, uri);
 
-        ApiMetadataContext context = ApiMetadataContext.of(uri, method);
+        ApiMetadataContext context = ApiMetadataContext.of(method, uri);
         ApiMetadataContext.setCurrentContext(context);
 
         // MDC.put(TenantContext.X_TENANT_ID, tenantId);

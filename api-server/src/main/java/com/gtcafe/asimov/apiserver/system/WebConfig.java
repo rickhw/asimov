@@ -27,11 +27,16 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(tenantContextInterceptor)
                 .addPathPatterns("/**")  // 攔截所有請求
                 // 底下是不需要 API Key 的 URI
-                .excludePathPatterns("/health", "/metrics", "/version")
+                // 1. operation
+                .excludePathPatterns("/health", "/metrics")
+                // 2. metadata, tenant context
+                .excludePathPatterns("/apimeta", "/version", "/tenant-context")
+                // 3. swagger
                 .excludePathPatterns("/swagger-ui/**", "/v3/api-docs/**")
+                // 4. 開放申請, 不需要 API Key. @TODO: 要處理 POST /api/tenants
                 .excludePathPatterns("/api/tenants");
 
-        // 需要產生 HttpRequestContextInterceptor 的 Bean --> 全部
+        // 需要產生 HttpRequestContextInterceptor 的 Bean
         registry.addInterceptor(httpRequestContextInterceptor)
                 .addPathPatterns("/**");
 

@@ -4,7 +4,11 @@ import java.util.HashMap;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@ToString
 public class ApiMetadataContext {
 
     @Getter @Setter
@@ -17,14 +21,17 @@ public class ApiMetadataContext {
     private String uri;
 
     @Getter @Setter
+    private String apiVersion;
+
+    @Getter @Setter
     private String kind; 
 
     private static final ThreadLocal<ApiMetadataContext> CONTEXT = new ThreadLocal<>();
 
-    private static HashMap<String, String> operationIdMap = new HashMap();
-    private static HashMap<String, String> kindMap = new HashMap();
+    private static HashMap<String, String> operationIdMap = new HashMap<>();
+    private static HashMap<String, String> kindMap = new HashMap<>();
     
-    // TODO: as bean load from json file
+    // @TODO: as bean load from json file
     static {
         operationIdMap.put("GET:/", "root");
         operationIdMap.put("GET:/version", "slogan");
@@ -40,12 +47,18 @@ public class ApiMetadataContext {
     private ApiMetadataContext(String method, String uri) {
         this.method = method;
         this.uri = uri;
+        this.operationId = "unknown";
+        this.kind = "unknown";
+
+        String key = method + ":" + uri;
+        log.info("key: [{}]", key);
+        
         try {
-            this.operationId = operationIdMap.get(method + ":" + uri);
-            this.kind = kindMap.get(method + ":" + uri);    
+            this.operationId = operationIdMap.get(key);
+            this.kind = kindMap.get(key);    
+
+            log.info("operationId: [{}], kind: [{}]", operationId, kind);
         } catch (Exception e) {
-            this.operationId = "unknown";
-            this.kind = "unknown";
         }
     }
 
@@ -53,8 +66,8 @@ public class ApiMetadataContext {
         return CONTEXT.get();
     }
 
-    public static void setCurrentContext(ApiMetadataContext tenantContext) {
-        CONTEXT.set(tenantContext);
+    public static void setCurrentContext(ApiMetadataContext context) {
+        CONTEXT.set(context);
     }
 
     public static void clear() {

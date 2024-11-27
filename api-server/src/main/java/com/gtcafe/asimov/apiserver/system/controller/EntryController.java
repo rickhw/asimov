@@ -41,4 +41,11 @@ public class EntryController {
         return ResponseEntity.ok("health");
     }
 
+    @GetMapping(value = "/apimeta", produces = { MediaType.TEXT_PLAIN_VALUE })
+    public ResponseEntity<String> apimeta() {
+        ApiMetadataContext ctx = ApiMetadataContext.getCurrentContext();
+// 
+        return ResponseEntity.ok(ctx.toString());
+    }
+
 }
