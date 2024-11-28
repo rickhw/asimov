@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.core.common.utils.Slogan;
-import com.gtcafe.asimov.core.system.context.ApiMetadataContext;
-import com.gtcafe.asimov.core.system.context.HttpRequestContext;
+import com.gtcafe.asimov.common.utils.Slogan;
+import com.gtcafe.asimov.system.context.ApiMetadataContext;
+import com.gtcafe.asimov.system.context.HttpRequestContext;
 
 import lombok.extern.slf4j.Slf4j;
 

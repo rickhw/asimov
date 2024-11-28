@@ -7,10 +7,10 @@ import com.gtcafe.asimov.apiserver.platform.tenant.TenantEntity;
 import com.gtcafe.asimov.apiserver.platform.tenant.TenantRepository;
 import com.gtcafe.asimov.apiserver.platform.tenant.dto.RegisterTenantDTO;
 import com.gtcafe.asimov.apiserver.system.MessageProducer;
-import com.gtcafe.asimov.core.common.utils.JsonUtils;
+import com.gtcafe.asimov.common.utils.JsonUtils;
 import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
-import com.gtcafe.asimov.core.system.cache.CacheRepository;
-import com.gtcafe.asimov.core.system.constants.QueueName;
+import com.gtcafe.asimov.system.cache.CacheRepository;
+import com.gtcafe.asimov.system.constants.QueueName;
 
 import lombok.extern.slf4j.Slf4j;
 

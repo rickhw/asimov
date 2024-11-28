@@ -1,6 +1,6 @@
 package com.gtcafe.asimov.core.domain.container;
 
-import com.gtcafe.asimov.core.system.event.IMessage;
+import com.gtcafe.asimov.system.event.IMessage;
 
 public class CreateContainerMessage implements IMessage {
 

@@ -1,6 +1,6 @@
 package com.gtcafe.asimov.core.platform.tenant;
 
-import com.gtcafe.asimov.core.system.event.Event;
+import com.gtcafe.asimov.system.event.Event;
 
 import lombok.ToString;
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import com.gtcafe.asimov.apiserver.platform.tenant.domain.model.State;
 import com.gtcafe.asimov.apiserver.platform.tenant.domain.model.Tenant;
-import com.gtcafe.asimov.core.system.constants.KindConstants;
+import com.gtcafe.asimov.system.constants.KindConstants;
 
 public class TenantTest {
 

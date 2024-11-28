@@ -2,8 +2,8 @@ package com.gtcafe.asimov.core.platform.hello;
 
 import java.util.UUID;
 
-import com.gtcafe.asimov.core.system.constants.KindConstants;
-import com.gtcafe.asimov.core.system.event.IMessage;
+import com.gtcafe.asimov.system.constants.KindConstants;
+import com.gtcafe.asimov.system.event.IMessage;
 
 import lombok.Getter;
 import lombok.Setter;

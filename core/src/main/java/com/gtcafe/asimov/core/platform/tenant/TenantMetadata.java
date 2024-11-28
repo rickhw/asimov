@@ -1,6 +1,7 @@
 package com.gtcafe.asimov.core.platform.tenant;
 
-import com.gtcafe.asimov.core.system.event2.Metadata;
+import com.gtcafe.asimov.system.event2.Metadata;
+
 import lombok.Getter;
 import lombok.Setter;
 

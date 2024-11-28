@@ -8,7 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {
     "com.gtcafe.asimov.apiserver",
     "com.gtcafe.asimov.core",
-    "com.gtcafe.asimov.core.common"
+    "com.gtcafe.asimov.system",
+    "com.gtcafe.asimov.common"
 })
 public class Main {
     public static void main(String[] args) {

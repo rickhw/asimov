@@ -4,12 +4,12 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.core.common.utils.JsonUtils;
+import com.gtcafe.asimov.common.utils.JsonUtils;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 import com.gtcafe.asimov.core.platform.task.TaskState;
-import com.gtcafe.asimov.core.system.cache.CacheRepository;
-import com.gtcafe.asimov.core.system.constants.QueueName;
-import com.gtcafe.asimov.core.system.event.IMessage;
+import com.gtcafe.asimov.system.cache.CacheRepository;
+import com.gtcafe.asimov.system.constants.QueueName;
+import com.gtcafe.asimov.system.event.IMessage;
 
 import lombok.extern.slf4j.Slf4j;
 
