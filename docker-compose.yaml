@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3"
 services:
   api-gateway_apache-apisix:
     # image: apache/apisix:3.11.0-debian
