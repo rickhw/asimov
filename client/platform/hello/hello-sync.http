@@ -1,7 +1,12 @@
 @contentType = application/json
 @hostname = http://localhost:8080
+# @hostname = http://192.168.64.18:9080
 
-## -----
+
+### ---
+GET {{hostname}}/api/hello
+
+### -----
 GET {{hostname}}/api/hello
 X-Tenant-Id: t-123
 X-AppName: asimov
