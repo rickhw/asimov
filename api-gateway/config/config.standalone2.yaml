@@ -1,0 +1,89 @@
+# Apache APISIX Configuration (Standalone Mode)
+
+apisix:
+  node_listen: 9080  # HTTP 端口
+  # enable_admin: true
+  # enable_admin_cors: true
+
+  config_center: yaml  # 使用本地 YAML 文件進行配置，不依賴 etcd
+
+  # admin_key:
+  #   - name: admin
+  #     key: admin-api-key  # 管理端 API Key
+  #     role: admin
+
+# 插件配置
+# plugins:
+#   - api-key-auth  # 啟用 API Key 驗證插件
+
+routes:
+  - id: root
+    uri: /
+    methods: [GET]
+    # plugins:
+    #   api-key-auth:  # 啟用 API Key 驗證
+    #     key: customer-3-api-key
+    upstream:
+      type: roundrobin
+      nodes:
+        "http://host.docker.internal:8080/version": 1  # 對應的後端服務地址
+
+  # # Hello API Route
+  # - uri: /hello
+  #   methods: [GET]
+  #   plugins:
+  #     api-key-auth:  # 啟用 API Key 驗證
+  #       key: customer-1-api-key
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "127.0.0.1:8080": 1  # 對應的後端服務地址
+
+  # # Tenant API Route
+  # - uri: /tenant
+  #   methods: [POST]
+  #   plugins:
+  #     api-key-auth:  # 啟用 API Key 驗證
+  #       key: customer-2-api-key
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "127.0.0.1:8080": 1  # 對應的後端服務地址
+
+  # # Task API Route
+  # - uri: /task
+  #   methods: [GET, POST, PUT]
+  #   plugins:
+  #     api-key-auth:  # 啟用 API Key 驗證
+  #       key: customer-3-api-key
+  #   upstream:
+  #     type: roundrobin
+  #     nodes:
+  #       "127.0.0.1:8080": 1  # 對應的後端服務地址
+
+
+# consumers:
+#   # Consumer 1
+#   - username: customer1
+#     plugins:
+#       api-key-auth:
+#         key: customer-1-api-key  # API Key 對應 customer 1
+
+#   # Consumer 2
+#   - username: customer2
+#     plugins:
+#       api-key-auth:
+#         key: customer-2-api-key  # API Key 對應 customer 2
+
+#   # Consumer 3
+#   - username: customer3
+#     plugins:
+#       api-key-auth:
+#         key: customer-3-api-key  # API Key 對應 customer 3
+
+# 日誌配置
+# plugin_attr:
+#   log-rotate:
+#     interval: 86400  # 每天輪換日誌
+#     max_kept: 10  # 保留最多 10 個日誌檔案
+

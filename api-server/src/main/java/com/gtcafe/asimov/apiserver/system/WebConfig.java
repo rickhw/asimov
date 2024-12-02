@@ -28,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")  // 攔截所有請求
                 // 底下是不需要 API Key 的 URI
                 // 1. operation
-                .excludePathPatterns("/health", "/metrics")
+                .excludePathPatterns("/health", "/metrics", "/favicon.ico")
                 // 2. metadata, tenant context
                 .excludePathPatterns("/apimeta", "/version", "/tenant-context")
                 // 3. swagger
