@@ -34,5 +34,16 @@ routes:
             "127.0.0.1:8080": 1
         type: roundrobin
 
+  -
+    uri: /protected
+    upstream:
+        nodes:
+            "127.0.0.1:8080": 1
+        type: roundrobin
+    plugins:
+      auth-plugin:
+        header_to_pass: X-Auth-Token
+        callback: http://auth-server.local/verify
+
 
 #END
