@@ -1,16 +1,16 @@
-version: "3"
+# version: "3"
 services:
-  # api-gateway_apache-apisix:
-  #   image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
-  #   # restart: always
-  #   volumes:
-  #     - ./api-gateway/config/config.standalone.yaml:/usr/local/apisix/conf/config.yaml
-  #   environment:
-  #     - APISIX_STAND_ALONE=true
-  #   ports:
-  #     - "9180:9180" # Admin API
-  #     - "9080:9080" # HTTP Proxy
-  #     - "9443:9443" # HTTPS Proxy
+  api-gateway_apache-apisix:
+    image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
+    # restart: always
+    volumes:
+      - ./api-gateway/config/config.standalone.yaml:/usr/local/apisix/conf/apisix.yaml
+    environment:
+      - APISIX_STAND_ALONE=true
+    ports:
+      - "9180:9180" # Admin API
+      - "9080:9080" # HTTP Proxy
+      - "9443:9443" # HTTPS Proxy
 
   rdb_mysql:
     image: mysql:8.0  # MySQL 官方映像支援 ARM
