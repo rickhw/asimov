@@ -1,0 +1,37 @@
+plugins {
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+
+    id 'java-library'
+}
+
+java {
+   sourceCompatibility = '17'
+   targetCompatibility = '17'
+}
+
+// 禁用 Spring Boot 的 bootJar 任務，因為 common 不需要生成可執行 jar
+// 沒有 public static void main() 
+tasks.getByName('bootJar') {
+    enabled = false
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+    implementation 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+    implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.15.0'
+
+}
+
+tasks.jar {
+    archiveBaseName.set('asimov-core')
+    archiveVersion.set(version)
+}

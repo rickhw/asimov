@@ -1,0 +1,16 @@
+{
+    "kind": "core.Tenant",
+    "metadata": {
+        "tenantKey": "this-is-a-tenant",    // write once, read manay by user
+        "_apiVersion": "v1alpha",           // write once, read manay by system
+        "_resourceId": "75ac3d12-d237-4a81-8173-049e948906d4",
+        "_tenantId": "t-1234567890",
+        "_state": "pending",
+        "_creationTime": "2021-12-10T00:29:06.800+08:00",
+        "_lastModified": "2021-12-10T00:29:06.800+08:00"
+    },
+    "spec": {
+        "rootAccount": "rick@abc.com",
+        "description": "this is a tenant"
+    }
+}

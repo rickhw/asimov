@@ -1,15 +1,15 @@
 plugins {
-    id 'org.springframework.boot' version '3.4.0'
+    id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
 }
 
 dependencies {
-    // implementation project(':common')
-    implementation project(':core')
+    implementation project(':asimov-core')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
     // rdb: mysql or maria, or pgsql
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -20,9 +20,6 @@ dependencies {
 
     // cache: redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-//    implementation 'redis.clients:jedis:4.4.0' // SP3.2 不建議使用, 使用預設的 Lettuce
-//    implementation 'redis.clients:jedis:3.3.0'
-
     
     implementation 'org.projectlombok:lombok:1.18.36'
     compileOnly 'org.projectlombok:lombok:1.18.36'
@@ -30,7 +27,7 @@ dependencies {
 
     // template engine
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    
 
      // 測試相關依賴
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

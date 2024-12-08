@@ -7,9 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {
     "com.gtcafe.asimov.apiserver",
-    "com.gtcafe.asimov.core",
-    "com.gtcafe.asimov.system",
-    "com.gtcafe.asimov.common"
+    "com.gtcafe.asimov.core"
 })
 public class Main {
     public static void main(String[] args) {

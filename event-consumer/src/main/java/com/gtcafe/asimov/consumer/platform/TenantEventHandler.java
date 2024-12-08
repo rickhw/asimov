@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.core.platform.tenant.RegisterTenantMessage;
-import com.gtcafe.asimov.system.cache.CacheRepository;
-import com.gtcafe.asimov.system.event.Event;
-import com.gtcafe.asimov.system.event.EventHandler;
+import com.gtcafe.asimov.core.system.cache.CacheRepository;
+import com.gtcafe.asimov.core.system.event.Event;
+import com.gtcafe.asimov.core.system.event.EventHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
