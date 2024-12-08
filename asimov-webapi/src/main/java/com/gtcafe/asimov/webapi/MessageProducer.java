@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver;
+package com.gtcafe.asimov.webapi;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

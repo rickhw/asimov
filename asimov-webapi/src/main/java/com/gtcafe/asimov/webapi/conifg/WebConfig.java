@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver;
+package com.gtcafe.asimov.webapi.conifg;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

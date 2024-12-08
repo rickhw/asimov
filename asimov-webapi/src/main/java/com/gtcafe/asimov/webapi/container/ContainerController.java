@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.domain.container;
+package com.gtcafe.asimov.webapi.container;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

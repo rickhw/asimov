@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver.domain.container;
+package com.gtcafe.asimov.webapi.container;
 
 public class RetrieveContainerResponse {
 

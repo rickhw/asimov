@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver;
+package com.gtcafe.asimov.webapi;
 
 import javax.sql.DataSource;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.gtcafe.asimov.core.common.utils.Slogan;
 
 @Service
-public class InitializerHook implements ApplicationRunner  {
+public class Initializer implements ApplicationRunner  {
 
     // private static final Logger logger = LoggerFactory.getLogger(InitializerHook.class);
 
@@ -27,7 +27,7 @@ public class InitializerHook implements ApplicationRunner  {
 
     private final Environment env;
 
-    public InitializerHook(Environment env) {
+    public Initializer(Environment env) {
         this.env = env;
     }
 
