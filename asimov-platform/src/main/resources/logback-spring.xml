@@ -2,7 +2,7 @@
 <configuration>
 
     <!-- 設定 log 檔案儲存路徑 -->
-    <!-- <property name="LOG_PATH" value="/var/log/asimov" /> -->
+    <property name="LOG_PATH" value="./log" />
     
     <appender name="ConsoleJsonLine" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -14,14 +14,14 @@
     <!-- 定義 ROOT logger 並輸出到檔案 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 初始 log 檔案位置，僅用於當前日誌 -->
-        <!-- <file>${LOG_PATH}/current.log</file> -->
-        <file>current.log</file>
+        <file>${LOG_PATH}/current.log</file>
+        <!-- <file>current.log</file> -->
         
         <!-- 設定日誌滾動策略，設定檔案名稱和滾動規則 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 每天創建新檔案，依據日期命名 -->
-            <!-- <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}.log</fileNamePattern> -->
-            <fileNamePattern>%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- <fileNamePattern>%d{yyyy-MM-dd}.log</fileNamePattern> -->
             <!-- 保留半年內的 log -->
             <!-- <maxHistory>180</maxHistory> -->
             <maxHistory>2</maxHistory>
