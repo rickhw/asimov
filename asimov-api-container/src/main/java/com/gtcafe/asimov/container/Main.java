@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.webapi;
+package com.gtcafe.asimov.container;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

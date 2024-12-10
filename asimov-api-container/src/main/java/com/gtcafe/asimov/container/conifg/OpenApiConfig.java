@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.webapi.conifg;
+package com.gtcafe.asimov.container.conifg;
 
 import java.util.Arrays;
 

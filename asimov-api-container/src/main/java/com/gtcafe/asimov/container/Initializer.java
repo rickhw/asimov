@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.webapi;
+package com.gtcafe.asimov.container;
 
 import javax.sql.DataSource;
 
