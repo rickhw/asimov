@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.apiserver;
+package com.gtcafe.asimov.webapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

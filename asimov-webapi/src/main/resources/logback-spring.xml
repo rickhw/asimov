@@ -2,7 +2,7 @@
 <configuration>
 
     <!-- 設定 log 檔案儲存路徑 -->
-    <property name="LOG_PATH" value="./log" />
+    <property name="LOG_PATH" value="./logs" />
     
     <appender name="ConsoleJsonLine" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
