@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.tenant;
+package com.gtcafe.asimov.platform.tenant.infrastructure;
 
 import java.util.UUID;
 

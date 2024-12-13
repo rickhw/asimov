@@ -3,14 +3,14 @@ package com.gtcafe.asimov.platform.tenant.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.platform.config.MessageProducer;
-import com.gtcafe.asimov.platform.tenant.TenantEntity;
-import com.gtcafe.asimov.platform.tenant.TenantRepository;
-import com.gtcafe.asimov.platform.tenant.dto.RegisterTenantDTO;
 import com.gtcafe.asimov.core.common.utils.JsonUtils;
 import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
 import com.gtcafe.asimov.core.system.cache.CacheRepository;
 import com.gtcafe.asimov.core.system.constants.QueueName;
+import com.gtcafe.asimov.platform.config.MessageProducer;
+import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
+import com.gtcafe.asimov.platform.tenant.infrastructure.TenantRepository;
+import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
