@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.token;
+package com.gtcafe.asimov.platform.token.rest;
 
 import java.security.KeyPair;
 import java.security.PublicKey;

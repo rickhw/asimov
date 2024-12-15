@@ -4,7 +4,7 @@ package com.gtcafe.asimov.platform.task;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
-import com.gtcafe.asimov.platform.task.response.RetrieveTaskResponse;
+import com.gtcafe.asimov.platform.task.rest.response.RetrieveTaskResponse;
 
 
 @Service

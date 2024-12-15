@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.hello;
+package com.gtcafe.asimov.platform.hello.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,18 +24,15 @@ public class HelloService {
   @Autowired
   private JsonUtils jsonUtils;
 
-  public String sayHelloSync(String message) {
-    // SayHelloEvent event = new SayHelloEvent(message);
-    // producer.sendEvent(event, QueueName.SAY_HELLO_QUEUE_NAME);
+  public Hello sayHelloSync() {
 
-    // String taskJsonString = jsonUtils.modelToJsonString(event);
-    // cacheRepos.saveOrUpdateObject(event.getId(), taskJsonString);
+    Hello hello = new Hello("Hello, World!");
 
-    return message;
+    return hello;
 }
 
-  public SayHelloEvent sayHelloAsync(String message) {
-      SayHelloEvent event = new SayHelloEvent(message);
+  public SayHelloEvent sayHelloAsync(Hello hello) {
+      SayHelloEvent event = new SayHelloEvent(hello.getMessage());
       producer.sendEvent(event, QueueName.HELLO_QUEUE);
 
       String taskJsonString = jsonUtils.modelToJsonString(event);

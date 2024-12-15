@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.platform.task.response.RetrieveTaskResponse;
+import com.gtcafe.asimov.platform.task.rest.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.platform.tenant.domain.TenantService;
-import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantDTO;
-import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
+import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
 
 // @Tag(name = "API Metadata", description = "")
 @RestController
@@ -31,7 +30,7 @@ public class TenantController {
 
   @PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<RetrieveTaskResponse> registerAsync(
-      @RequestBody @Validated RegisterTenantDTO request) {
+      @RequestBody @Validated RegisterTenantRequest request) {
 
     // 1. validate the request --> by spring-boot-starter-validation
 
@@ -43,8 +42,7 @@ public class TenantController {
     // 4. gen the id
 
     // 5. create async task
-    RegisterTenantEvent event = _service.registerTenantAsync(request);
-    RetrieveTaskResponse res = new RetrieveTaskResponse(event);
+    RetrieveTaskResponse res = _service.registerTenantAsync(request);
 
     // 6. return the task status.
     return ResponseEntity.ok(res);

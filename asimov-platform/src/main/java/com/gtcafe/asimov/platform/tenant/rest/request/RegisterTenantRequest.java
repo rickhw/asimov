@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-public class RegisterTenantDTO {
+public class RegisterTenantRequest {
 
 	@NotBlank(message = "tenantKey cannot empty")
     @Size(max = 50, message = "tenantKey max lenght is 50.")

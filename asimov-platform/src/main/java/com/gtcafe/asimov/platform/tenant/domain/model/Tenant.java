@@ -20,7 +20,7 @@ public class Tenant {
 
 	@Setter
 	@Getter
-	private KeySet keyset;
+	private Identifier identifier;
 
 	@Setter
 	@Getter
@@ -33,7 +33,7 @@ public class Tenant {
 	public Tenant() {
 		this.kind = KindEnum.PLATFORM_TENANT;
 		this.apiVersion = VersionEnum.V1_ALPHA;
-		this.keyset = new KeySet();
+		this.identifier = new Identifier();
 		this.metadata = new Metadata();
 		this.spec = new Spec();
 	}

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-public class KeySet {
+public class Identifier {
 
  	/* write once, read manay by user */
      @Getter @Setter
@@ -21,7 +21,7 @@ public class KeySet {
      @JsonProperty("_tenantId")
      private String tenantId; 	// "t-1234567890"
 
-     public KeySet() {
+     public Identifier() {
         this.resourceId = UUID.randomUUID().toString();
     }
 

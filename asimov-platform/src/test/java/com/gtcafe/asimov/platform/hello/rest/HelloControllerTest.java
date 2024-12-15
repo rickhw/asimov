@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.hello;
+package com.gtcafe.asimov.platform.hello.rest;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;

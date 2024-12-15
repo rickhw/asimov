@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.tenant;
+package com.gtcafe.asimov.platform.tenant.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

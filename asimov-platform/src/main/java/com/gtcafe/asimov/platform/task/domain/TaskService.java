@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.task;
+package com.gtcafe.asimov.platform.task.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.gtcafe.asimov.core.common.utils.JsonUtils;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
 import com.gtcafe.asimov.core.system.cache.CacheRepository;
+import com.gtcafe.asimov.platform.task.TaskMapper;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.task.response;
+package com.gtcafe.asimov.platform.task.rest.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
@@ -7,8 +7,7 @@ import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
 import lombok.Getter;
 import lombok.Setter;
 
-
-public class RetrieveTaskResponse {
+public class RetrieveTaskResponse<T> {
 
     @Getter @Setter
     private String id;
@@ -24,9 +23,8 @@ public class RetrieveTaskResponse {
     @JsonProperty("_lastModified")
     private String lastModified;
 
-
     @Getter @Setter
-    private Object data;
+    private T data;
 
     public RetrieveTaskResponse() {}
 
@@ -34,7 +32,7 @@ public class RetrieveTaskResponse {
     public RetrieveTaskResponse(RegisterTenantEvent tdo) {
         this.id = tdo.getId();
         this.state = tdo.getState().toString();
-        this.data = tdo.getData();
+        // this.data = tdo.getData();
         this.creationTime = tdo.getCreationTime();
         this.lastModified = tdo.getLastModified();
     }
@@ -42,7 +40,7 @@ public class RetrieveTaskResponse {
     public RetrieveTaskResponse(SayHelloEvent tdo) {
         this.id = tdo.getId();
         this.state = tdo.getState().toString();
-        this.data = tdo.getData();
+        // this.data = tdo.getData();
         this.creationTime = tdo.getCreationTime();
         this.lastModified = tdo.getLastModified();
     }

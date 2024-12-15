@@ -8,9 +8,10 @@ import com.gtcafe.asimov.core.platform.tenant.RegisterTenantEvent;
 import com.gtcafe.asimov.core.system.cache.CacheRepository;
 import com.gtcafe.asimov.core.system.constants.QueueName;
 import com.gtcafe.asimov.platform.config.MessageProducer;
+import com.gtcafe.asimov.platform.task.rest.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantRepository;
-import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantDTO;
+import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +31,7 @@ public class TenantService {
     @Autowired
     private JsonUtils jsonUtils;
 
-    public RegisterTenantEvent registerTenantAsync(RegisterTenantDTO request) {
+    public RetrieveTaskResponse registerTenantAsync(RegisterTenantRequest request) {
         RegisterTenantEvent event = new RegisterTenantEvent();
         event.getData().setId(request.getTenantKey());
         String taskJsonString = jsonUtils.modelToJsonString(event);
@@ -49,6 +50,8 @@ public class TenantService {
         entity.setRootAccount(request.getRootAccount());
         repos.save(entity);
 
-        return event;
+        RetrieveTaskResponse res = new RetrieveTaskResponse(event);
+
+        return res;
     }
 }

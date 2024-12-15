@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.task;
+package com.gtcafe.asimov.platform.task.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.platform.task.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.core.platform.hello.SayHelloEvent;
+import com.gtcafe.asimov.platform.task.TaskMapper;
+import com.gtcafe.asimov.platform.task.domain.TaskService;
+import com.gtcafe.asimov.platform.task.rest.response.RetrieveTaskResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
