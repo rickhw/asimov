@@ -1,7 +1,6 @@
 # -----------------------------------------------------------------------------
 # Server (Tomcat)
 # -----------------------------------------------------------------------------
-## Product Metadata
 server:
   port: ${port:8080}
 
@@ -16,10 +15,9 @@ server:
 # -----------------------------------------------------------------------------
 # Sprinboot
 # -----------------------------------------------------------------------------
-#spring.main.banner-mode=off
 spring:
 #  main:
-#    banner-mode: off # see: https://stackoverflow.com/questions/26585959/how-to-disable-spring-boot-logo-in-stdout
+#    banner-mode: off
 
   application:
     name: Platform API Server
@@ -62,7 +60,7 @@ spring:
 # -----------------------------------------------------------------------------
 logging:
   path: ./logs
-  level.com.gtcafe.asimov.apiserver: DEBUG
+  level.com.gtcafe.asimov.platform: DEBUG
 
 springdoc:
   api-docs:
@@ -113,8 +111,27 @@ app:
 
 
 # -----------------------------------------------------------------------------
-# Security: JWT
+# Actuator Configuration
 # -----------------------------------------------------------------------------
-# gtcafe.app.jwtCookieName=gtcafe
-# gtcafe.app.jwtSecret= ======================Gtcafe=Spring===========================
-# gtcafe.app.jwtExpirationMs=86400000
+management:
+  endpoints:
+    web:
+      exposure:
+        # include: health,metrics,prometheus
+        include: metrics,prometheus
+
+    # health:
+    #   show-details: always
+
+    metrics:
+      tags:
+        application: ${spring.application.name}
+
+      # Custom Metrics Configuration
+      # enable:
+      #   all: true
+      #   jvm: true
+        # process: true
+      #   system: true
+      #   logback: true
+      #   tomcat: true

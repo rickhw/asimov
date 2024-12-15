@@ -20,10 +20,10 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    @Bean
-    public ICapacityUnit capacityUnit() {
-        return new ReentrantCapacityUnit();
-        // return new NormalCapacityUnit();
-    }
+    // @Bean
+    // public ICapacityUnit capacityUnit() {
+    //     return new ReentrantCapacityUnit();
+    //     // return new NormalCapacityUnit();
+    // }
 
 }

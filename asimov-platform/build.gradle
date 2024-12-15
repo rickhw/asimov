@@ -9,6 +9,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // openapi
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
     // rdb: mysql or maria, or pgsql
@@ -34,7 +36,6 @@ dependencies {
     // template engine
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     
-
      // 測試相關依賴
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.jayway.jsonpath:json-path'  // 支持 jsonPath
@@ -42,7 +43,11 @@ dependencies {
 
     // operation
     // implementation 'com.github.loki4j:loki-logback-appender:1.4.1'
-    // metric: TODO
+
+    // metric
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
 }
 
 //test {

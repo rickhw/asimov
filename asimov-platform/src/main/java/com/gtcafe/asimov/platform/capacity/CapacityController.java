@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.loki4j.slf4j.marker.LabelMarker;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/capacity")
+@Slf4j
 public class CapacityController {
-
-	// private final Logger LOG = LoggerFactory.getLogger(CapacityController.class);
 
 	@Autowired
 	private ICapacityUnit cu;
@@ -30,13 +29,16 @@ public class CapacityController {
 		// MDC.put("capacityUnit", Integer.toString(cu.getValue()));
 		// MDC.put("value", Integer.toString(cu.getValue()));
 
-		LabelMarker marker1 = LabelMarker.of("consumedValue", () -> Integer.toString(value));
-		LOG.info(marker1, "operate(), consumedValue: {}", value);
+		// LabelMarker marker1 = LabelMarker.of("consumedValue", () ->
+		// Integer.toString(value));
+		// LOG.info(marker1, "operate(), consumedValue: {}", value);
 
-		LabelMarker marker2 = LabelMarker.of("capacityUnit", () -> Integer.toString(cu.getValue()));
-		LOG.info(marker2, "operate(), totalCapcity: {}", cu.getValue());
+		// LabelMarker marker2 = LabelMarker.of("capacityUnit", () ->
+		// Integer.toString(cu.getValue()));
+		// LOG.info(marker2, "operate(), totalCapcity: {}", cu.getValue());
 
-		// LOG.info("operate(), totalCapcity: {}, consumedValue: {}", cu.getValue(), value);
+		// LOG.info("operate(), totalCapcity: {}, consumedValue: {}", cu.getValue(),
+		// value);
 
 		return cu.getValue();
 	}
@@ -63,19 +65,6 @@ public class CapacityController {
 		return cu.getValue();
 	}
 
-	// @GetMapping("/file")
-	// public int file(@RequestParam(required = true) Integer value) {
-
-	// 	System.out.println(new Date());
-	// 	try {
-	// 		Thread.sleep(value);
-	// 	} catch (Exception e) {
-	// 	}
-
-	// 	System.out.println(new Date());
-
-	// 	return cu.getValue();
-	// }
 
 	@GetMapping("/metric")
 	// public String file(@RequestParam(required = true) String metricName) {
