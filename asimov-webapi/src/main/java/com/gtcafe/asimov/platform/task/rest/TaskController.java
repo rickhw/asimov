@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.platform.hello.domain.HelloEvent;
 import com.gtcafe.asimov.platform.task.domain.TaskService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +28,7 @@ public class TaskController {
     // 1. validate: is not exist or expire.
 
     // 2. find the id in cache
-    HelloEvent tdo = _service.retrieveV4(id);
+    // HelloEvent tdo = _service.retrieveV4(id);
 
     // tdo.getData()
 

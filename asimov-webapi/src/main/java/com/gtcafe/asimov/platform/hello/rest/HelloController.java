@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gtcafe.asimov.core.platform.hello.Hello;
 import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
-import com.gtcafe.asimov.platform.hello.domain.Hello;
+import com.gtcafe.asimov.platform.hello.HelloMapper;
 import com.gtcafe.asimov.platform.hello.domain.HelloService;
 import com.gtcafe.asimov.platform.hello.rest.request.SayHelloRequest;
 import com.gtcafe.asimov.platform.hello.rest.response.HelloTaskResponse;
@@ -32,6 +33,9 @@ public class HelloController {
   @Autowired
   private HelloService _service;
 
+  @Autowired
+  private HelloMapper _mapper;
+
   @GetMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<SayHelloResponse> sayHelloSync() {
     Hello message = _service.sayHelloSync();
@@ -46,8 +50,9 @@ public class HelloController {
   ) {
 
     // if (HttpHeaderConstants.ASYNC_MODE.equalsIgnoreCase(requestMode)) {
+    Hello hello = _mapper.mapRequestToDomain(request);
 
-    HelloTaskResponse res = _service.sayHelloAsync(request.getHello());
+    HelloTaskResponse res = _service.sayHelloAsync(hello);
     //   RetrieveTaskResponse res = new RetrieveTaskResponse(event);
 
       return ResponseEntity.ok(res);

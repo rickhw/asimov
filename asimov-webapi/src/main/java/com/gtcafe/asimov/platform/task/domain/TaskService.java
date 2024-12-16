@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.core.system.cache.CacheRepository;
 import com.gtcafe.asimov.core.system.utils.JsonUtils;
-import com.gtcafe.asimov.platform.hello.domain.HelloEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,16 +33,16 @@ public class TaskService {
   //   return tdo;
   // }
 
-  public HelloEvent retrieveV4(String id) {
-    // 1. validate: is not exist or expire.
+  // public HelloEvent retrieveV4(String id) {
+  //   // 1. validate: is not exist or expire.
 
-    // 2. find the id in cache
-    String jsonString = _repos.retrieveObject(id);
-    HelloEvent tdo = jsonUtils.jsonStringToModel(jsonString, HelloEvent.class);
+  //   // 2. find the id in cache
+  //   String jsonString = _repos.retrieveObject(id);
+  //   HelloEvent tdo = jsonUtils.jsonStringToModel(jsonString, HelloEvent.class);
 
-    log.info("SayHelloEventV4: {}", jsonString);
+  //   log.info("SayHelloEventV4: {}", jsonString);
 
-    return tdo;
-  }
+  //   return tdo;
+  // }
 
 }

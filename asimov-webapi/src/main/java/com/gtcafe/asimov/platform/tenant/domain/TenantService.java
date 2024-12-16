@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.conifg.MessageProducer;
+import com.gtcafe.asimov.core.platform.tenant.Tenant;
+import com.gtcafe.asimov.core.platform.tenant.TenantEvent;
 import com.gtcafe.asimov.core.system.cache.CacheRepository;
 import com.gtcafe.asimov.core.system.constants.QueueName;
 import com.gtcafe.asimov.core.system.utils.JsonUtils;
-import com.gtcafe.asimov.platform.tenant.domain.model.Tenant;
+import com.gtcafe.asimov.platform.tenant.TenantMapper;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantRepository;
-import com.gtcafe.asimov.platform.tenant.rest.TenantMapper;
 import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
 import com.gtcafe.asimov.platform.tenant.rest.response.TenantTaskResponse;
 

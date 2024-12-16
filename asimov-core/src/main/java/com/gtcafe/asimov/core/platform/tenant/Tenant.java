@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.tenant.domain.model;
+package com.gtcafe.asimov.core.platform.tenant;
 
 import com.gtcafe.asimov.core.system.constants.KindEnum;
 import com.gtcafe.asimov.core.system.constants.VersionEnum;

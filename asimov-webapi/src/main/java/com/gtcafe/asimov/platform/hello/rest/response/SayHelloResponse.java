@@ -2,8 +2,8 @@ package com.gtcafe.asimov.platform.hello.rest.response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.gtcafe.asimov.core.platform.hello.Hello;
 import com.gtcafe.asimov.core.system.utils.TimeUtils;
-import com.gtcafe.asimov.platform.hello.domain.Hello;
 
 import lombok.Getter;
 import lombok.Setter;

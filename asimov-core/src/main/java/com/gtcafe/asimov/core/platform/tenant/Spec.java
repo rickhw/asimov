@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.tenant.domain.model;
+package com.gtcafe.asimov.core.platform.tenant;
 
 import lombok.Getter;
 import lombok.Setter;
