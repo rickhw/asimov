@@ -1,0 +1,7 @@
+{
+    "kind": "core.HelloAsimov",
+    "operationId": "sayHello",
+    "data": {
+        "message": "Hello, Master Asimov"
+    }
+}

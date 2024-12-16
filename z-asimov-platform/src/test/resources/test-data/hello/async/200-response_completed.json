@@ -1,0 +1,11 @@
+{
+  "id": "uuid-1234-5678-91013",
+  "metadata": {
+    "_kind": "platform.SayHello",
+    "_state": "completed",
+    "_type": "processing" // resource, record, processing (cpu-bound)
+  },
+  "data": {
+    "message": "Hello, Master Asimov"
+  }
+}

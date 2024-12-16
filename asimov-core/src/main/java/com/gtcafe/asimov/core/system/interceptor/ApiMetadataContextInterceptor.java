@@ -30,7 +30,7 @@ public class ApiMetadataContextInterceptor implements HandlerInterceptor {
         log.info("method: [{}], uri: [{}]", method, uri);
 
         ApiMetadataContext context = ApiMetadataContext.of(method, uri);
-        ApiMetadataContext.setCurrentContext(context);
+        ApiMetadataContext.SetCurrentContext(context);
 
         // MDC.put(TenantContext.X_TENANT_ID, tenantId);
         // MDC.put(TenantContext.X_APP_NAME, appName);
@@ -47,6 +47,6 @@ public class ApiMetadataContextInterceptor implements HandlerInterceptor {
         @SuppressWarnings("null") Object handler, 
         @SuppressWarnings("null") Exception ex
     ) {
-        TenantContext.clear();
+        TenantContext.Clear();
     }
 }

@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.gtcafe.asimov.core.common.bean.request.HttpRequestContextBean;
+import com.gtcafe.asimov.core.system.bean.request.HttpRequestContextBean;
+import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
 import com.gtcafe.asimov.core.system.context.HttpRequestContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,16 +30,16 @@ public class HttpRequestContextInterceptor implements HandlerInterceptor {
         @SuppressWarnings("null") HttpServletResponse response,  
         @SuppressWarnings("null") Object handler
     ) {
-        String requestId = request.getHeader(HttpRequestContext.X_REQUEST_ID);
+        String requestId = request.getHeader(HttpHeaderConstants.X_REQUEST_ID);
 
         if (!StringUtils.hasLength(requestId)) {
             requestId = httpRequestBean.getRequestId().getRequestId();
         }
 
         HttpRequestContext context = HttpRequestContext.of(requestId);
-        HttpRequestContext.setCurrentContext(context);
+        HttpRequestContext.SetCurrentContext(context);
 
-        MDC.put(HttpRequestContext.X_REQUEST_ID, requestId);
+        MDC.put(HttpHeaderConstants.X_REQUEST_ID, requestId);
 
         return true;
     }
@@ -50,6 +51,6 @@ public class HttpRequestContextInterceptor implements HandlerInterceptor {
         @SuppressWarnings("null") Object handler, 
         @SuppressWarnings("null") Exception ex
     ) {
-        HttpRequestContext.clear();
+        HttpRequestContext.Clear();
     }
 }

@@ -1,9 +1,9 @@
-package com.gtcafe.asimov.core.platform.tenant;
+// package com.gtcafe.asimov.core.platform.tenant;
 
-public enum TenantState {
-    PENDING,
-    ACTIVE,
-    INACTIVE,
-    SUSPENDED,
-    TERMINATED
-}
+// public enum TenantState {
+//     PENDING,
+//     ACTIVE,
+//     INACTIVE,
+//     SUSPENDED,
+//     TERMINATED
+// }

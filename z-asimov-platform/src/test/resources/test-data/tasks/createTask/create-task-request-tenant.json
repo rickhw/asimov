@@ -1,0 +1,9 @@
+{
+    "kind": "core.Tenant",
+    "operationId": "registerTenant",
+    "data": {
+        "tenantKey": "this-is-a-tenant",
+        "rootAccount": "rick@abc.com",
+        "description": "this is a tenant"
+    }
+}

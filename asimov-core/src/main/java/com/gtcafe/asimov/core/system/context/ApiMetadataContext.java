@@ -62,15 +62,15 @@ public class ApiMetadataContext {
         }
     }
 
-    public static ApiMetadataContext getCurrentContext() {
+    public static ApiMetadataContext GetCurrentContext() {
         return CONTEXT.get();
     }
 
-    public static void setCurrentContext(ApiMetadataContext context) {
+    public static void SetCurrentContext(ApiMetadataContext context) {
         CONTEXT.set(context);
     }
 
-    public static void clear() {
+    public static void Clear() {
         CONTEXT.remove();
     }
 

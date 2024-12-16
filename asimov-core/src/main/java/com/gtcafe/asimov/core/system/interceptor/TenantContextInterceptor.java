@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
 import com.gtcafe.asimov.core.system.context.TenantContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,9 +37,9 @@ public class TenantContextInterceptor implements HandlerInterceptor {
         //     return true;
         // }
 
-        String tenantId = request.getHeader(TenantContext.X_TENANT_ID);
-        String appName = request.getHeader(TenantContext.X_APP_NAME);
-        String roleName = request.getHeader(TenantContext.X_ROLE_NAME);
+        String tenantId = request.getHeader(HttpHeaderConstants.X_TENANT_ID);
+        String appName = request.getHeader(HttpHeaderConstants.X_APP_NAME);
+        String roleName = request.getHeader(HttpHeaderConstants.X_ROLE_NAME);
         // String requestId = request.getHeader(TenantContext.X_REQUEST_ID);
 
         // if (!StringUtils.hasLength(requestId)) {
@@ -50,11 +51,11 @@ public class TenantContextInterceptor implements HandlerInterceptor {
         }
 
         TenantContext context = TenantContext.of(tenantId, appName, roleName);
-        TenantContext.setCurrentContext(context);
+        TenantContext.SetCurrentContext(context);
 
-        MDC.put(TenantContext.X_TENANT_ID, tenantId);
-        MDC.put(TenantContext.X_APP_NAME, appName);
-        MDC.put(TenantContext.X_ROLE_NAME, roleName);
+        MDC.put(HttpHeaderConstants.X_TENANT_ID, tenantId);
+        MDC.put(HttpHeaderConstants.X_APP_NAME, appName);
+        MDC.put(HttpHeaderConstants.X_ROLE_NAME, roleName);
         // MDC.put(TenantContext.X_REQUEST_ID, requestId);
 
         return true;
@@ -67,6 +68,6 @@ public class TenantContextInterceptor implements HandlerInterceptor {
         @SuppressWarnings("null") Object handler, 
         @SuppressWarnings("null") Exception ex
     ) {
-        TenantContext.clear();
+        TenantContext.Clear();
     }
 }

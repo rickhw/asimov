@@ -1,0 +1,9 @@
+{
+    "kind": "core.Tenant",
+    "operationId": "registerTenant",
+    "returnCode": "500",
+    "errorCode": "E002",
+    "message": "failed to create task",
+    "detail": "",
+    "requestId": "75ac3d12-d237-4a81-8173-049e948906d4"
+}
