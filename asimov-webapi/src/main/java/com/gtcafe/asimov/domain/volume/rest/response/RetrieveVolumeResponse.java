@@ -1,6 +1,6 @@
-package com.gtcafe.asimov.container.rest.request;
+package com.gtcafe.asimov.domain.volume.rest.response;
 
-public class RetrieveContainerResponse {
+public class RetrieveVolumeResponse {
 
 	private Long id;
     private String accountName;

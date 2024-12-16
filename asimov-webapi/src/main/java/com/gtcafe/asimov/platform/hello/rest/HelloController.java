@@ -25,8 +25,8 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api")
-@Tag(name = "Hello", description = "Hello API")
+@RequestMapping("/api/v1alpha/hello")
+@Tag(name = "Platform/Hello", description = "Hello API")
 @Slf4j
 public class HelloController {
 
@@ -36,14 +36,14 @@ public class HelloController {
   @Autowired
   private HelloMapper _mapper;
 
-  @GetMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
+  @GetMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<SayHelloResponse> sayHelloSync() {
     Hello message = _service.sayHelloSync();
     SayHelloResponse res = new SayHelloResponse(message);
     return ResponseEntity.ok(res);
   }
 
-  @PostMapping(value = "/hello", produces = { MediaType.APPLICATION_JSON_VALUE })
+  @PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
   @Parameter(name = HttpHeaderConstants.X_REQUEST_MODE, description = "Request mode", example = "async", schema = @Schema(implementation = ExecMode.class))
   public ResponseEntity<HelloTaskResponse> sayHello(
       @Valid @RequestBody SayHelloRequest request

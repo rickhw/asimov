@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.platform.task.rest.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.platform.tenant.domain.TenantService;
 import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
 import com.gtcafe.asimov.platform.tenant.rest.response.TenantTaskResponse;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Tenant", description = "Tenant API")
+@Tag(name = "Platform/Tenant", description = "Tenant API")
 @RestController
-@RequestMapping("/api/tenants")
+@RequestMapping("/api/v1alpha/tenants")
 public class TenantController {
 
   @Autowired

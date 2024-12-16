@@ -13,9 +13,9 @@ import com.gtcafe.asimov.platform.task.domain.TaskService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
-@Tag(name = "Task", description = "Task API")
+@Tag(name = "Platform/Task", description = "Task API")
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/v1alpha/tasks")
 @Slf4j
 public class TaskController {
   // private static final Logger logger = LoggerFactory.getLogger(TaskController.class);

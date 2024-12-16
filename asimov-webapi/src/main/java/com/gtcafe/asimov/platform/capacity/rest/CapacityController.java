@@ -16,9 +16,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api/capacity")
+@RequestMapping("/api/v1alpha/capacity")
 @Slf4j
-@Tag(name = "Capacity", description = "Capacity API")
+@Tag(name = "Platform/Capacity", description = "Capacity API")
 public class CapacityController {
 
 	@Autowired

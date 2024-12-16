@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-@Tag(name = "Predefined API", description = "Entry Controller")
+@Tag(name = "System/PredefinedAPI", description = "Entry Controller")
 public class EntryController {
 
     @Autowired

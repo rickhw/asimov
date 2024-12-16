@@ -22,16 +22,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api/platform/token")
+@RequestMapping("/api/v1alpha/tokens")
 @Slf4j
-@Tag(name = "Token", description = "Token API")
+@Tag(name = "Platform/Token", description = "Token API")
 public class TokenController {
 
     @Autowired
     private KeyPair keyPair;
 
     // 1. 產生 JWT Token
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<Map<String, String>> generateToken(@RequestParam String username) {
         String token = Jwts.builder()
                 .setSubject(username)
@@ -46,7 +46,7 @@ public class TokenController {
     }
 
     // 2. 提供 Public Key
-    @GetMapping("/:pkey")
+    @GetMapping(":pkey")
     public ResponseEntity<String> getPublicKey() {
         PublicKey publicKey = keyPair.getPublic();
         String publicKeyString = "-----BEGIN PUBLIC KEY-----\n" +
@@ -56,7 +56,7 @@ public class TokenController {
     }
 
     // 3. 需要透過 Token 操作的 API
-    @GetMapping("/:validate")
+    @GetMapping(":validate")
     public ResponseEntity<String> secureData(@RequestHeader("Authorization") String authHeader) {
         try {
             String token = authHeader.replace("Bearer ", "");

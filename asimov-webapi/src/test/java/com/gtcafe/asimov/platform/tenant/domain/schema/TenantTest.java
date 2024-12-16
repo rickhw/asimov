@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import com.gtcafe.asimov.core.platform.tenant.State;
+import com.gtcafe.asimov.core.platform.tenant.Tenant;
 import com.gtcafe.asimov.core.system.constants.KindEnum;
-import com.gtcafe.asimov.platform.tenant.domain.model.State;
-import com.gtcafe.asimov.platform.tenant.domain.model.Tenant;
 
 public class TenantTest {
 
@@ -26,7 +26,8 @@ public class TenantTest {
 
         // 檢查 metadata 是否生成
         assertNotNull(tenant.getMetadata());  
-        // assertNotNull(tenant.getMetadata().getCreationTime());
+        assertNotNull(tenant.getMetadata().getCreationTime());
+        assertNotNull(tenant.getMetadata().getLastModified());
         assertEquals(State.PENDING, tenant.getMetadata().getState());  // 檢查 state 初始值
 
         // 檢查 spec 是否生成
