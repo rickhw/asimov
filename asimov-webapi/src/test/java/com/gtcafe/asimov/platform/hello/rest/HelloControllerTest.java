@@ -1,85 +1,71 @@
 package com.gtcafe.asimov.platform.hello.rest;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class HelloControllerTest {
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gtcafe.asimov.core.platform.hello.Hello;
+import com.gtcafe.asimov.core.system.utils.TimeUtils;
+import com.gtcafe.asimov.platform.hello.HelloMapper;
+import com.gtcafe.asimov.platform.hello.domain.HelloService;
+
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(HelloController.class)
+class HelloControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    // @Autowired
-    // private ObjectMapper objectMapper;  // 用於解析 JSON
+    @MockBean
+    private HelloService helloService;
 
-    private static final String TEST_DATA_PATH = "src/test/resources/test-data/hello/sync";
-    private static final String API_URI = "/api/hello";
+    @MockBean
+    private HelloMapper helloMapper;
 
+    @MockBean
+    private TimeUtils timeUtils;
 
-    @Test
-    void testHelloPost() throws Exception {
-        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-sync.json"), StandardCharsets.UTF_8);
-
-        mockMvc
-            .perform(
-                MockMvcRequestBuilders
-                    .post(API_URI)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestPayload)
-                )
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.message").value("Hello, Asimov"))  // 驗證靜態部分
-            .andExpect(jsonPath("$.launchTime", notNullValue()))      // 驗證時間部分存在
-            .andExpect(jsonPath("$.launchTime", containsString("2024"))); // 檢查時間大致正確
-            // .andExpect(content().string(expectedPayload));  // 驗證回應的內容
-    }
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
-    void testHelloPost_AbnormalCase1() throws Exception {
-        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-abnormal-case1.json"), StandardCharsets.UTF_8);
+    void sayHelloSync_ShouldReturnCorrectResponse() throws Exception {
+        // Arrange
+        String expectedTime = "2024-12-17T13:04:34.371Z";
+        Hello mockHello = Hello.builder().build();
+        mockHello.setMessage("Hello, World!");
 
-        mockMvc
-            .perform(
-                MockMvcRequestBuilders
-                    .post(API_URI)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestPayload)
-            )
-            .andExpect(
-                status().isBadRequest()
-            );
+        // 模擬 HelloService 和 TimeUtils 的行為
+        when(helloService.sayHelloSync()).thenReturn(mockHello);
+        when(timeUtils.currentTimeIso8601()).thenReturn(expectedTime);
+
+        // Act & Assert
+        mockMvc.perform(get("/api/v1alpha/hello")
+                .header("X-Tenant-Id", "t-123")
+                .header("X-AppName", "asimov")
+                .header("X-RoleName", "admin")
+                .accept(MediaType.APPLICATION_JSON))
+                // 驗證 HTTP Method 和 Header
+                .andExpect(status().isOk())
+                .andExpect(header().exists("Content-Type"))
+                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(header().exists("X-Request-Id")) // 假設 X-Request-Id 是自動生成的
+
+                // 驗證 JSON payload 正確性
+                .andExpect(jsonPath("$.message.message", is("Hello, World!")))
+                .andExpect(jsonPath("$.launchTime", is(expectedTime)));
     }
-
-    @Test
-    void testHelloPost_AbnormalCase2() throws Exception {
-        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-abnormal-case2.json"), StandardCharsets.UTF_8);
-
-        mockMvc
-            .perform(
-                MockMvcRequestBuilders
-                    .post(API_URI)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestPayload)
-            )
-            .andExpect(
-                status().isBadRequest()
-            );
-    }
-
-
 }
