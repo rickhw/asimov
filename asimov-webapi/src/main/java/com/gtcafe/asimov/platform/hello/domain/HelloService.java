@@ -34,7 +34,7 @@ public class HelloService {
 
     Hello hello =  Hello.builder()
       .message("Hello, World!")
-      .timestamp(timeUtils.currentTimeIso8601())
+      // .timestamp(timeUtils.currentTimeIso8601())
       .build();
 
     return hello;

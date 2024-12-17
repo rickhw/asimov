@@ -20,7 +20,7 @@ public class HelloMapper {
 
         return Hello.builder()
             .message(request.getMessage())
-            .timestamp(timeUtils.currentTimeIso8601())
+            // .timestamp(timeUtils.currentTimeIso8601())
             .build();
     }
 }

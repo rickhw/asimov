@@ -11,8 +11,8 @@ public class Hello {
     @Setter
     private String message;
 
-    @Getter
-    @Setter
-    private String timestamp;
+    // @Getter
+    // @Setter
+    // private String timestamp;
 
 }
