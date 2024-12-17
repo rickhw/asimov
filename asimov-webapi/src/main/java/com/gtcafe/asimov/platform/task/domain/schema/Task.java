@@ -27,4 +27,9 @@ public class Task<T> {
     @Getter @Setter
     private T data;
 
+    public Task() {
+        this.state = TaskState.PENDING;
+        this.id = java.util.UUID.randomUUID().toString();
+    }
+
 }

@@ -1,19 +1,19 @@
 @contentType = application/json
-@hostname = http://localhost:8080
+@hostname = http://localhost:8080/api/v1alpha/hello
 # @hostname = http://192.168.64.18:9080
 
 
 ### ---
-GET {{hostname}}/api/hello
+GET {{hostname}}
 
 ### -----
-GET {{hostname}}/api/hello
+GET {{hostname}}
 X-Tenant-Id: t-123
 X-AppName: asimov
 X-RoleName: admin
 
 ### normal case#1:
-POST {{hostname}}/api/hello
+POST {{hostname}}
 content-type: {{contentType}}
 X-Tenant-Id: t-123
 X-AppName: asimov

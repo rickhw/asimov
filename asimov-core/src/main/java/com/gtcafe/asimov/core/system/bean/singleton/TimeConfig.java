@@ -8,6 +8,7 @@ import lombok.Setter;
 
 @Component
 @ConfigurationProperties(prefix = "app.time")
+// @PropertySource("classpath:app.properties")
 public class TimeConfig {
 
     @Getter @Setter    

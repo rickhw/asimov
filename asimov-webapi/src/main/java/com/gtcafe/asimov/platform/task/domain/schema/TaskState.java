@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public enum TaskState {
     CREATING("Creating"),
-    Pending("Pending"),
+    PENDING("Pending"),
     RUNNING("Running"),
     COMPLETED("Completed"),
     FAILURE("Failure")

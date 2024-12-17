@@ -1,12 +1,10 @@
 package com.gtcafe.asimov.core.platform.hello;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.gtcafe.asimov.core.system.utils.TimeUtils;
-
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 public class Hello {
 
     @Getter
@@ -16,17 +14,5 @@ public class Hello {
     @Getter
     @Setter
     private String timestamp;
-
-    @Autowired
-    private TimeUtils timeUtils;
-
-    public Hello(String message) {
-        this.message = message;
-        this.timestamp = timeUtils.currentTimeIso8601();
-    }
-
-    public Hello() {
-        this("Hello, World!");
-    }
 
 }

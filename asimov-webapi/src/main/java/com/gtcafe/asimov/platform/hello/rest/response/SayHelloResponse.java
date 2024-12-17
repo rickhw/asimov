@@ -1,26 +1,18 @@
 package com.gtcafe.asimov.platform.hello.rest.response;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.gtcafe.asimov.core.platform.hello.Hello;
-import com.gtcafe.asimov.core.system.utils.TimeUtils;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 public class SayHelloResponse {
 
     @Getter @Setter
     private Hello message;
 
-    @Getter
+    @Getter @Setter
     private String launchTime;
 
-    @Autowired
-    private TimeUtils timeUtils;
-
-    public SayHelloResponse(Hello message) {
-        this.message = message;
-        this.launchTime = timeUtils.currentTimeIso8601();
-    }
 }

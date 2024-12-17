@@ -26,6 +26,11 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
     implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.15.0'
 
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.assertj:assertj-core:3.24.2' // AssertJ 驗證工具
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+
 }
 
 tasks.jar {
