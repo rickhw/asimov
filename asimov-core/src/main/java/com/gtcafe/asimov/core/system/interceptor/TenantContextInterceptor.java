@@ -46,9 +46,10 @@ public class TenantContextInterceptor implements HandlerInterceptor {
         //     requestId = httpRequestBean.getRequestId().getRequestId();
         // }
 
-        if (!StringUtils.hasLength(tenantId)) {
-            throw new IllegalArgumentException("TenantId is required");
-        }
+        // @TODO
+        // if (!StringUtils.hasLength(tenantId)) {
+        //     throw new IllegalArgumentException("TenantId is required");
+        // }
 
         TenantContext context = TenantContext.of(tenantId, appName, roleName);
         TenantContext.SetCurrentContext(context);

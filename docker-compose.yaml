@@ -1,10 +1,10 @@
 services:
-  app:
-    build: ./asimov-webapi
-    ports:
-      - "8080:8080"
-    networks:
-      - monitoring
+  # app:
+  #   build: ./asimov-webapi
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - monitoring
 
   api-gateway_apache-apisix:
     image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}

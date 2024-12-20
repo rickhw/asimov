@@ -61,8 +61,6 @@ public class TenantService {
         TenantEntity entity = mapper.mapTenantEntity(request);
         repos.save(entity);
 
-        
-
         return res;
     }
 }
