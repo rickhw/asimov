@@ -43,7 +43,7 @@ public class RegionService {
     return region;
   }
 
-
+  // Cache aside pattern
   public Region retrieve(String regionCode) {
     Region region = null;
 

@@ -55,7 +55,7 @@ spring:
 # -----------------------------------------------------------------------------
 logging:
   path: ./logs
-  level.com.gtcafe.asimov: DEBUG
+  level.com.gtcafe.asimov: INFO
 
 springdoc:
   api-docs:

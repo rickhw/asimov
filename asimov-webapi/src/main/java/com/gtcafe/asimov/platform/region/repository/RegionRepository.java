@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface RegionRepository extends JpaRepository<RegionEntity, Long>{
 
     RegionEntity findByRegionCode(String regionCode);
-
-    // RegionEntity saveAndFlush(RegionEntity entity);
+    
 }

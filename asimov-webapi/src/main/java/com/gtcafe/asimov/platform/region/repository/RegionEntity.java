@@ -2,6 +2,8 @@ package com.gtcafe.asimov.platform.region.repository;
 
 import java.util.UUID;
 
+import com.gtcafe.asimov.platform.region.schema.RegionState;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,8 +25,15 @@ public class RegionEntity {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "state")
+	private RegionState state;
+
+	@Column(name = "creation_time")
+	private long creationTime;
+
 	public RegionEntity() {
 		this.id = UUID.randomUUID().toString();
+		this.state = RegionState.AVAILABLE;
 	}
 
 }
