@@ -15,7 +15,8 @@ dependencies {
 
     // rdb: mysql or maria, or pgsql
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    // runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     // message queue
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
@@ -28,10 +29,9 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // for JSON processing
 
-
-    // implementation 'org.projectlombok:lombok:1.18.36'
-    // compileOnly 'org.projectlombok:lombok:1.18.36'
-    // annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    implementation 'org.projectlombok:lombok:1.18.36'
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
 
     // template engine
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

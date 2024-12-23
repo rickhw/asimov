@@ -4,7 +4,7 @@ services:
   #   ports:
   #     - "8080:8080"
   #   networks:
-  #     - monitoring
+  #     - net1
 
   api-gateway_apache-apisix:
     image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
@@ -18,24 +18,41 @@ services:
       - "9080:9080" # HTTP Proxy
       - "9443:9443" # HTTPS Proxy
     networks:
-      - monitoring
+      - net1
 
-  rdb_mysql:
-    image: mysql:8.0  # MySQL 官方映像支援 ARM
+  # rdb_mysql:
+  #   image: mysql:8.0  # MySQL 官方映像支援 ARM
+  #   environment:
+  #     MYSQL_DATABASE: asimov
+  #     MYSQL_ROOT_PASSWORD: password
+  #   ports:
+  #     - "3306:3306"
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+  #     timeout: 5s
+  #     retries: 5
+  #   volumes:
+  #     - ./.docker-data/rdb_mysql:/var/lib/mysql
+  #     # - ./init-scripts/init.ddl.sql:/docker-entrypoint-initdb.d/init.ddl.sql  # 加入初始化 SQL 檔案
+  #   networks:
+  #     - net1
+
+  rdb_mariadb:
+    image: mariadb:10.10  # 使用 MariaDB 官方映像，支援 ARM
     environment:
-      MYSQL_DATABASE: asimov
-      MYSQL_ROOT_PASSWORD: password
+      MARIADB_DATABASE: asimov
+      MARIADB_ROOT_PASSWORD: password
     ports:
       - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 5s
       retries: 5
     volumes:
-      - ./.docker-data/rdb_mysql:/var/lib/mysql
+      - ./.docker-data/rdb_mariadb:/var/lib/mysql
       # - ./init-scripts/init.ddl.sql:/docker-entrypoint-initdb.d/init.ddl.sql  # 加入初始化 SQL 檔案
     networks:
-      - monitoring
+      - net1
 
   cache_redis:
     image: redis:7.2-alpine  # Redis 官方映像支援 ARM
@@ -45,7 +62,7 @@ services:
       - ./.docker-data/cache_redis/.docker-data:/.docker-data
       - ./.docker-data/cache_redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
-      - monitoring
+      - net1
 
   queue_rabbitmq:
     image: rabbitmq:3.12-management-alpine  # RabbitMQ 官方映像支援 ARM
@@ -61,10 +78,9 @@ services:
       RABBITMQ_DEFAULT_PASS: password
     # command: bash /docker-entrypoint-init.d/init_rabbitmq.sh
     networks:
-      - monitoring
+      - net1
 
 ## -- adminer -- ##
-
 
   cache-adminer_phpRedisAdmin:
     image: erikdubbelboer/phpredisadmin:1.19  # 這個映像應該也能運行在 ARM 上
@@ -74,19 +90,19 @@ services:
       REDIS_1_HOST: cache_redis
       REDIS_1_NAME: localhost
     networks:
-      - monitoring
+      - net1
 
   rdb-adminer_phpmyadmin:
     image: phpmyadmin  # PhpMyAdmin 支援 ARM
     ports:
       - 9999:80
     links:
-      - rdb_mysql:db
+      - rdb_mariadb:db
     depends_on:
-      rdb_mysql:
+      rdb_mariadb:
         condition: service_healthy
     networks:
-      - monitoring
+      - net1
 
 ## -- O11y: metric, log, trace -- ##
 
@@ -99,7 +115,7 @@ services:
     ports:
       - "9200:9200"
     networks:
-      - monitoring
+      - net1
 
   dashboard_kibana:
     image: docker.elastic.co/kibana/kibana:8.16.1
@@ -109,7 +125,7 @@ services:
     depends_on:
       - search_elasticsearch
     networks:
-      - monitoring
+      - net1
 
   metric_prometheus:
     image: prom/prometheus:latest
@@ -118,7 +134,7 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
-      - monitoring
+      - net1
     depends_on:
       # - app
       - node-exporter
@@ -132,7 +148,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - monitoring
+      - net1
 
   logshipper_webapi-filebeat:
     image: docker.elastic.co/beats/filebeat:7.17.26
@@ -143,14 +159,14 @@ services:
     depends_on:
       - search_elasticsearch
     networks:
-      - monitoring
+      - net1
 
   node-exporter:
     image: prom/node-exporter:latest
     ports:
       - "9100:9100"
     networks:
-      - monitoring
+      - net1
     # volumes:
     #   - /proc:/host/proc:ro
     #   - /sys:/host/sys:ro
@@ -162,5 +178,5 @@ services:
 
 
 networks:
-  monitoring:
+  net1:
     driver: bridge

@@ -51,20 +51,20 @@ public class RegionController {
     return ResponseEntity.ok(RegionMapper.mapDomainToResponse(region));
   }
 
-  @GetMapping(value = "/{region-code}", produces = { MediaType.APPLICATION_JSON_VALUE })
+  @GetMapping(value = "/{code}", produces = { MediaType.APPLICATION_JSON_VALUE })
   @Schema(name = "Retrieve ", description = "")
   public ResponseEntity<RetrieveRegionResponse> retrieve(
-    @Parameter(name ="region-code", description = "regionCode", required = true) @PathVariable("region-code") String regionCode) {
+    @Parameter(name ="code", description = "region code", required = true) @PathVariable("code") String regionCode) {
 
     Region region = service.retrieve(regionCode);
     
     return ResponseEntity.ok(RegionMapper.mapDomainToResponse(region));
   }
 
-  @DeleteMapping(value = "/{region-code}", produces = { MediaType.APPLICATION_JSON_VALUE })
+  @DeleteMapping(value = "/{code}", produces = { MediaType.APPLICATION_JSON_VALUE })
   @Schema(name = "Delete ", description = "")
   public ResponseEntity<String> delete(
-    @Parameter(name ="region-code", description = "regionCode", required = true) @PathVariable String regionCode) {
+    @Parameter(name ="code", description = "region code", required = true) @PathVariable("code") String regionCode) {
 
     return ResponseEntity.ok(String.format("sent, eventId: [%s], message: [%s]"));
   }

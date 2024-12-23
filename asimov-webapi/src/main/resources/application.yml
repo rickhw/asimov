@@ -19,21 +19,30 @@ spring:
     name: WebAPI Server
 
   datasource:
-    url: jdbc:mysql://localhost:3306/asimov?allowPublicKeyRetrieval=true&useSSL=false
+    # url: jdbc:mysql://localhost:3306/asimov?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mariadb://localhost:3306/asimov?allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: password
-
+    driver-class-name: org.mariadb.jdbc.Driver
+  # jpa:
+  #   hibernate:
+  #     ddl-auto: update
+  #   properties:
+  #     hibernate:
+  #       dialect: org.hibernate.dialect.MariaDBDialect
   jpa:
+    open-in-view: false
     hibernate:
-      dialect: org.hibernate.dialect.MySQLDialect
+      # dialect: org.hibernate.dialect.MySQLDialect
+      dialect: org.hibernate.dialect.MariaDBDialect
 
       # https://stackoverflow.com/questions/51136693/how-to-check-hikaricp-connection-pooling-is-working-or-not-in-java
       # lsof -nP -i :3306 -sTCP:ESTABLISHED
       # ss -46 -np state established dport = :3306 | grep 'java' | sort -r -k 3,3 | nl
       # netstat -ant | grep 3306
-      # hikari:
-      #   maximumPoolSize: 5
-      #   minimumIdle: 5
+      hikari:
+        maximumPoolSize: 5
+        minimumIdle: 5
       ddl-auto: update
 
   rabbitmq:
@@ -54,8 +63,11 @@ spring:
 # logback
 # -----------------------------------------------------------------------------
 logging:
-  path: ./logs
-  level.com.gtcafe.asimov: INFO
+  # path: ./logs
+  level:
+    com.gtcafe.asimov: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 springdoc:
   api-docs:
