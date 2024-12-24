@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.region;
+package com.gtcafe.asimov.platform.region.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.gtcafe.asimov.core.system.cache.CacheRepository;
 import com.gtcafe.asimov.core.system.utils.JsonUtils;
 import com.gtcafe.asimov.core.system.utils.TimeUtils;
+import com.gtcafe.asimov.platform.region.RegionMapper;
 import com.gtcafe.asimov.platform.region.repository.RegionEntity;
 import com.gtcafe.asimov.platform.region.repository.RegionRepository;
 import com.gtcafe.asimov.platform.region.schema.Region;

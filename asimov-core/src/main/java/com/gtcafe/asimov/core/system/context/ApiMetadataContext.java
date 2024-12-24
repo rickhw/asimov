@@ -51,13 +51,13 @@ public class ApiMetadataContext {
         this.kind = "unknown";
 
         String key = method + ":" + uri;
-        log.info("key: [{}]", key);
+        log.debug("key: [{}]", key);
         
         try {
             this.operationId = operationIdMap.get(key);
             this.kind = kindMap.get(key);    
 
-            log.info("operationId: [{}], kind: [{}]", operationId, kind);
+            log.debug("operationId: [{}], kind: [{}]", operationId, kind);
         } catch (Exception e) {
         }
     }

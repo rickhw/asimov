@@ -3,7 +3,6 @@ package com.gtcafe.asimov.platform.region.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.platform.region.RegionMapper;
-import com.gtcafe.asimov.platform.region.RegionService;
-import com.gtcafe.asimov.platform.region.repository.RegionEntity;
+import com.gtcafe.asimov.platform.region.domain.RegionService;
 import com.gtcafe.asimov.platform.region.rest.request.CreateRegionRequest;
 import com.gtcafe.asimov.platform.region.rest.response.RetrieveRegionResponse;
 import com.gtcafe.asimov.platform.region.schema.Region;

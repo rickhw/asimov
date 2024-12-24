@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.gtcafe.asimov.core.system.interceptor.ApiMetadataContextInterceptor;
 import com.gtcafe.asimov.core.system.interceptor.HttpRequestContextInterceptor;
 import com.gtcafe.asimov.core.system.interceptor.TenantContextInterceptor;
 
@@ -13,12 +12,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     private final TenantContextInterceptor tenantContextInterceptor;
     private final HttpRequestContextInterceptor httpRequestContextInterceptor;
-    private final ApiMetadataContextInterceptor apiMetadataContextInterceptor;
 
-    public WebConfig(TenantContextInterceptor tenantContextInterceptor, HttpRequestContextInterceptor httpRequestContextInterceptor, ApiMetadataContextInterceptor apiMetadataContextInterceptor) {
+    public WebConfig(TenantContextInterceptor tenantContextInterceptor, HttpRequestContextInterceptor httpRequestContextInterceptor) {
         this.tenantContextInterceptor = tenantContextInterceptor;
         this.httpRequestContextInterceptor = httpRequestContextInterceptor;
-        this.apiMetadataContextInterceptor = apiMetadataContextInterceptor;
     }
 
     @Override
@@ -41,10 +38,6 @@ public class WebConfig implements WebMvcConfigurer {
 
         // 需要產生 HttpRequestContextInterceptor 的 Bean
         registry.addInterceptor(httpRequestContextInterceptor)
-                .addPathPatterns("/**");
-
-        // 產生 ApiMetadataContextInterceptor 的 Bean
-        registry.addInterceptor(apiMetadataContextInterceptor)
                 .addPathPatterns("/**");
 
     }

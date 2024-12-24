@@ -2,7 +2,6 @@ package com.gtcafe.asimov.core.system.interceptor;
 
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
@@ -27,8 +26,8 @@ public class TenantContextInterceptor implements HandlerInterceptor {
         @SuppressWarnings("null") Object handler
     ) {
         
-        String uri = request.getRequestURI();
-        log.info("uri: {}", uri);
+        // String uri = request.getRequestURI();
+        // log.debug("uri: {}", uri);
 
         // if (uri.startsWith("/health") || uri.startsWith("/metrics") 
         //     || uri.equals("/")
@@ -57,7 +56,6 @@ public class TenantContextInterceptor implements HandlerInterceptor {
         MDC.put(HttpHeaderConstants.X_TENANT_ID, tenantId);
         MDC.put(HttpHeaderConstants.X_APP_NAME, appName);
         MDC.put(HttpHeaderConstants.X_ROLE_NAME, roleName);
-        // MDC.put(TenantContext.X_REQUEST_ID, requestId);
 
         return true;
     }
