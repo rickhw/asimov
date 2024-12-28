@@ -1,7 +1,3 @@
-plugins {
-    id 'java'
-}
-
 allprojects {
     group = 'com.gtcafe.asimov'
     version = '1.0.0'

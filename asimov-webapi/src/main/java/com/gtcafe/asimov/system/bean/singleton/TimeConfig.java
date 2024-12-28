@@ -1,0 +1,20 @@
+package com.gtcafe.asimov.system.bean.singleton;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Component
+@ConfigurationProperties(prefix = "app.time")
+// @PropertySource("classpath:app.properties")
+public class TimeConfig {
+
+    @Getter @Setter    
+    private String zone;
+
+    @Getter @Setter
+    private String format;
+
+}

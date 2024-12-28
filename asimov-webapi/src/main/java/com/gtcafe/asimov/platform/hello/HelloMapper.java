@@ -3,9 +3,9 @@ package com.gtcafe.asimov.platform.hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.core.platform.hello.Hello;
-import com.gtcafe.asimov.core.system.utils.TimeUtils;
+import com.gtcafe.asimov.platform.hello.model.Hello;
 import com.gtcafe.asimov.platform.hello.rest.request.SayHelloRequest;
+import com.gtcafe.asimov.system.utils.TimeUtils;
 
 @Service
 public class HelloMapper {

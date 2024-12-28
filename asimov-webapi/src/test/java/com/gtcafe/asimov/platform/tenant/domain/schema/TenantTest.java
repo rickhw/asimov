@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import com.gtcafe.asimov.core.platform.tenant.State;
-import com.gtcafe.asimov.core.platform.tenant.Tenant;
-import com.gtcafe.asimov.core.system.constants.KindEnum;
+import com.gtcafe.asimov.platform.tenant.model.State;
+import com.gtcafe.asimov.platform.tenant.model.Tenant;
+import com.gtcafe.asimov.system.constants.KindEnum;
 
 public class TenantTest {
 

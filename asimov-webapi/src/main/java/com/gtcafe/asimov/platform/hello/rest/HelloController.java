@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.core.platform.hello.Hello;
-import com.gtcafe.asimov.core.system.constants.HttpHeaderConstants;
-import com.gtcafe.asimov.core.system.utils.TimeUtils;
 import com.gtcafe.asimov.platform.hello.HelloMapper;
 import com.gtcafe.asimov.platform.hello.domain.HelloService;
+import com.gtcafe.asimov.platform.hello.model.Hello;
 import com.gtcafe.asimov.platform.hello.rest.request.SayHelloRequest;
 import com.gtcafe.asimov.platform.hello.rest.response.HelloTaskResponse;
 import com.gtcafe.asimov.platform.hello.rest.response.SayHelloResponse;
-import com.gtcafe.asimov.platform.task.domain.schema.ExecMode;
+import com.gtcafe.asimov.platform.task.schema.ExecMode;
+import com.gtcafe.asimov.system.constants.HttpHeaderConstants;
+import com.gtcafe.asimov.system.utils.TimeUtils;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;

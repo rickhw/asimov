@@ -17,10 +17,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gtcafe.asimov.core.platform.hello.Hello;
-import com.gtcafe.asimov.core.system.utils.TimeUtils;
 import com.gtcafe.asimov.platform.hello.HelloMapper;
 import com.gtcafe.asimov.platform.hello.domain.HelloService;
+import com.gtcafe.asimov.platform.hello.model.Hello;
+import com.gtcafe.asimov.system.utils.TimeUtils;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(HelloController.class)

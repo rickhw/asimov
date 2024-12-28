@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.conifg.MessageProducer;
-import com.gtcafe.asimov.core.platform.hello.Hello;
-import com.gtcafe.asimov.core.platform.hello.HelloEvent;
-import com.gtcafe.asimov.core.system.cache.CacheRepository;
-import com.gtcafe.asimov.core.system.constants.QueueName;
-import com.gtcafe.asimov.core.system.utils.JsonUtils;
-import com.gtcafe.asimov.core.system.utils.TimeUtils;
+import com.gtcafe.asimov.platform.hello.model.Hello;
+import com.gtcafe.asimov.platform.hello.model.HelloEvent;
 import com.gtcafe.asimov.platform.hello.rest.response.HelloTaskResponse;
+import com.gtcafe.asimov.system.cache.CacheRepository;
+import com.gtcafe.asimov.system.constants.QueueName;
+import com.gtcafe.asimov.system.utils.JsonUtils;
+import com.gtcafe.asimov.system.utils.TimeUtils;
 
 import lombok.extern.slf4j.Slf4j;
 

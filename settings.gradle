@@ -6,7 +6,7 @@ rootProject.name = 'asimov'
 include 'asimov-webapi'
 include 'asimov-consumer'       // depends on core
 
-include 'asimov-core'           // common libraries and domain core which only data model, w/o dependencies
+// include 'asimov-core'           // common libraries and domain core which only data model, w/o dependencies
 
 
 

@@ -1,7 +1,7 @@
 package com.gtcafe.asimov.platform.hello.rest.response;
 
-import com.gtcafe.asimov.core.platform.hello.Hello;
-import com.gtcafe.asimov.platform.task.domain.schema.Task;
+import com.gtcafe.asimov.platform.hello.model.Hello;
+import com.gtcafe.asimov.platform.task.schema.Task;
 
 public class HelloTaskResponse extends Task<Hello> {
 

@@ -22,21 +22,34 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/v1alpha/regions")
+@RequestMapping("/api/v1alpha")
 @Tag(name = "Platform/Region", description = "Region APIs")
 public class RegionController {
 
   @Autowired
   private RegionService service;
 
-  @GetMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
+  @GetMapping(value = "/regions", produces = { MediaType.APPLICATION_JSON_VALUE })
   @Schema(name = "Query", description = "")
   public ResponseEntity<String> query() {
     return ResponseEntity.ok("ok");
   }
 
+  @GetMapping(value = "/regions:flush", produces = { MediaType.APPLICATION_JSON_VALUE })
+  @Schema(name = "Flush the data in cache", description = "")
+  public ResponseEntity<String> flush() {
+    //  try {
+      service.flush();
+        // } catch (ConcurrentOperationException e) {
+        //     // 處理併發情況
+        // } catch (Exception e) {
+        //     // 處理其他錯誤
+        // }
+    return ResponseEntity.ok("ok");
+  }
 
-  @PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
+
+  @PostMapping(value = "/regions", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE })
   @Schema(name = "Create", description = "")
   public ResponseEntity<RetrieveRegionResponse> create(
       @RequestBody
@@ -49,7 +62,7 @@ public class RegionController {
     return ResponseEntity.ok(RegionMapper.mapDomainToResponse(region));
   }
 
-  @GetMapping(value = "/{code}", produces = { MediaType.APPLICATION_JSON_VALUE })
+  @GetMapping(value = "/regions/{code}")
   @Schema(name = "Retrieve ", description = "")
   public ResponseEntity<RetrieveRegionResponse> retrieve(
     @Parameter(name ="code", description = "region code", required = true) @PathVariable("code") String regionCode) {
@@ -59,7 +72,7 @@ public class RegionController {
     return ResponseEntity.ok(RegionMapper.mapDomainToResponse(region));
   }
 
-  @DeleteMapping(value = "/{code}", produces = { MediaType.APPLICATION_JSON_VALUE })
+  @DeleteMapping(value = "/regions/{code}", produces = { MediaType.APPLICATION_JSON_VALUE })
   @Schema(name = "Delete ", description = "")
   public ResponseEntity<String> delete(
     @Parameter(name ="code", description = "region code", required = true) @PathVariable("code") String regionCode) {

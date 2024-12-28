@@ -2,8 +2,8 @@ package com.gtcafe.asimov.platform.tenant;
 
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.core.platform.tenant.Tenant;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
+import com.gtcafe.asimov.platform.tenant.model.Tenant;
 import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
 
 @Service
