@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.system.queue.QueueConfig;
 import com.gtcafe.asimov.system.queue.RabbitInitializer;
-import com.gtcafe.asimov.system.queue.event.Event;
+import com.gtcafe.asimov.system.queue.model.Event;
 import com.gtcafe.asimov.system.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;

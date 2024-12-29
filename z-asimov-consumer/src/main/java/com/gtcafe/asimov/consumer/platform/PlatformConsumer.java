@@ -10,6 +10,7 @@ import com.gtcafe.asimov.core.system.cache.CacheRepository;
 import com.gtcafe.asimov.core.system.constants.QueueName;
 import com.gtcafe.asimov.core.system.event.IMessage;
 import com.gtcafe.asimov.core.system.utils.JsonUtils;
+import com.gtcafe.asimov.platform.hello.HelloEventHandler;
 
 import lombok.extern.slf4j.Slf4j;
 

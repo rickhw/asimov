@@ -4,8 +4,8 @@ package com.gtcafe.asimov.system.constants;
 public final class QueueName {
 
 	// Domains
-	public final static String REGISTER_TENANT = "platform.tenant.pending-to-active";
-	public final static String DEREGISTER_TENANT = "platform.tenant.active-to-inactive";
+	// public final static String REGISTER_TENANT = "platform.tenant.pending-to-active";
+	// public final static String DEREGISTER_TENANT = "platform.tenant.active-to-inactive";
 
 	// Platform
 	public final static String HELLO_QUEUE = "asimov.platform.hello";

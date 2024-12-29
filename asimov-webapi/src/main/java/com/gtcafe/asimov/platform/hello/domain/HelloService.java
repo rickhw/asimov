@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.conifg.MessageProducer;
+import com.gtcafe.asimov.platform.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.platform.hello.model.Hello;
-import com.gtcafe.asimov.platform.hello.model.HelloEvent;
 import com.gtcafe.asimov.platform.hello.rest.response.HelloTaskResponse;
 import com.gtcafe.asimov.system.cache.CacheRepository;
 import com.gtcafe.asimov.system.constants.QueueName;
@@ -43,6 +43,7 @@ public class HelloService {
   public HelloTaskResponse sayHelloAsync(Hello hello) {
     HelloEvent event = new HelloEvent(hello);
 
+    // sent to queue
     producer.sendEvent(event, QueueName.HELLO_QUEUE);
 
     String taskJsonString = jsonUtils.modelToJsonString(event);

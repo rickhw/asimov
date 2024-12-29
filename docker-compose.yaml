@@ -1,4 +1,4 @@
-version: '3.8'
+#version: '3.8'
 services:
   api-gateway_apache-apisix:
     image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}

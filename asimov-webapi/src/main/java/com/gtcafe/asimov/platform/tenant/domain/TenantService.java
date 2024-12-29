@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.conifg.MessageProducer;
 import com.gtcafe.asimov.platform.tenant.TenantMapper;
+import com.gtcafe.asimov.platform.tenant.consumer.TenantEvent;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantRepository;
 import com.gtcafe.asimov.platform.tenant.model.Tenant;
-import com.gtcafe.asimov.platform.tenant.model.TenantEvent;
 import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
 import com.gtcafe.asimov.platform.tenant.rest.response.TenantTaskResponse;
 import com.gtcafe.asimov.system.cache.CacheRepository;
@@ -52,7 +52,7 @@ public class TenantService {
         /// persist
 
         // 1. send the event to the queue
-        producer.sendEvent(event, QueueName.REGISTER_TENANT);
+        producer.sendEvent(event, QueueName.TENANT_QUEUE);
 
         // 2. store the task in the cache
         cacheRepos.saveOrUpdateObject(event.getEventId(), taskJsonString);
