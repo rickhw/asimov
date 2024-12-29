@@ -78,6 +78,8 @@ public class RabbitInitializer {
                         rabbitAdmin.declareExchange(exchange);
                         rabbitAdmin.declareBinding(BindingBuilder.bind(queue).to(exchange).with(config.getRoutingKey()));
                     }
+
+                    queueMap.put(config.getName(), config);
                 }
                 System.out.println("RabbitMQ Queues, Exchanges, and Bindings initialized.");
             }

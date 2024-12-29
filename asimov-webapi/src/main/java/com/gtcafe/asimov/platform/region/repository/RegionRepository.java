@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository 
+// @JpaSpecificationExecutor  // 如果需要動態查詢可以加上這個
 public interface RegionRepository extends JpaRepository<RegionEntity, Long>{
 
     RegionEntity findByRegionCode(String regionCode);

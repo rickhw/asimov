@@ -3,9 +3,8 @@ package com.gtcafe.asimov.platform.tenant.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.conifg.MessageProducer;
 import com.gtcafe.asimov.platform.tenant.TenantMapper;
-import com.gtcafe.asimov.platform.tenant.consumer.TenantEvent;
+import com.gtcafe.asimov.platform.tenant.consumer.TenantTaskEvent;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantRepository;
 import com.gtcafe.asimov.platform.tenant.model.Tenant;
@@ -13,6 +12,7 @@ import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
 import com.gtcafe.asimov.platform.tenant.rest.response.TenantTaskResponse;
 import com.gtcafe.asimov.system.cache.CacheRepository;
 import com.gtcafe.asimov.system.constants.QueueName;
+import com.gtcafe.asimov.system.queue.MessageProducer;
 import com.gtcafe.asimov.system.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ public class TenantService {
         TenantTaskResponse res = new TenantTaskResponse();
         res.setData(tenant);
         
-        TenantEvent event = new TenantEvent(tenant);
+        TenantTaskEvent event = new TenantTaskEvent(tenant);
         String taskJsonString = jsonUtils.modelToJsonString(event);
         
         //////////////////////////////
@@ -55,7 +55,7 @@ public class TenantService {
         producer.sendEvent(event, QueueName.TENANT_QUEUE);
 
         // 2. store the task in the cache
-        cacheRepos.saveOrUpdateObject(event.getEventId(), taskJsonString);
+        cacheRepos.saveOrUpdateObject(event.getId(), taskJsonString);
 
         // 3. store the tenant in the database
         TenantEntity entity = mapper.mapTenantEntity(request);

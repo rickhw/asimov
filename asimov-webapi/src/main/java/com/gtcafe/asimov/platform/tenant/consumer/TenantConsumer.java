@@ -25,12 +25,12 @@ public class TenantConsumer {
 
     @RabbitListener(queues = QueueName.TENANT_QUEUE)
     public  void consumeTenantQueue(String eventString) {
-        TenantEvent event = jsonUtils.jsonStringToModel(eventString, TenantEvent.class);
+        TenantTaskEvent event = jsonUtils.jsonStringToModel(eventString, TenantTaskEvent.class);
 
         // 變更 Task 狀態至 RUNNING 並更新 cache
         // event.transit(TaskState.RUNNING);
 
-        cacheRepos.saveOrUpdateObject(event.getEventId(), eventString);
+        cacheRepos.saveOrUpdateObject(event.getId(), eventString);
 
         eventHandler.handleEvent(event);
 

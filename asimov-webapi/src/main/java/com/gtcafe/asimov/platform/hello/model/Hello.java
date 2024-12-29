@@ -1,10 +1,10 @@
 package com.gtcafe.asimov.platform.hello.model;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
+@NoArgsConstructor
 public class Hello {
 
     @Getter

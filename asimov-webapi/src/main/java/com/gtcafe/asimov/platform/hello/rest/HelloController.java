@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.platform.hello.HelloMapper;
+import com.gtcafe.asimov.platform.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.platform.hello.domain.HelloService;
 import com.gtcafe.asimov.platform.hello.model.Hello;
 import com.gtcafe.asimov.platform.hello.rest.request.SayHelloRequest;
 import com.gtcafe.asimov.platform.hello.rest.response.HelloTaskResponse;
 import com.gtcafe.asimov.platform.hello.rest.response.SayHelloResponse;
+import com.gtcafe.asimov.platform.task.rest.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.platform.task.schema.ExecMode;
 import com.gtcafe.asimov.system.constants.HttpHeaderConstants;
 import com.gtcafe.asimov.system.utils.TimeUtils;
@@ -56,14 +58,15 @@ public class HelloController {
 
   @PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
   @Parameter(name = HttpHeaderConstants.X_REQUEST_MODE, description = "Request mode", example = "async", schema = @Schema(implementation = ExecMode.class))
-  public ResponseEntity<HelloTaskResponse> sayHello(
+  public ResponseEntity<HelloTaskResponse> sayHelloAsync(
       @Valid @RequestBody SayHelloRequest request
   ) {
 
     // if (HttpHeaderConstants.ASYNC_MODE.equalsIgnoreCase(requestMode)) {
     Hello hello = _mapper.mapRequestToDomain(request);
-    HelloTaskResponse res = _service.sayHelloAsync(hello);
-    //   RetrieveTaskResponse res = new RetrieveTaskResponse(event);
+    HelloEvent event = _service.sayHelloAsync(hello);
+
+    HelloTaskResponse res = _mapper.mapHelloEventToResponse(event);
 
     return ResponseEntity.ok(res);
     // } else {

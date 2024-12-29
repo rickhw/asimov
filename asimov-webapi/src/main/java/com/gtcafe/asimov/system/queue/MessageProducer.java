@@ -1,12 +1,10 @@
-package com.gtcafe.asimov.conifg;
+package com.gtcafe.asimov.system.queue;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.system.queue.QueueConfig;
-import com.gtcafe.asimov.system.queue.RabbitInitializer;
-import com.gtcafe.asimov.system.queue.model.Event;
+import com.gtcafe.asimov.platform.task.schema.Task;
 import com.gtcafe.asimov.system.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +22,11 @@ public class MessageProducer {
     @Autowired
     private JsonUtils jsonUtils;
 
-    public <T extends Event<?>> T sendEvent(T event, String queueName) {
+    public <T extends Task<?>> T sendEvent(T event, String queueName) {
         QueueConfig queueConfig = rabbitInitizlizer.getQueueConfig(queueName);
 
         if (queueConfig == null) {
-            log.error("Queue config not found for {}", queueName);
+            log.error("Queue config not found for [{}]", queueName);
             return null;
         }
 

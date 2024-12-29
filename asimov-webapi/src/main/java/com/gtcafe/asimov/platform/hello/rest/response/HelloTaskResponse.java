@@ -9,4 +9,8 @@ public class HelloTaskResponse extends Task<Hello> {
         super();
         this.setData(hello);
     }
+
+    public HelloTaskResponse() {
+        super();
+    }
 }
