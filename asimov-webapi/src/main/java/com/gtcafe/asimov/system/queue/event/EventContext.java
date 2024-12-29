@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.event;
+package com.gtcafe.asimov.system.queue.event;
 
 import com.gtcafe.asimov.system.context.ApiMetadataContext;
 import com.gtcafe.asimov.system.context.HttpRequestContext;

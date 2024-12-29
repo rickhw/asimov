@@ -1,6 +1,6 @@
 package com.gtcafe.asimov.platform.tenant.model;
 
-import com.gtcafe.asimov.system.event.Event;
+import com.gtcafe.asimov.system.queue.event.Event;
 
 import lombok.Builder;
 

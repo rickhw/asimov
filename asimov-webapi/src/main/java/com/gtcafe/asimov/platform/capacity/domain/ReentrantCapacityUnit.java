@@ -2,9 +2,7 @@ package com.gtcafe.asimov.platform.capacity.domain;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.css.Counter;
 
 // import io.micrometer.core.instrument.MeterRegistry;
 

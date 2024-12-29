@@ -4,9 +4,9 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.system.event.Event;
 import com.gtcafe.asimov.system.queue.QueueConfig;
 import com.gtcafe.asimov.system.queue.RabbitInitializer;
+import com.gtcafe.asimov.system.queue.event.Event;
 import com.gtcafe.asimov.system.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.event;
+package com.gtcafe.asimov.system.queue.event;
 
 import lombok.Getter;
 import lombok.Setter;

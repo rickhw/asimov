@@ -1,6 +1,6 @@
 package com.gtcafe.asimov.platform.hello.model;
 
-import com.gtcafe.asimov.system.event.Event;
+import com.gtcafe.asimov.system.queue.event.Event;
 
 // @ToString
 // @Builder
