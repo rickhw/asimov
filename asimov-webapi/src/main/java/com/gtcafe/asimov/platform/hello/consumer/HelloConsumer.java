@@ -27,7 +27,7 @@ public class HelloConsumer {
 
     @RabbitListener(queues = QueueName.HELLO_QUEUE)
     public void consumeHelloQueue(String eventString) {
-        log.info("Received message: [{}]", eventString);
+        // log.info("Received message: [{}]", eventString);
 
         // convert json string to model
         HelloEvent event = jsonUtils.jsonStringToModel(eventString, HelloEvent.class);
@@ -41,17 +41,9 @@ public class HelloConsumer {
         String afterEventString = jsonUtils.modelToJsonString(event);
         cacheRepos.saveOrUpdateObject(cachedKey, afterEventString);
 
-        
         // start processing (running)
         eventHandler.handleEvent(event);
-        // 根據 data 類型取得相應的處理器並執行處理邏輯
-        // SayHelloMessage data = event.getData();
-        // EventHandler<T> handler = eventHandlerRegistry.getHandler(data.getClass());
-        // if (handler != null) {
-        //     handler.handleEvent(event);
-        // } else {
-        //     log.warn("No handler found for event type: {}", data.getClass());
-        // }
+        
     }
 }
 
