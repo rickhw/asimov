@@ -27,7 +27,7 @@ public class CapacityController {
 	public int operate() throws Exception {
 
 		// random unit value, between 1 and 100
-		int unit = (int) ((Math.random() * 100) + 1 % 100);
+		int unit = (int) ((Math.random() * 1000) + 1) % 10;
 
 		service.aquireCapacity(unit);
 
@@ -40,7 +40,7 @@ public class CapacityController {
 		// LabelMarker marker = LabelMarker.of("value", () ->
 		// Integer.toString(cu.getValue()));
 		// LOG.info(marker, "getValue(), value is {}", cu.getValue());
-		log.info("capacity unit is [{}]", cu.getValue());
+		log.info("capacity unit is [{}", cu.getValue());
 
 		return cu.getValue();
 	}

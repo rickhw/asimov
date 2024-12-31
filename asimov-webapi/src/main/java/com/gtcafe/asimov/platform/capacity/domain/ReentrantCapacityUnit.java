@@ -22,6 +22,7 @@ public class ReentrantCapacityUnit implements ICapacityUnit {
         locker.lock();
 
         if (value > capacityUnit) {
+            locker.unlock();
             throw new CapacityInsufficient("Not enough capacity unit");
         }
 
