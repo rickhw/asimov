@@ -1,5 +1,18 @@
 #version: '3.8'
 services:
+  # app:
+  #   build: ./asimov-webapi
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - net1
+  #   depends_on:
+  #     - rdb_mariadb
+  #     - cache_redis
+  #     - queue_rabbitmq
+  #     - search_elasticsearch
+  #     - metric_prometheus
+
   api-gateway_apache-apisix:
     image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
     volumes:

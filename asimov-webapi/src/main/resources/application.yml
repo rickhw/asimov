@@ -12,8 +12,8 @@ server:
 # Sprinboot
 # -----------------------------------------------------------------------------
 spring:
-  #  main:
-  #    banner-mode: off
+  main:
+    banner-mode: off
 
   application:
     name: WebAPI Server
@@ -30,15 +30,22 @@ spring:
     hibernate:
       # dialect: org.hibernate.dialect.MySQLDialect
       dialect: org.hibernate.dialect.MariaDBDialect
+      # ddl-auto: update
+      ddl-auto: validate
 
       # https://stackoverflow.com/questions/51136693/how-to-check-hikaricp-connection-pooling-is-working-or-not-in-java
       # lsof -nP -i :3306 -sTCP:ESTABLISHED
       # ss -46 -np state established dport = :3306 | grep 'java' | sort -r -k 3,3 | nl
       # netstat -ant | grep 3306
-      # hikari:
-      #   maximumPoolSize: 5
-      #   minimumIdle: 5
-      ddl-auto: update
+      hikari:
+        # maximumPoolSize: 5
+        # minimumIdle: 5
+        minimum-idle: 5
+        maximum-pool-size: 20
+        idle-timeout: 30000
+        max-lifetime: 1800000
+        validation-timeout: 5000
+        connection-timeout: 30000
 
   rabbitmq:
     host: localhost
@@ -62,6 +69,7 @@ logging:
   level:
     com.gtcafe.asimov: INFO
     org.hibernate.SQL: DEBUG
+    org.springframework.amqp: DEBUG
     # org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 springdoc:
@@ -127,7 +135,9 @@ management:
     metrics:
       tags:
         application: ${spring.application.name}
-
+      export:
+        prometheus:
+          enabled: true
       # Custom Metrics Configuration
       # enable:
       #   all: true

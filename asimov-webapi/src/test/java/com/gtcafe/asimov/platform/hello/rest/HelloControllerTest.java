@@ -45,7 +45,7 @@ class HelloControllerTest {
     void sayHelloSync_ShouldReturnCorrectResponse() throws Exception {
         // Arrange
         String expectedTime = "2024-12-17T13:04:34.371Z";
-        Hello mockHello = Hello.builder().build();
+        Hello mockHello = new Hello(); //Hello.builder().build();
         mockHello.setMessage("Hello, World!");
 
         // 模擬 HelloService 和 TimeUtils 的行為
