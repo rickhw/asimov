@@ -44,37 +44,4 @@ public class ReentrantCapacityUnit implements ICapacityUnit {
             locker.unlock();
         }
     }
-
-    // public void operate(int value) {
-    //     locker.lock();
-
-    //     try {
-    //         capacityUnit += value;
-    //     } catch (Exception ex) {
-    //     } finally {
-    //         locker.unlock();
-    //     }
-    // }
-
-    // public void increase(int value) {
-    //     locker.lock();
-
-    //     try {
-    //         capacityUnit = capacityUnit + value;
-    //     } catch (Exception ex) {
-    //     } finally {
-    //         locker.unlock();
-    //     }
-    // }
-
-    // public void decrease(int value) {
-    //     locker.lock();
-
-    //     try {
-    //         capacityUnit = capacityUnit - value;
-    //     } catch (Exception ex) {
-    //     } finally {
-    //         locker.unlock();
-    //     }
-    // }
 }

@@ -22,17 +22,4 @@ public class NativeCapacityUnit implements ICapacityUnit {
     public synchronized void resume(int value) {
         capacityUnit += value;
     }
-
-    // public synchronized void operate(int value) {
-    //     capacityUnit += value;
-    // }
-
-    // public synchronized void increase(int value) {
-    //     capacityUnit = capacityUnit + value;
-    // }
-
-    // public synchronized void decrease(int value) {
-    //     capacityUnit = capacityUnit - value;
-    // }
-
 }
