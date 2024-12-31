@@ -1,27 +1,38 @@
 package com.gtcafe.asimov.platform.capacity.domain;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class NativeCapacityUnit implements ICapacityUnit {
 
-    private int capacityUnit = 0;
+    private int capacityUnit = DEFAULT_CAPACITY_UNIT;
 
     public int getValue() {
         return capacityUnit;
     }
 
     public void reset() {
-        capacityUnit = 0;
+        this.capacityUnit = DEFAULT_CAPACITY_UNIT;
     }
 
-    public synchronized void operate(int value) {
+    public synchronized void consume(int value) {
+        capacityUnit -= value;
+    }
+
+    public synchronized void resume(int value) {
         capacityUnit += value;
     }
 
-    public synchronized void increase(int value) {
-        capacityUnit = capacityUnit + value;
-    }
+    // public synchronized void operate(int value) {
+    //     capacityUnit += value;
+    // }
 
-    public synchronized void decrease(int value) {
-        capacityUnit = capacityUnit - value;
-    }
+    // public synchronized void increase(int value) {
+    //     capacityUnit = capacityUnit + value;
+    // }
+
+    // public synchronized void decrease(int value) {
+    //     capacityUnit = capacityUnit - value;
+    // }
 
 }

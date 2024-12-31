@@ -1,8 +1,11 @@
 package com.gtcafe.asimov.platform.capacity.domain;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class NormalCapacityUnit implements ICapacityUnit {
 
-    private int capacityUnit = 0;
+    private int capacityUnit = DEFAULT_CAPACITY_UNIT;
 
     // public NormalCapacityUnit() {
     // System.out.printf("Init counter, value: [%s]\n", this.getValue());
@@ -13,19 +16,26 @@ public class NormalCapacityUnit implements ICapacityUnit {
     }
 
     public void reset() {
-        capacityUnit = 0;
+        capacityUnit = DEFAULT_CAPACITY_UNIT;
     }
 
-    public void operate(int value) {
+    public void consume(int value) {
+        capacityUnit -= value;
+    }
+
+    public void resume(int value) {
         capacityUnit += value;
     }
+    // public void operate(int value) {
+    //     capacityUnit += value;
+    // }
 
-    public void increase(int value) {
-        capacityUnit = capacityUnit + value;
-    }
+    // public void increase(int value) {
+    //     capacityUnit = capacityUnit + value;
+    // }
 
-    public void decrease(int value) {
-        capacityUnit = capacityUnit - value;
-    }
+    // public void decrease(int value) {
+    //     capacityUnit = capacityUnit - value;
+    // }
 
 }

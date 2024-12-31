@@ -4,40 +4,36 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.springframework.stereotype.Service;
 
-// import io.micrometer.core.instrument.MeterRegistry;
-
 @Service
 public class ReentrantCapacityUnit implements ICapacityUnit {
 
-    private int capacityUnit = 0;
+    private int capacityUnit = DEFAULT_CAPACITY_UNIT;
     private ReentrantLock locker = new ReentrantLock();
-
-    // private final Counter capacityConsumed;
-	// private final Counter capacityRemaining;
-
-    // @Autowired
-    // private MeterRegistry registry;
-
-	// public ReentrantCapacityUnit(MeterRegistry registry) {
-
-	// 	this.capacityRemaining = Counter.builder("capacity.remaining")
-	// 			.description("Total number of tasks completed")
-	// 			.register(registry);
-
-	// 	this.capacityConsumed = Counter.builder("capacity.consumed")
-	// 			.description("Total number of tasks creation")
-	// 			.register(registry);
-	// }
 
     public int getValue() {
         return capacityUnit;
     }
 
     public void reset() {
-        capacityUnit = 0;
+        capacityUnit = DEFAULT_CAPACITY_UNIT;
     }
 
-    public void operate(int value) {
+    public void consume(int value) throws CapacityInsufficient {
+        locker.lock();
+
+        if (value > capacityUnit) {
+            throw new CapacityInsufficient("Not enough capacity unit");
+        }
+
+        try {
+            capacityUnit -= value;
+        } catch (Exception ex) {
+        } finally {
+            locker.unlock();
+        }
+    }
+
+    public void resume(int value) {
         locker.lock();
 
         try {
@@ -48,25 +44,36 @@ public class ReentrantCapacityUnit implements ICapacityUnit {
         }
     }
 
-    public void increase(int value) {
-        locker.lock();
+    // public void operate(int value) {
+    //     locker.lock();
 
-        try {
-            capacityUnit = capacityUnit + value;
-        } catch (Exception ex) {
-        } finally {
-            locker.unlock();
-        }
-    }
+    //     try {
+    //         capacityUnit += value;
+    //     } catch (Exception ex) {
+    //     } finally {
+    //         locker.unlock();
+    //     }
+    // }
 
-    public void decrease(int value) {
-        locker.lock();
+    // public void increase(int value) {
+    //     locker.lock();
 
-        try {
-            capacityUnit = capacityUnit - value;
-        } catch (Exception ex) {
-        } finally {
-            locker.unlock();
-        }
-    }
+    //     try {
+    //         capacityUnit = capacityUnit + value;
+    //     } catch (Exception ex) {
+    //     } finally {
+    //         locker.unlock();
+    //     }
+    // }
+
+    // public void decrease(int value) {
+    //     locker.lock();
+
+    //     try {
+    //         capacityUnit = capacityUnit - value;
+    //     } catch (Exception ex) {
+    //     } finally {
+    //         locker.unlock();
+    //     }
+    // }
 }
