@@ -16,6 +16,10 @@
 - 處理 JSON / Model 用 JsonUtils 處理
 
 
+## Setup development environment
+
+- export .env for application.yaml: `export $(grep -v '^#' .env | xargs)`
+
 
 ## build by Gradle wrapper
 

@@ -2,7 +2,6 @@
 
 Code Name: Asimov (艾希莫夫)
 
-
 ## Concepts - Code Features
 
 - multi-tenancy
@@ -60,5 +59,6 @@ Code Name: Asimov (艾希莫夫)
 
 ## Part4: Operation
 
-
+- export metrics
+- ship log
 
