@@ -32,3 +32,6 @@ gradle
 
 ## docker data
 .docker-data
+
+## Secret
+.env
