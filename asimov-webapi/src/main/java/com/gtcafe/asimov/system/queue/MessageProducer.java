@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.platform.task.schema.Task;
+import com.gtcafe.asimov.system.queue.model.QueueConfig;
 import com.gtcafe.asimov.system.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;

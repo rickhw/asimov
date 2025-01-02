@@ -25,7 +25,7 @@ public class HelloConsumer {
     @Autowired
     private HelloEventHandler eventHandler;
 
-    @RabbitListener(queues = QueueName.HELLO_QUEUE)
+    @RabbitListener(queues = QueueName.HELLO_QUEUE, autoStartup = "false")
     public void consumeHelloQueue(String eventString) {
         // log.info("Received message: [{}]", eventString);
 
@@ -33,7 +33,8 @@ public class HelloConsumer {
         HelloEvent event = jsonUtils.jsonStringToModel(eventString, HelloEvent.class);
         String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
 
-        log.info("start the conusmer, cachedKey: [{}], state: [{}]", cachedKey, event.getState());
+        // log.info("start the conusmer, cachedKey: [{}], state: [{}]", cachedKey, event.getState());
+        log.info("task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
 
         event.setState(TaskState.RUNNING);
 

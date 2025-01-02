@@ -31,6 +31,7 @@ public class Handler extends Thread {
 
             // 更新 metrics: 剩餘的 capacity
             meterRegistry.gauge("capacity.remaining", cu, ReentrantCapacityUnit::getValue);
+            // meterRegistry.gauge("capacity.consumed", cu, unit);
 
             log.info("resume: [{}], remain: [{}], processTime: [{}ms]", unit, cu.getValue(), processTime);
         } catch (InterruptedException e) {

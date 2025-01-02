@@ -23,7 +23,7 @@ public class TenantConsumer {
     @Autowired
     private TenantEventHandler eventHandler;
 
-    @RabbitListener(queues = QueueName.TENANT_QUEUE)
+    @RabbitListener(queues = QueueName.TENANT_QUEUE, autoStartup = "false")
     public  void consumeTenantQueue(String eventString) {
         TenantTaskEvent event = jsonUtils.jsonStringToModel(eventString, TenantTaskEvent.class);
 

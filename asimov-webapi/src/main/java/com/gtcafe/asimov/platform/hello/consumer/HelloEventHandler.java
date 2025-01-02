@@ -28,14 +28,16 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
         String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
         String taskCachedKeyForIndex = String.format("%s:%s", KindConstants.SYS_TASK, event.getId());
         try {
-            log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
+            // log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
             
             // simulate the process
-            log.info("start the process, cachedKey: [{}], state: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
+            log.info("task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
+            // log.info("start the handler, cachedKey: [{}], state: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
             Thread.sleep(SIMULATE_DELAY);
 
             event.setState(TaskState.COMPLETED);
-            log.info("finish the process, cachedKey: [{}], state: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
+            log.info("task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
+            // log.info("finish the handler, cachedKey: [{}], state: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
 
             String afterEventString = jsonUtils.modelToJsonString(event);
 

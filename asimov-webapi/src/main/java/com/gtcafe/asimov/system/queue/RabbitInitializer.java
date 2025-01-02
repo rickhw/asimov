@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import com.gtcafe.asimov.system.constants.QueueName;
+import com.gtcafe.asimov.system.queue.model.QueueConfig;
 
 @Configuration
 @ConfigurationProperties(prefix = "app.rabbitmq")

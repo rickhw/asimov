@@ -28,6 +28,7 @@ public class CapacityService {
             // 更新 metrics: consumed 和剩餘的 capacity
             meterRegistry.counter("capacity.consumed").increment(unit);
             meterRegistry.gauge("capacity.remaining", cu, ReentrantCapacityUnit::getValue);
+            // meterRegistry.gauge("capacity.consumed", cu, ReentrantCapacityUnit::getValue);
         } catch (CapacityInsufficient e) {
             log.error("capacity insufficient: {}", e.getMessage());
             return;

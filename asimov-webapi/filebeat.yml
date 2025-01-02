@@ -7,7 +7,9 @@ filebeat.inputs:
     fields_under_root: true
 
 output.elasticsearch:
-  hosts: ["search_elasticsearch:9200"]
+  # hosts: ["search_elasticsearch:9200"]
+  hosts: ["host.docker.internal:9200"]
   protocol: "http"
 setup.kibana:
-  host: "kibana:5601"
+  # host: "kibana:5601"
+  host: "host.docker.internal:5601"
