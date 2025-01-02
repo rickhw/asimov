@@ -8,11 +8,9 @@
   - [ ] producer
     - [x] rabbitMQ multiple config
     - [v] common message producer
-    - [ ] common constants and model
-    - [ ] task object
-    - [ ] store to cache
-  - [ ] concumser
-    - [ ] common consummer
+    - [v] common constants and model
+    - [v] task object
+    - [v] store to cache
   - [ ] log
 
 ## Tenant Users
@@ -22,7 +20,7 @@
 - [ ] Apply an API key for a tenant
 
 
-## SaaS Platform Admin
+## SaaS Platform Admin (Backstage Web UI)
 
 
 
@@ -36,9 +34,9 @@
 ## Tech Issue
 
 - core
-    - common librares for web server
-    - TenantContext
-    - ApiMetadataContext
+    - [ ] common librares for web server
+    - [ ] TenantContext
+    - [ ] ApiMetadataContext
 - async
     - message dispatch, type
     - annotation: @DryRun, @Async
