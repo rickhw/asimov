@@ -28,7 +28,6 @@ current.log
 .gradle
 bin/
 build/
-gradle
 
 ## docker data
 .docker-data
