@@ -2,12 +2,12 @@
 
 ## docker register
 REPOS_ENDPOINT="475976321288.dkr.ecr.us-west-2.amazonaws.com"
-REPOS_NAME="rws-dev"
+REPOS_NAME="asimov"
 
 ## product metadata
-PRODUCT_NAME="rws"
-ROLE_NAME="booter"
-VERSION="0.2.0"
+PRODUCT_NAME="asimov"
+ROLE_NAME="webapi"
+VERSION="0.1.0"
 BUILD_TYPE="dev"
 
 ## -- Runtime Variables
