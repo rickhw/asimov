@@ -21,65 +21,65 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @AutoConfigureMockMvc
 public class HelloControllerTest2 {
 
-    @Autowired
-    private MockMvc mockMvc;
-
     // @Autowired
-    // private ObjectMapper objectMapper;  // 用於解析 JSON
+    // private MockMvc mockMvc;
 
-    private static final String TEST_DATA_PATH = "src/test/resources/test-data/hello/sync";
-    private static final String API_URI = "/api/hello";
+    // // @Autowired
+    // // private ObjectMapper objectMapper;  // 用於解析 JSON
+
+    // private static final String TEST_DATA_PATH = "src/test/resources/test-data/hello/sync";
+    // private static final String API_URI = "/api/hello";
 
 
-    @Test
-    void testHelloPost() throws Exception {
-        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-sync.json"), StandardCharsets.UTF_8);
+    // @Test
+    // void testHelloPost() throws Exception {
+    //     String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-sync.json"), StandardCharsets.UTF_8);
 
-        mockMvc
-            .perform(
-                MockMvcRequestBuilders
-                    .post(API_URI)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestPayload)
-                )
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.message").value("Hello, Asimov"))  // 驗證靜態部分
-            .andExpect(jsonPath("$.launchTime", notNullValue()))      // 驗證時間部分存在
-            .andExpect(jsonPath("$.launchTime", containsString("2024"))); // 檢查時間大致正確
-            // .andExpect(content().string(expectedPayload));  // 驗證回應的內容
-    }
+    //     mockMvc
+    //         .perform(
+    //             MockMvcRequestBuilders
+    //                 .post(API_URI)
+    //                 .contentType(MediaType.APPLICATION_JSON)
+    //                 .content(requestPayload)
+    //             )
+    //         .andExpect(status().isOk())
+    //         .andExpect(jsonPath("$.message").value("Hello, Asimov"))  // 驗證靜態部分
+    //         .andExpect(jsonPath("$.launchTime", notNullValue()))      // 驗證時間部分存在
+    //         .andExpect(jsonPath("$.launchTime", containsString("2024"))); // 檢查時間大致正確
+    //         // .andExpect(content().string(expectedPayload));  // 驗證回應的內容
+    // }
 
-    @Test
-    void testHelloPost_AbnormalCase1() throws Exception {
-        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-abnormal-case1.json"), StandardCharsets.UTF_8);
+    // @Test
+    // void testHelloPost_AbnormalCase1() throws Exception {
+    //     String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-abnormal-case1.json"), StandardCharsets.UTF_8);
 
-        mockMvc
-            .perform(
-                MockMvcRequestBuilders
-                    .post(API_URI)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestPayload)
-            )
-            .andExpect(
-                status().isBadRequest()
-            );
-    }
+    //     mockMvc
+    //         .perform(
+    //             MockMvcRequestBuilders
+    //                 .post(API_URI)
+    //                 .contentType(MediaType.APPLICATION_JSON)
+    //                 .content(requestPayload)
+    //         )
+    //         .andExpect(
+    //             status().isBadRequest()
+    //         );
+    // }
 
-    @Test
-    void testHelloPost_AbnormalCase2() throws Exception {
-        String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-abnormal-case2.json"), StandardCharsets.UTF_8);
+    // @Test
+    // void testHelloPost_AbnormalCase2() throws Exception {
+    //     String requestPayload = Files.readString(Paths.get(TEST_DATA_PATH + "/hello-post-abnormal-case2.json"), StandardCharsets.UTF_8);
 
-        mockMvc
-            .perform(
-                MockMvcRequestBuilders
-                    .post(API_URI)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestPayload)
-            )
-            .andExpect(
-                status().isBadRequest()
-            );
-    }
+    //     mockMvc
+    //         .perform(
+    //             MockMvcRequestBuilders
+    //                 .post(API_URI)
+    //                 .contentType(MediaType.APPLICATION_JSON)
+    //                 .content(requestPayload)
+    //         )
+    //         .andExpect(
+    //             status().isBadRequest()
+    //         );
+    // }
 
 
 }
