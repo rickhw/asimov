@@ -30,8 +30,8 @@ spring:
     hibernate:
       # dialect: org.hibernate.dialect.MySQLDialect
       dialect: org.hibernate.dialect.MariaDBDialect
-      # ddl-auto: update
-      ddl-auto: validate
+      ddl-auto: update
+      # ddl-auto: validate
 
       # https://stackoverflow.com/questions/51136693/how-to-check-hikaricp-connection-pooling-is-working-or-not-in-java
       # lsof -nP -i :3306 -sTCP:ESTABLISHED
