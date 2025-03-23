@@ -17,9 +17,9 @@ routes:
   -
     uri: /api/hello
     upstream:
-        nodes:
-            "127.0.0.1:8080": 1
-        type: roundrobin
+      nodes:
+        "127.0.0.1:8080": 1
+      type: roundrobin
     plugins:
       proxy-rewrite:
         headers:

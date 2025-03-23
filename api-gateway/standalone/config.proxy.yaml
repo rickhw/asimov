@@ -1,0 +1,49 @@
+apisix:
+  node_listen: 9080             # HTTP proxy port
+  # enable_https: false           # Disable HTTPS
+  # stream_proxy:                 # Disable TCP/UDP proxy
+  #   tcp: []
+  #   udp: []
+  # admin_listen:
+  #   ip: 0.0.0.0
+  #   port: 9180                  # Admin API port
+
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
+
+routes:
+  -
+    uri: /_/health
+    upstream:
+      nodes:
+        "192.168.5.122:8080": 1
+      type: roundrobin
+    # plugins:
+    #   proxy-rewrite:
+    #     headers:
+    #       X-Forwarded-For: "$remote_addr"
+    #       X-Tenant-Id: "t-1234567890"
+    #       X-AppName: "asimov-api-gateway"
+    #       X-RoleName: "admin-api-gateway"
+  # -
+  #   uri: /version
+  #   upstream:
+  #       nodes:
+  #           "127.0.0.1:8080": 1
+  #       type: roundrobin
+
+  # -
+  #   uri: /protected
+  #   upstream:
+  #       nodes:
+  #           "127.0.0.1:8080": 1
+  #       type: roundrobin
+  #   plugins:
+  #     auth-plugin:
+  #       header_to_pass: X-Auth-Token
+  #       callback: http://auth-server.local/verify
+
+
+#END

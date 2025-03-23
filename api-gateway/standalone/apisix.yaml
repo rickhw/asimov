@@ -1,0 +1,21 @@
+apisix:
+  node_listen: 9080
+    #  enable_admin: false  # 關閉管理 API
+    #  config_provider: yaml  # 啟用 YAML 配置模式
+
+routes:
+  -
+    uri: /**
+    upstream:
+      nodes:
+        "192.168.5.122:8080": 1
+        "192.168.5.183:8080": 1
+      type: roundrobin
+
+  -
+    uri: /_/health
+    upstream:
+      nodes:
+        "192.168.5.122:8080": 1
+        "192.168.5.183:8080": 1
+      type: roundrobin
