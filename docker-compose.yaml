@@ -1,7 +1,7 @@
 #version: '3.8'
 services:
   # app:
-  #   build: ./asimov-webapi
+  #   build: ./api-server
   #   ports:
   #     - "8080:8080"
   #   networks:
@@ -13,18 +13,18 @@ services:
   #     - search_elasticsearch
   #     - metric_prometheus
 
-  api-gateway_apache-apisix:
-    image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
-    volumes:
-      - ./api-gateway/config/config.standalone.yaml:/usr/local/apisix/conf/apisix.yaml:ro
-    environment:
-      - APISIX_STAND_ALONE=true
-    ports:
-      - "9180:9180"
-      - "9080:9080"
-      - "9443:9443"
-    networks:
-      - net1
+  # api-gateway_apache-apisix:
+  #   image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
+  #   volumes:
+  #     - ./api-gateway/config/config.standalone.yaml:/usr/local/apisix/conf/apisix.yaml:ro
+  #   environment:
+  #     - APISIX_STAND_ALONE=true
+  #   ports:
+  #     - "9180:9180"
+  #     - "9080:9080"
+  #     - "9443:9443"
+  #   networks:
+  #     - net1
 
   rdb_mariadb:
     image: mariadb:10.10
@@ -86,69 +86,69 @@ services:
     networks:
       - net1
 
-  search_elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-    ports:
-      - "9200:9200"
-    networks:
-      - net1
+  # search_elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+  #   environment:
+  #     - discovery.type=single-node
+  #     - xpack.security.enabled=false
+  #   ports:
+  #     - "9200:9200"
+  #   networks:
+  #     - net1
 
-  dashboard_kibana:
-    image: docker.elastic.co/kibana/kibana:8.16.1
-    ports:
-      - "5601:5601"
-    environment:
-      - ELASTICSEARCH_HOSTS=http://search_elasticsearch:9200
-      - xpack.security.enabled=false
-    depends_on:
-      - search_elasticsearch
-    networks:
-      - net1
+  # dashboard_kibana:
+  #   image: docker.elastic.co/kibana/kibana:8.16.1
+  #   ports:
+  #     - "5601:5601"
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://search_elasticsearch:9200
+  #     - xpack.security.enabled=false
+  #   depends_on:
+  #     - search_elasticsearch
+  #   networks:
+  #     - net1
 
-  metric_prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - net1
+  # metric_prometheus:
+  #   image: prom/prometheus:latest
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   networks:
+  #     - net1
 
-  dashboard_grafana:
-    image: grafana/grafana:10.1.0
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
-    ports:
-      - "3000:3000"
-    networks:
-      - net1
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+  # dashboard_grafana:
+  #   image: grafana/grafana:10.1.0
+  #   volumes:
+  #     - ./grafana/provisioning:/etc/grafana/provisioning
+  #     - ./grafana/dashboards:/var/lib/grafana/dashboards
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - net1
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
 
-  logshipper_webapi-filebeat:
-    image: docker.elastic.co/beats/filebeat:7.17.26
-    volumes:
-      - ./asimov-webapi/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ./asimov-webapi/logs:/logs
-    depends_on:
-      - search_elasticsearch
-    networks:
-      - net1
+  # logshipper_webapi-filebeat:
+  #   image: docker.elastic.co/beats/filebeat:7.17.26
+  #   volumes:
+  #     - ./api-server/filebeat.yml:/usr/share/filebeat/filebeat.yml
+  #     - ./api-server/logs:/logs
+  #   depends_on:
+  #     - search_elasticsearch
+  #   networks:
+  #     - net1
 
-  node-exporter:
-    image: prom/node-exporter:latest
-    ports:
-      - "9100:9100"
-    networks:
-      - net1
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+  # node-exporter:
+  #   image: prom/node-exporter:latest
+  #   ports:
+  #     - "9100:9100"
+  #   networks:
+  #     - net1
+  #   command:
+  #     - '--path.procfs=/host/proc'
+  #     - '--path.sysfs=/host/sys'
+  #     - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
 
 networks:
   net1:
