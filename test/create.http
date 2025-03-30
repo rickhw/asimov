@@ -1,0 +1,46 @@
+#@HOST = http://35.166.206.169:8080
+@HOST = http://localhost:8080
+# @HOST = http://rws.lab.gtcafe.com
+
+# @HOST = http://192.168.5.122:8080
+
+### ----------------------------
+POST {{ HOST }}/api/users
+Content-Type: application/json
+
+{
+    "username": "user1",
+    "password": "111",
+    "authorities": ["STUDENT"]
+}
+
+### ----------------------------
+POST {{ HOST }}/api/users
+Content-Type: application/json
+
+{
+    "username": "user2",
+    "password": "222",
+    "authorities": ["TEACHER"]
+}
+
+### ----------------------------
+POST {{ HOST }}/api/users
+Content-Type: application/json
+
+{
+    "username": "user3",
+    "password": "333",
+    "authorities": ["TEACHER", "ADMIN"]
+}
+
+
+### ----------------------------
+POST {{ HOST }}/api/users
+Content-Type: application/json
+
+{
+    "username": "jack",
+    "password": "jack123",
+    "authorities": ["ADMIN"]
+}

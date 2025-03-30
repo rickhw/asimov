@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.conifg;
+package com.gtcafe.asimov.config;
 
 import java.util.Arrays;
 

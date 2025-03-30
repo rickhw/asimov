@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 引入共用 head -->
+    <th:block th:replace="~{fragments/common :: commonHead('首頁 - 系統名稱')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+    <!-- 引入帶有登出按鈕的 header -->
+    <header th:replace="~{fragments/common :: authHeader('系統首頁', ${username})}"></header>
+    <nav th:replace="~{fragments/common :: authMenubar(${username})}"></nav>
+    
+    <div class="home-container">
+        <main class="home-content">
+            <div class="welcome-message">
+                <h2>歡迎來到系統首頁！</h2>
+            </div>
+            
+            <div class="feature-section">
+                <h3>系統功能</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Profile</h4>
+                        <p><a th:href="@{/profile}">查看 Profile 資訊</a></p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>API Token</h4>
+                        <p>功能描述內容...</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>功能三</h4>
+                        <p>功能描述內容...</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>功能四</h4>
+                        <p>功能描述內容...</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Session Information</h4>
+                        <p><a th:href="@{/session}">查看 Session 資訊</a></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- 引入共用 footer -->
+    <footer th:replace="~{fragments/common :: loginFooter(clientIp=${clientIp}, computeNodeHostname=${computeNodeHostname}, sessionId=${sessionId}, roles=${roles})}"></footer>
+</body>
+</html>

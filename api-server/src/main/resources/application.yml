@@ -8,6 +8,39 @@ server:
       enabled: false
   address: 0.0.0.0
 
+  servlet:
+    session:
+      cookie:
+        # Cookie 名稱，預設 JSESSIONID
+        name: rSessionId
+
+        # Cookie 持續時間，默認為 -1 (瀏覽器關閉後失效)
+        max-age: 3600
+
+        # 是否僅通過 HTTPS 傳輸
+        # secure: true
+
+        # 是否僅限 HTTP 訪問（不允許 JavaScript 訪問）
+        # http-only: true
+
+        # Cookie 路徑
+        # path: /
+
+        # Cookie 域
+        # domain: example.com
+
+        # Cookie SameSite 屬性
+        # same-site: lax
+
+      # 是否持續性 session，預設 false
+      # persistent: false
+
+      # 追蹤模式，可選值有 cookie(默認)、url、ssl
+      # tracking-modes: cookie
+
+      # 超時時間，預設 30 分鐘
+      timeout: 30m
+
 # -----------------------------------------------------------------------------
 # Sprinboot
 # -----------------------------------------------------------------------------
@@ -18,11 +51,27 @@ spring:
   application:
     name: WebAPI Server
 
+  session:
+    # 存儲類型，可選值有 none, jdbc, redis, hazelcast, mongodb
+    store-type: redis
+
+    # session 超時時間，預設 30 分鐘
+    timeout: 30m
+
+    # 是否在啟動時創建 session 存儲需要的表/結構
+    # initialize-schema: always
+
+    # Redis 配置
+    redis:
+      namespace: asimov:session
+      flush-mode: on-save
+      cleanup-cron: "0 * * * * *"
+
   datasource:
     #url: jdbc:mysql://localhost:3306/asimov?allowPublicKeyRetrieval=true&useSSL=false
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    # url: ${SPRING_DATASOURCE_URL}
+    # username: ${SPRING_DATASOURCE_USERNAME}
+    # password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
@@ -47,17 +96,17 @@ spring:
         validation-timeout: 5000
         connection-timeout: 30000
 
-  rabbitmq:
-    host: ${SPRING_RABBITMQ_HOST}
-    port: ${SPRING_RABBITMQ_PORT}
-    username: ${SPRING_RABBITMQ_USERNAME}
-    password: ${SPRING_RABBITMQ_PASSWORD}
+  # rabbitmq:
+  #   host: ${SPRING_RABBITMQ_HOST}
+  #   port: ${SPRING_RABBITMQ_PORT}
+  #   username: ${SPRING_RABBITMQ_USERNAME}
+  #   password: ${SPRING_RABBITMQ_PASSWORD}
 
   data:
     redis:
       database: 0
-      host: ${SPRING_DATA_REDIS_HOST}
-      port: ${SPRING_DATA_REDIS_PORT}
+      # host: ${SPRING_DATA_REDIS_HOST}
+      # port: ${SPRING_DATA_REDIS_PORT}
       # password: password
       # timeout: 60000
 

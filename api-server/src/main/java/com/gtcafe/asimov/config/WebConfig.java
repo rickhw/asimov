@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.conifg;
+package com.gtcafe.asimov.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -33,6 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
                 // 4. 開放申請, 不需要 API Key. @TODO: 要處理 POST /api/tenants
                 .excludePathPatterns("/api/v1alpha/tenants/**")
                 .excludePathPatterns("/api/v1alpha/regions/**")
+                .excludePathPatterns("/api/users/**")
                 .addPathPatterns("/**")  // 攔截所有請求
             ;
 
