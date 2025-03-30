@@ -1,7 +1,7 @@
 package com.gtcafe.asimov.platform.tenant.model;
 
-import com.gtcafe.asimov.system.constants.KindEnum;
-import com.gtcafe.asimov.system.constants.VersionEnum;
+import com.gtcafe.asimov.framework.constants.KindEnum;
+import com.gtcafe.asimov.framework.constants.VersionEnum;
 
 import lombok.Getter;
 import lombok.Setter;

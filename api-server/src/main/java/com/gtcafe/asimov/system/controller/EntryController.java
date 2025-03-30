@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.system.context.ApiMetadataContext;
-import com.gtcafe.asimov.system.context.HttpRequestContext;
-import com.gtcafe.asimov.system.utils.Slogan;
+import com.gtcafe.asimov.framework.context.ApiMetadataContext;
+import com.gtcafe.asimov.framework.context.HttpRequestContext;
+import com.gtcafe.asimov.framework.utils.Slogan;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;

@@ -4,9 +4,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.system.cache.CacheRepository;
-import com.gtcafe.asimov.system.constants.QueueName;
-import com.gtcafe.asimov.system.utils.JsonUtils;
+import com.gtcafe.asimov.framework.constants.QueueName;
+import com.gtcafe.asimov.framework.utils.JsonUtils;
+import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

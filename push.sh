@@ -24,7 +24,7 @@ echo "Image Name: $DOCKER_IMAGE_NAME"
 cd api-server
 docker build . -t ${DOCKER_IMAGE_NAME}
 
-# docker push ${DOCKER_IMAGE_NAME}
+docker push ${DOCKER_IMAGE_NAME}
 
 
 

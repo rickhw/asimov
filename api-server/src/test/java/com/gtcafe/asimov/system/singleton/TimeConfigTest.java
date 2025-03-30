@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.TestPropertySource;
 
-import com.gtcafe.asimov.system.bean.singleton.TimeConfig;
+import com.gtcafe.asimov.framework.bean.singleton.TimeConfig;
 
 @SpringBootTest
 @EnableConfigurationProperties(TimeConfig.class)

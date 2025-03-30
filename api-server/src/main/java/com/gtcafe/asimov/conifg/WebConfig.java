@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.gtcafe.asimov.system.interceptor.HttpRequestContextInterceptor;
-import com.gtcafe.asimov.system.interceptor.TenantContextInterceptor;
+import com.gtcafe.asimov.framework.interceptor.HttpRequestContextInterceptor;
+import com.gtcafe.asimov.framework.interceptor.TenantContextInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {

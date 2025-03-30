@@ -3,8 +3,8 @@ package com.gtcafe.asimov.platform.tenant.consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.platform.task.TaskEventHandler;
-import com.gtcafe.asimov.system.cache.CacheRepository;
+import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
+import com.gtcafe.asimov.system.task.TaskEventHandler;
 
 import lombok.extern.slf4j.Slf4j;
 

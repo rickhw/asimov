@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.gtcafe.asimov.system.bean.singleton.TimeConfig;
+import com.gtcafe.asimov.framework.bean.singleton.TimeConfig;
 
 class TimeUtilsTest {
 

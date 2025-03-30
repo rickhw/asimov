@@ -3,6 +3,10 @@ package com.gtcafe.asimov.platform.tenant.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gtcafe.asimov.framework.constants.QueueName;
+import com.gtcafe.asimov.framework.utils.JsonUtils;
+import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
+import com.gtcafe.asimov.infrastructure.queue.MessageProducer;
 import com.gtcafe.asimov.platform.tenant.TenantMapper;
 import com.gtcafe.asimov.platform.tenant.consumer.TenantTaskEvent;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
@@ -10,10 +14,6 @@ import com.gtcafe.asimov.platform.tenant.infrastructure.TenantRepository;
 import com.gtcafe.asimov.platform.tenant.model.Tenant;
 import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
 import com.gtcafe.asimov.platform.tenant.rest.response.TenantTaskResponse;
-import com.gtcafe.asimov.system.cache.CacheRepository;
-import com.gtcafe.asimov.system.constants.QueueName;
-import com.gtcafe.asimov.system.queue.MessageProducer;
-import com.gtcafe.asimov.system.utils.JsonUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
