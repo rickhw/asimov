@@ -15,7 +15,7 @@ import com.gtcafe.asimov.platform.user.repository.UserRepository;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1alpha")
 public class UserController {
 
     @Autowired

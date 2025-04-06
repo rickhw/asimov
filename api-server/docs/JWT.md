@@ -186,7 +186,7 @@ public class JwtApiApplication {
 
 2. 測試產生 Token：
    ```bash
-   curl -X POST "http://localhost:8080/api/generate-token?username=testuser"
+   curl -X POST "http://localhost:8080/api/v1alpha/tokens?username=testuser"
    ```
 
 3. 獲取 Public Key：
@@ -197,7 +197,7 @@ public class JwtApiApplication {
 4. 測試需要 Token 的 API：
    ```bash
    curl -H "Authorization: Bearer <YOUR_TOKEN>" "http://localhost:8080/api/secure-data"
-   ```
+   ```｀
 
 此專案簡潔易讀，並且展示了如何以 Spring Boot 配合 JWT 實現安全驗證。
 

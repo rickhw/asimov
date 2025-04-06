@@ -20,24 +20,24 @@ import lombok.extern.slf4j.Slf4j;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository memberRepository;
+    private UserRepository repos;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity member = memberRepository.findByUsername(username);
-        if (member == null) {
+        UserEntity entity = repos.findByUsername(username);
+        if (entity == null) {
             log.error("Can't find member: [{}]", username);
             throw new UsernameNotFoundException("Can't find member: " + username);
         }
 
-        List<SimpleGrantedAuthority> authorities = member.getAuthorities()
+        List<SimpleGrantedAuthority> authorities = entity.getAuthorities()
                 .stream()
                 .map(auth -> new SimpleGrantedAuthority(auth.name()))
                 .toList();
 
         return User
                 .withUsername(username)
-                .password(member.getPassword())
+                .password(entity.getPassword())
                 .authorities(authorities)
                 .build();
     }

@@ -33,6 +33,8 @@ public class TokenController {
     // 1. 產生 JWT Token
     @PostMapping("")
     public ResponseEntity<Map<String, String>> generateToken(@RequestParam String username) {
+        log.info("generate token for user: [{}]", username);
+
         String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())

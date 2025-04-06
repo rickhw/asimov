@@ -24,7 +24,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(requests -> requests
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // 允許訪問靜態資源
                 .requestMatchers(HttpMethod.POST, "/api/members").permitAll()
-                .requestMatchers("/api/tokens").permitAll()
+                .requestMatchers("/api/v1alpha/tokens").permitAll()
+                .requestMatchers("/api/v1alpha/users").permitAll()
                 .requestMatchers(HttpMethod.GET, "/_/**").permitAll()
                 
                 .anyRequest().authenticated()
@@ -34,11 +35,11 @@ public class SecurityConfig {
                 .loginProcessingUrl("/process-login") // 登入表單提交的URL, 改動的話, 要自己處理. Method=POST, 建議不要動, 但是也不能不寫
                 .defaultSuccessUrl("/home", true) // 登入成功後跳轉的頁面
                 .failureUrl("/login?error=true") // 登入失敗後跳轉的頁面
-            .failureHandler((request, response, exception) -> {
-                log.error("Authentication failed: [{}]", exception.getMessage());
-                response.sendRedirect("/login?error=true");
-            })
-            .permitAll()
+                .failureHandler((request, response, exception) -> {
+                    log.error("Authentication failed: [{}]", exception.getMessage());
+                    response.sendRedirect("/login?error=true");
+                })
+                .permitAll()
             )
             .logout(logout -> logout
                 .logoutUrl("/perform-logout") // 登出處理的URL

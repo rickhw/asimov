@@ -27,13 +27,16 @@ public class WebConfig implements WebMvcConfigurer {
                 // 1. operation
                 .excludePathPatterns("/health", "/metrics", "/favicon.ico")
                 // 2. metadata, tenant context
-                .excludePathPatterns("/apimeta", "/version", "/tenant-context")
+                .excludePathPatterns("/_/**")
                 // 3. swagger
                 .excludePathPatterns("/swagger-ui/**", "/v3/api-docs/**")
+
                 // 4. 開放申請, 不需要 API Key. @TODO: 要處理 POST /api/tenants
                 .excludePathPatterns("/api/v1alpha/tenants/**")
                 .excludePathPatterns("/api/v1alpha/regions/**")
-                .excludePathPatterns("/api/users/**")
+                .excludePathPatterns("/api/v1alpha/tokens**")
+                .excludePathPatterns("/api/v1alpha/users/**")
+
                 .addPathPatterns("/**")  // 攔截所有請求
             ;
 

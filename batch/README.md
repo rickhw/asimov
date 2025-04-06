@@ -1,1 +1,0 @@
-Batch Job triggered by CronJob

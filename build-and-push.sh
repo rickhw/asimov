@@ -20,12 +20,14 @@ source ./scripts/build-config.sh
 # ./login-ecr.sh
 
 echo "Image Name: $DOCKER_IMAGE_NAME"
-
+gradle clean build 
 cd api-server
-docker build . -t ${DOCKER_IMAGE_NAME}
+docker build . \
+    -t ${DOCKER_IMAGE_NAME} \
+    -t ${DOCKER_IMAGE_LATEST_NAME}
 
 docker push ${DOCKER_IMAGE_NAME}
-
+docker push ${DOCKER_IMAGE_LATEST_NAME}
 
 
 
