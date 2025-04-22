@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
 import com.gtcafe.asimov.platform.tenant.model.Tenant;
-import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
+import com.gtcafe.asimov.rest.tenant.tenant.request.RegisterTenantRequest;
 
 @Service
 public class TenantMapper {

@@ -12,8 +12,8 @@ import com.gtcafe.asimov.platform.tenant.consumer.TenantTaskEvent;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantEntity;
 import com.gtcafe.asimov.platform.tenant.infrastructure.TenantRepository;
 import com.gtcafe.asimov.platform.tenant.model.Tenant;
-import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
-import com.gtcafe.asimov.platform.tenant.rest.response.TenantTaskResponse;
+import com.gtcafe.asimov.rest.tenant.tenant.request.RegisterTenantRequest;
+import com.gtcafe.asimov.rest.tenant.tenant.response.TenantTaskResponse;
 
 import lombok.extern.slf4j.Slf4j;
 

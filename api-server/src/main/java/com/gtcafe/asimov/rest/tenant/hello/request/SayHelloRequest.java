@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.hello.rest.request;
+package com.gtcafe.asimov.rest.tenant.hello.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

@@ -17,20 +17,20 @@ import lombok.extern.slf4j.Slf4j;
 public class HelloConsumer {
 
     @Autowired
-    private JsonUtils jsonUtils;
+    private JsonUtils _jsonUtils;
 
     @Autowired
-    private CacheRepository cacheRepos;
+    private CacheRepository _cacheRepos;
 
     @Autowired
-    private HelloEventHandler eventHandler;
+    private HelloEventHandler _eventHandler;
 
     @RabbitListener(queues = QueueName.HELLO_QUEUE, autoStartup = "false")
     public void consumeHelloQueue(String eventString) {
         // log.info("Received message: [{}]", eventString);
 
         // convert json string to model
-        HelloEvent event = jsonUtils.jsonStringToModel(eventString, HelloEvent.class);
+        HelloEvent event = _jsonUtils.jsonStringToModel(eventString, HelloEvent.class);
         String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
 
         // log.info("start the conusmer, cachedKey: [{}], state: [{}]", cachedKey, event.getState());
@@ -39,11 +39,11 @@ public class HelloConsumer {
         event.setState(TaskState.RUNNING);
 
         // update state from pending to running
-        String afterEventString = jsonUtils.modelToJsonString(event);
-        cacheRepos.saveOrUpdateObject(cachedKey, afterEventString);
+        String afterEventString = _jsonUtils.modelToJsonString(event);
+        _cacheRepos.saveOrUpdateObject(cachedKey, afterEventString);
 
         // start processing (running)
-        eventHandler.handleEvent(event);
+        _eventHandler.handleEvent(event);
         
     }
 }

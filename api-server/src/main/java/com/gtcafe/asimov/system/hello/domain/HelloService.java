@@ -11,7 +11,6 @@ import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
 import com.gtcafe.asimov.infrastructure.queue.MessageProducer;
 import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.system.hello.model.Hello;
-import com.gtcafe.asimov.system.hello.rest.response.HelloTaskResponse;
 
 import lombok.extern.slf4j.Slf4j;
 

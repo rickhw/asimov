@@ -1,8 +1,8 @@
 package com.gtcafe.asimov.system.region;
 
+import com.gtcafe.asimov.rest.admin.region.request.CreateRegionRequest;
+import com.gtcafe.asimov.rest.admin.region.response.RetrieveRegionResponse;
 import com.gtcafe.asimov.system.region.repository.RegionEntity;
-import com.gtcafe.asimov.system.region.rest.request.CreateRegionRequest;
-import com.gtcafe.asimov.system.region.rest.response.RetrieveRegionResponse;
 import com.gtcafe.asimov.system.region.schema.Region;
 
 public class RegionMapper {

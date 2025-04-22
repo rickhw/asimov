@@ -4,7 +4,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.gtcafe.asimov.system.hello.rest.HelloController;
+import com.gtcafe.asimov.rest.tenant.hello.HelloController;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(HelloController.class)

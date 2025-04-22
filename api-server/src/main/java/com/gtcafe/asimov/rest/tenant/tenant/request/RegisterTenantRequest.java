@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.tenant.rest.request;
+package com.gtcafe.asimov.rest.tenant.tenant.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

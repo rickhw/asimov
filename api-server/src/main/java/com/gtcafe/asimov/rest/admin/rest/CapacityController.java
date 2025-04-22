@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.capacity.rest;
+package com.gtcafe.asimov.rest.admin.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

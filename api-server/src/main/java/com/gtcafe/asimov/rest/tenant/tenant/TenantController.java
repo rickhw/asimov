@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.tenant.rest;
+package com.gtcafe.asimov.rest.tenant.tenant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.platform.tenant.domain.TenantService;
-import com.gtcafe.asimov.platform.tenant.rest.request.RegisterTenantRequest;
-import com.gtcafe.asimov.platform.tenant.rest.response.TenantTaskResponse;
+import com.gtcafe.asimov.rest.tenant.tenant.request.RegisterTenantRequest;
+import com.gtcafe.asimov.rest.tenant.tenant.response.TenantTaskResponse;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

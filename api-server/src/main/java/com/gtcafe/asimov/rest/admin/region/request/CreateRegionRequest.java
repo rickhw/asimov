@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.region.rest.request;
+package com.gtcafe.asimov.rest.admin.region.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

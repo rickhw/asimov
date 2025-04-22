@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.region.rest.response;
+package com.gtcafe.asimov.rest.admin.region.response;
 
 import lombok.Builder;
 import lombok.Data;

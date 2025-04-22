@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.platform.tenant.rest.response;
+package com.gtcafe.asimov.rest.tenant.tenant.response;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.hello.rest;
+package com.gtcafe.asimov.rest.tenant.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gtcafe.asimov.framework.constants.HttpHeaderConstants;
 import com.gtcafe.asimov.framework.utils.TimeUtils;
+import com.gtcafe.asimov.rest.tenant.hello.request.SayHelloRequest;
+import com.gtcafe.asimov.rest.tenant.hello.response.HelloTaskResponse;
+import com.gtcafe.asimov.rest.tenant.hello.response.SayHelloResponse;
 import com.gtcafe.asimov.system.hello.HelloMapper;
 import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.system.hello.domain.HelloService;
 import com.gtcafe.asimov.system.hello.model.Hello;
-import com.gtcafe.asimov.system.hello.rest.request.SayHelloRequest;
-import com.gtcafe.asimov.system.hello.rest.response.HelloTaskResponse;
-import com.gtcafe.asimov.system.hello.rest.response.SayHelloResponse;
 import com.gtcafe.asimov.system.task.schema.ExecMode;
 
 import io.swagger.v3.oas.annotations.Parameter;

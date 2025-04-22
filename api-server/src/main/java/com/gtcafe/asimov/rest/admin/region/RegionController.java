@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.region.rest;
+package com.gtcafe.asimov.rest.admin.region;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gtcafe.asimov.rest.admin.region.request.CreateRegionRequest;
+import com.gtcafe.asimov.rest.admin.region.response.RetrieveRegionResponse;
 import com.gtcafe.asimov.system.region.RegionMapper;
 import com.gtcafe.asimov.system.region.domain.RegionService;
-import com.gtcafe.asimov.system.region.rest.request.CreateRegionRequest;
-import com.gtcafe.asimov.system.region.rest.response.RetrieveRegionResponse;
 import com.gtcafe.asimov.system.region.schema.Region;
 
 import io.swagger.v3.oas.annotations.Parameter;

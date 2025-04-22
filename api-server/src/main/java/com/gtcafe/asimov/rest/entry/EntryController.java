@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.controller;
+package com.gtcafe.asimov.rest.entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 @RequestMapping("/_")
-@Tag(name = "System/PredefinedAPI", description = "Entry Controller")
+@Tag(name = "Public", description = "Entry Controller")
 public class EntryController {
 
     @Autowired

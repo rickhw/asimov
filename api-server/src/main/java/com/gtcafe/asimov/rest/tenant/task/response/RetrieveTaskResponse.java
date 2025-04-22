@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.task.rest.response;
+package com.gtcafe.asimov.rest.tenant.task.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

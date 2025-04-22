@@ -22,9 +22,17 @@ source ./scripts/build-config.sh
 echo "Image Name: $DOCKER_IMAGE_NAME"
 gradle clean build 
 cd api-server
+
+# docker build . \
+#     --platform=linux/amd64 \
+#     -t ${DOCKER_IMAGE_NAME} \
+#     -t ${DOCKER_IMAGE_LATEST_NAME}
+
 docker build . \
+    --platform=linux/arm64 \
     -t ${DOCKER_IMAGE_NAME} \
     -t ${DOCKER_IMAGE_LATEST_NAME}
+
 
 docker push ${DOCKER_IMAGE_NAME}
 docker push ${DOCKER_IMAGE_LATEST_NAME}

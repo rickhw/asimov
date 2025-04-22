@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.task.rest;
+package com.gtcafe.asimov.rest.tenant.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

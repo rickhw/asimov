@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.framework.utils.TimeUtils;
+import com.gtcafe.asimov.rest.tenant.hello.request.SayHelloRequest;
+import com.gtcafe.asimov.rest.tenant.hello.response.HelloTaskResponse;
 import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.system.hello.model.Hello;
-import com.gtcafe.asimov.system.hello.rest.request.SayHelloRequest;
-import com.gtcafe.asimov.system.hello.rest.response.HelloTaskResponse;
 
 @Service
 public class HelloMapper {
