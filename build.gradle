@@ -1,6 +1,6 @@
 allprojects {
     group = 'com.gtcafe.asimov'
-    version = '1.0.0'
+    // version = '1.0.0'
 
     repositories {
         mavenCentral()
@@ -30,8 +30,3 @@ subprojects {
 }
 
 
-def getTimestamp() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMdd-HHmm')
-    return formattedDate
-}

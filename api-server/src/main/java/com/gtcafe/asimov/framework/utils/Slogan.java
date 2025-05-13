@@ -55,6 +55,9 @@ public class Slogan {
         content = content.replaceAll("<BuildId>", releng.getBuildId());
         content = content.replaceAll("<HashCode>", releng.getHashcode());
 
+        content = content.replaceAll("<BuildOs>", releng.getBuildOs());
+        content = content.replaceAll("<BuildSdk>", releng.getBuildSdk());
+
         return content;
     }
 
