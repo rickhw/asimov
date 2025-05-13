@@ -49,7 +49,7 @@ spring:
     banner-mode: off
 
   application:
-    name: WebAPI Server
+    name: ApiServer
 
   session:
     # 存儲類型，可選值有 none, jdbc, redis, hazelcast, mongodb
@@ -138,6 +138,7 @@ app:
     version: v1
     title: Asimov
     description: Asimov API
+    
   time:
     zone: UTC
     format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'

@@ -58,6 +58,11 @@ public class Slogan {
         content = content.replaceAll("<BuildOs>", releng.getBuildOs());
         content = content.replaceAll("<BuildSdk>", releng.getBuildSdk());
 
+        String runtimeSdk = String.format("%s %s", System.getProperty("java.version"), System.getProperty("java.vendor"));
+        String runtimeOs = String.format("%s %s %s", System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"));
+        content = content.replaceAll("<RuntimeSdk>",  runtimeSdk);
+        content = content.replaceAll("<RuntimeOS>",  runtimeOs);
+
         return content;
     }
 

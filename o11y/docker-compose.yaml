@@ -1,90 +1,5 @@
-#version: '3.8'
+version: '3.8'
 services:
-  # app:
-  #   build: ./asimov-webapi
-  #   ports:
-  #     - "8080:8080"
-  #   networks:
-  #     - net1
-  #   depends_on:
-  #     - rdb_mariadb
-  #     - cache_redis
-  #     - queue_rabbitmq
-  #     - search_elasticsearch
-  #     - metric_prometheus
-
-  api-gateway_apache-apisix:
-    image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
-    volumes:
-      - ./api-gateway/config/config.standalone.yaml:/usr/local/apisix/conf/apisix.yaml:ro
-    environment:
-      - APISIX_STAND_ALONE=true
-    ports:
-      - "9180:9180"
-      - "9080:9080"
-      - "9443:9443"
-    networks:
-      - net1
-
-  rdb_mariadb:
-    image: mariadb:10.10
-    environment:
-      MARIADB_DATABASE: asimov
-      MARIADB_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-    ports:
-      - "3306:3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 5s
-      retries: 5
-    volumes:
-      - ./.docker-data/rdb_mariadb:/var/lib/mysql
-    networks:
-      - net1
-
-  cache_redis:
-    image: redis:7.2-alpine
-    ports:
-      - 6379:6379
-    volumes:
-      - ./.docker-data/cache_redis:/data
-    networks:
-      - net1
-
-  queue_rabbitmq:
-    image: rabbitmq:3.12-management-alpine
-    ports:
-      - 5672:5672
-      - 15672:15672
-    volumes:
-      - ./.docker-data/queue_rabbitmq:/var/lib/rabbitmq
-    environment:
-      RABBITMQ_DEFAULT_USER: ${SPRING_RABBITMQ_USERNAME}
-      RABBITMQ_DEFAULT_PASS: ${SPRING_RABBITMQ_PASSWORD}
-    networks:
-      - net1
-
-  cache-adminer_phpRedisAdmin:
-    image: erikdubbelboer/phpredisadmin:1.19
-    ports:
-      - 9998:80
-    environment:
-      REDIS_1_HOST: cache_redis
-      REDIS_1_NAME: localhost
-    networks:
-      - net1
-
-  rdb-adminer_phpmyadmin:
-    image: phpmyadmin
-    ports:
-      - 9999:80
-    links:
-      - rdb_mariadb:db
-    depends_on:
-      rdb_mariadb:
-        condition: service_healthy
-    networks:
-      - net1
 
   search_elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
@@ -95,6 +10,7 @@ services:
       - "9200:9200"
     networks:
       - net1
+    restart: always
 
   dashboard_kibana:
     image: docker.elastic.co/kibana/kibana:8.16.1
@@ -107,6 +23,7 @@ services:
       - search_elasticsearch
     networks:
       - net1
+    restart: always
 
   metric_prometheus:
     image: prom/prometheus:latest
@@ -116,6 +33,7 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - net1
+    restart: always
 
   dashboard_grafana:
     image: grafana/grafana:10.1.0
@@ -128,6 +46,7 @@ services:
       - net1
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+    restart: always
 
   logshipper_webapi-filebeat:
     image: docker.elastic.co/beats/filebeat:7.17.26
@@ -138,6 +57,7 @@ services:
       - search_elasticsearch
     networks:
       - net1
+    restart: always
 
   node-exporter:
     image: prom/node-exporter:latest
@@ -149,6 +69,7 @@ services:
       - '--path.procfs=/host/proc'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: always
 
 networks:
   net1:

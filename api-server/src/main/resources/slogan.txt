@@ -10,3 +10,6 @@ HashCode: [<HashCode>]
 Build OS: [<BuildOs>]
 Build SDK: [<BuildSdk>]
 
+Runtime OS: [<RuntimeOS>]
+Runtime SDK: [<RuntimeSdk>]
+
