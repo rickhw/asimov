@@ -48,28 +48,28 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
     restart: always
 
-  logshipper_webapi-filebeat:
-    image: docker.elastic.co/beats/filebeat:7.17.26
-    volumes:
-      - ./asimov-webapi/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ./asimov-webapi/logs:/logs
-    depends_on:
-      - search_elasticsearch
-    networks:
-      - net1
-    restart: always
+  # logshipper_webapi-filebeat:
+  #   image: docker.elastic.co/beats/filebeat:7.17.26
+  #   volumes:
+  #     - ./asimov-webapi/filebeat.yml:/usr/share/filebeat/filebeat.yml
+  #     - ./asimov-webapi/logs:/logs
+  #   depends_on:
+  #     - search_elasticsearch
+  #   networks:
+  #     - net1
+  #   restart: always
 
-  node-exporter:
-    image: prom/node-exporter:latest
-    ports:
-      - "9100:9100"
-    networks:
-      - net1
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
-    restart: always
+  # node-exporter:
+  #   image: prom/node-exporter:latest
+  #   ports:
+  #     - "9100:9100"
+  #   networks:
+  #     - net1
+  #   command:
+  #     - '--path.procfs=/host/proc'
+  #     - '--path.sysfs=/host/sys'
+  #     - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+  #   restart: always
 
 networks:
   net1:
