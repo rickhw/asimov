@@ -1,9 +1,9 @@
-package com.gtcafe.asimov.domain.volume.rest.request;
+package com.gtcafe.asimov.rest.tenant.container.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class CreateVolumeRequest {
+public class CreateContainerRequest {
 
 	@NotBlank(message = "accountName cannot empty")
     @Size(max = 50, message = "accountName max lenght is 50.")

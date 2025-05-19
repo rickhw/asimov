@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.domain.volume.rest.response;
+package com.gtcafe.asimov.rest.tenant.volume.response;
 
 public class RetrieveVolumeResponse {
 

@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.domain.container.rest;
+package com.gtcafe.asimov.rest.tenant.container;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.domain.container.rest.request.CreateContainerRequest;
+import com.gtcafe.asimov.rest.tenant.container.request.CreateContainerRequest;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

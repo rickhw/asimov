@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.domain.container.rest.request;
+package com.gtcafe.asimov.rest.tenant.container.request;
 
 public class RetrieveContainerResponse {
 

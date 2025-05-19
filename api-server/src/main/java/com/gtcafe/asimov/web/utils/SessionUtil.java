@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.web;
+package com.gtcafe.asimov.web.utils;
 
 import java.net.Inet6Address;
 import java.net.InetAddress;
