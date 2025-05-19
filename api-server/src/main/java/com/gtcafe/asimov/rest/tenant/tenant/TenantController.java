@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gtcafe.asimov.platform.tenant.domain.TenantService;
 import com.gtcafe.asimov.rest.tenant.tenant.request.RegisterTenantRequest;
 import com.gtcafe.asimov.rest.tenant.tenant.response.TenantTaskResponse;
+import com.gtcafe.asimov.system.tenant.domain.TenantService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
