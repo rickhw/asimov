@@ -130,6 +130,35 @@ springdoc:
     # operationsSorter: name
 
 # -----------------------------------------------------------------------------
+# Actuator Configuration
+# -----------------------------------------------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        # include: health,metrics,prometheus
+        include: "*"
+
+    # health:
+    #   show-details: always
+
+    metrics:
+      tags:
+        application: ${spring.application.name}
+      export:
+        prometheus:
+          enabled: true
+      # Custom Metrics Configuration
+      # enable:
+      #   all: true
+      #   jvm: true
+      # process: true
+      #   system: true
+      #   logback: true
+      #   tomcat: true
+
+
+# -----------------------------------------------------------------------------
 # Application
 # -----------------------------------------------------------------------------
 
@@ -167,31 +196,3 @@ app:
     # - name: platform.tenant
     #   exchange: fanoutExchange
     #   routing-key: "" # Fanout exchange doesn't need routing key
-
-# -----------------------------------------------------------------------------
-# Actuator Configuration
-# -----------------------------------------------------------------------------
-management:
-  endpoints:
-    web:
-      exposure:
-        # include: health,metrics,prometheus
-        include: "*"
-
-    # health:
-    #   show-details: always
-
-    metrics:
-      tags:
-        application: ${spring.application.name}
-      export:
-        prometheus:
-          enabled: true
-      # Custom Metrics Configuration
-      # enable:
-      #   all: true
-      #   jvm: true
-      # process: true
-      #   system: true
-      #   logback: true
-      #   tomcat: true

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import com.gtcafe.asimov.framework.constants.QueueName;
 import com.gtcafe.asimov.framework.utils.JsonUtils;
 import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
-import com.gtcafe.asimov.infrastructure.queue.MessageProducer;
-import com.gtcafe.asimov.rest.tenant.tenant.request.RegisterTenantRequest;
-import com.gtcafe.asimov.rest.tenant.tenant.response.TenantTaskResponse;
+import com.gtcafe.asimov.infrastructure.queue.Producer;
+import com.gtcafe.asimov.rest.backstage.tenant.request.RegisterTenantRequest;
+import com.gtcafe.asimov.rest.backstage.tenant.response.TenantTaskResponse;
 import com.gtcafe.asimov.system.tenant.TenantMapper;
 import com.gtcafe.asimov.system.tenant.consumer.TenantTaskEvent;
 import com.gtcafe.asimov.system.tenant.model.Tenant;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TenantService {
 
     @Autowired
-    private MessageProducer producer;
+    private Producer producer;
 
     @Autowired
     private CacheRepository cacheRepos;

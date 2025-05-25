@@ -2,7 +2,7 @@ package com.gtcafe.asimov.system.tenant;
 
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.rest.tenant.tenant.request.RegisterTenantRequest;
+import com.gtcafe.asimov.rest.backstage.tenant.request.RegisterTenantRequest;
 import com.gtcafe.asimov.system.tenant.model.Tenant;
 import com.gtcafe.asimov.system.tenant.repository.TenantEntity;
 

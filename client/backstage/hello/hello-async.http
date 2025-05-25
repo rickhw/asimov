@@ -1,0 +1,18 @@
+@contentType = application/json
+@hostname = http://localhost:8080
+# @hostname = https://rws.lab.gtcafe.com
+
+
+# -----------------------------------------------------------------------------
+### normal case#1:
+POST {{hostname}}/api/v1alpha/hello
+Content-Type: {{contentType}}
+X-Request-Mode: async
+
+{
+  "message": "Hello, Asimov"
+}
+
+
+### get status
+GET {{hostname}}/api/tasks/bb25899b-b091-4403-9419-8a357680705e

@@ -20,8 +20,8 @@ public class JwtConfig {
 
     // private static String PRIVATE_KEY_PATH = "src/main/resources/private_key.pem";
     // private static String PUBLIC_KEY_PATH = "src/main/resources/public_key.pem";
-    private static String PRIVATE_KEY_PATH = "private_key.pem";
-    private static String PUBLIC_KEY_PATH = "public_key.pem";
+    private static String PRIVATE_KEY_PATH = "cert/private_key.pem";
+    private static String PUBLIC_KEY_PATH = "cert/public_key.pem";
 
     @Bean
     public KeyPair keyPair() throws Exception {

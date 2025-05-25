@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.system.user.model.UserEntity;
 import com.gtcafe.asimov.system.user.repository.UserRepository;
+import com.gtcafe.asimov.system.user.repository.model.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
 

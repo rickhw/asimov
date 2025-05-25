@@ -32,7 +32,9 @@ public class OpenApiConfig {
                         .version(openapiVersion))
                 .servers(Arrays.asList(
                         new Server().url("http://localhost:8080").description("Development Server"),
-                        new Server().url("http://api.example.com").description("Production Server")));
+                        new Server().url("http://rws.lab.gtcafe.com").description("Lab Server"),
+                        new Server().url("http://rws.gtcafe.com").description("Production Server")
+                ));
 
     }
 

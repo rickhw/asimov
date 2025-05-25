@@ -8,7 +8,7 @@ import com.gtcafe.asimov.framework.constants.QueueName;
 import com.gtcafe.asimov.framework.utils.JsonUtils;
 import com.gtcafe.asimov.framework.utils.TimeUtils;
 import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
-import com.gtcafe.asimov.infrastructure.queue.MessageProducer;
+import com.gtcafe.asimov.infrastructure.queue.Producer;
 import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.system.hello.model.Hello;
 
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HelloService {
 
   @Autowired
-  private MessageProducer producer;
+  private Producer producer;
 
   @Autowired
   private CacheRepository cacheRepos;

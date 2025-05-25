@@ -186,7 +186,7 @@ public class JwtApiApplication {
 
 2. 測試產生 Token：
    ```bash
-   curl -X POST "http://localhost:8080/api/v1alpha/tokens?username=testuser"
+   curl -X POST "http://localhost:8080/api/v1alpha/tokens?username=user1"
    ```
 
 3. 獲取 Public Key：
