@@ -63,11 +63,11 @@ public class HelloController {
     consumes = { MediaType.APPLICATION_JSON_VALUE }, 
     produces = { MediaType.APPLICATION_JSON_VALUE }
   )
-  // @Parameter(
-  //   name = HttpHeaderConstants.X_REQUEST_MODE, 
-  //   description = "Request mode", example = "async", 
-  //   schema = @Schema(implementation = ExecMode.class)
-  // )
+  @Parameter(
+    name = HttpHeaderConstants.X_REQUEST_MODE, 
+    description = "Request mode", example = "async", 
+    schema = @Schema(implementation = ExecMode.class)
+  )
   public ResponseEntity<HelloTaskResponse> sayHelloAsync(
       @Valid @RequestBody SayHelloRequest request,
       @RequestHeader(name = HttpHeaderConstants.X_REQUEST_MODE, required = false, defaultValue = HttpHeaderConstants.V__ASYNC_MODE) String requestMode
