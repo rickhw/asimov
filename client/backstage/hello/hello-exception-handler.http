@@ -3,7 +3,7 @@
 
 
 ### abnormal case#1: no attribute
-POST {{hostname}}/api/hello
+POST {{hostname}}/api/v1alpha/hello
 content-type: {{contentType}}
 
 {
@@ -12,7 +12,7 @@ content-type: {{contentType}}
 
 
 ### abnormal case#2: empty content 2
-POST {{hostname}}/api/hello
+POST {{hostname}}/api/v1alpha/hello
 content-type: {{contentType}}
 
 {
@@ -21,7 +21,7 @@ content-type: {{contentType}}
 
 
 ### abnormal case#3: invalid payload format
-POST {{hostname}}/api/hello
+POST {{hostname}}/api/v1alpha/hello
 content-type: {{contentType}}
 
 {

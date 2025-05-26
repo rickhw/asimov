@@ -70,7 +70,7 @@ public class HelloController {
   // )
   public ResponseEntity<HelloTaskResponse> sayHelloAsync(
       @Valid @RequestBody SayHelloRequest request,
-      @RequestHeader(name = HttpHeaderConstants.X_REQUEST_MODE, required = false) String requestMode
+      @RequestHeader(name = HttpHeaderConstants.X_REQUEST_MODE, required = false, defaultValue = HttpHeaderConstants.V__ASYNC_MODE) String requestMode
   ) {
 
     log.info("requestMode: [{}]", requestMode);
