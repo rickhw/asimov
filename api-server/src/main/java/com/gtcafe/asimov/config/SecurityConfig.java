@@ -48,7 +48,7 @@ public class SecurityConfig {
             //     .deleteCookies("JSESSIONID") // 刪除 Session Cookie
             //     .permitAll()
             // )
-            // .csrf(csrf -> csrf.disable())
+            .csrf(csrf -> csrf.disable())
             // .sessionManagement(session -> session
             //     .maximumSessions(1)
             //     // .maxSessionsPreventsLogin(true) // 不允許新登入，會拒絕新的 session

@@ -36,6 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/v1alpha/regions/**")
                 .excludePathPatterns("/api/v1alpha/tokens**")
                 .excludePathPatterns("/api/v1alpha/users/**")
+                // .excludePathPatterns("/api/v1alpha/hello/**")
 
                 .addPathPatterns("/**")  // 攔截所有請求
             ;

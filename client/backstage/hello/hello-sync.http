@@ -12,7 +12,7 @@ X-Tenant-Id: t-123
 X-AppName: asimov
 X-RoleName: admin
 
-### normal case#1:
+### normal case#1: not work, due to content-type specified
 POST {{hostname}}
 content-type: {{contentType}}
 X-Tenant-Id: t-123
