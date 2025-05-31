@@ -108,11 +108,15 @@ spring:
   data:
     redis:
       database: 0
-      # host: ${SPRING_DATA_REDIS_HOST}
-      # port: ${SPRING_DATA_REDIS_PORT}
+      # host: localhost
+      # port: 
       # password: password
       # timeout: 60000
-
+      # lettuce:
+      #   pool:
+      #     max-active: 10
+      #     max-idle: 5
+      #     min-idle: 1
 # -----------------------------------------------------------------------------
 # logback
 # -----------------------------------------------------------------------------

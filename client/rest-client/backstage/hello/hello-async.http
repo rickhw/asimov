@@ -1,6 +1,7 @@
 @contentType = application/json
-# @hostname = http://localhost:8080
-@hostname = https://rws.lab.gtcafe.com
+@hostname = http://localhost:8080
+#@hostname = https://rws.lab.gtcafe.com
+#@hostname = https://lab.gtcafe.com
 
 
 # -----------------------------------------------------------------------------
@@ -15,6 +16,6 @@ X-Request-Mode: async
 
 
 ### get status
-GET {{hostname}}/api/v1alpha/tasks/e318a939-daa0-46f8-91d5-de85f37cbf10
+GET {{hostname}}/api/v1alpha/tasks/c62ce699-ca1f-4bd0-87aa-3a63217a713e
 
 

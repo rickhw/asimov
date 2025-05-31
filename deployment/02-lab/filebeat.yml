@@ -1,0 +1,35 @@
+
+filebeat.inputs:
+  - type: log
+    paths:
+      - /home/ubuntu/asimov/api-server/logs/current.log
+    fields:
+      app_name: asimov.api-server
+    fields_under_root: true
+    json.keys_under_root: true
+    json.add_error_key: true
+    index: "asimov.api-server"  # 自定義索引標記
+
+
+# ============================== Elasticsearch output ===========================
+
+output.elasticsearch:
+  hosts: ["elastic.asimov.lab.gtcafe.com:9200"]
+  protocol: "http"
+  # username: "elastic"
+  # password: "your_elastic_password"
+
+  indices:
+    - index: "asimov.api-server-%{+yyyy.MM.dd}"
+      when.equals:
+        index: "asimov.api-server"
+
+
+# ============================ Setup Kibana (optional) ==========================
+
+setup.kibana:
+  host: "kibana.asimov.lab.gtcafe.com:5601"
+
+# ============================ Logging ==========================================
+
+logging.level: info

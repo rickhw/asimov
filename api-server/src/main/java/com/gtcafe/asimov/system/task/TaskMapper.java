@@ -1,15 +1,14 @@
 package com.gtcafe.asimov.system.task;
 
-
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.rest.domain.task.response.RetrieveTaskResponse;
 import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 
-
 @Service
 public class TaskMapper {
 
+    // @TODO adjust the logic
 	public RetrieveTaskResponse event2Response(HelloEvent event) {
 		RetrieveTaskResponse obj = new RetrieveTaskResponse();
 		obj.setId(event.getId());
