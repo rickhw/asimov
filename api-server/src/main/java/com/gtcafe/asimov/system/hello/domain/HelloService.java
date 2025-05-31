@@ -42,18 +42,21 @@ public class HelloService {
 
   public HelloEvent sayHelloAsync(Hello hello) {
 
-    // create a event
+    // 1. create a event
     HelloEvent event = new HelloEvent(hello);
     String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
     String taskCachedKeyForIndex = String.format("%s:%s", KindConstants.SYS_TASK, event.getId());
 
-    // sent to queue
-    producer.sendEvent(event, QueueName.HELLO_QUEUE);
-
-
+    // 2. store to cache
     String taskJsonString = jsonUtils.modelToJsonString(event);
     cacheRepos.saveOrUpdateObject(cachedKey, taskJsonString);
     cacheRepos.saveOrUpdateObject(taskCachedKeyForIndex, taskJsonString);
+
+    // 3. store to db
+
+    // 3. sent to queue
+    producer.sendEvent(event, QueueName.HELLO_QUEUE);
+
 
     return event;
   }

@@ -21,16 +21,16 @@ import com.gtcafe.asimov.framework.constants.QueueName;
 import com.gtcafe.asimov.infrastructure.queue.model.QueueConfig;
 
 @Configuration
-@ConfigurationProperties(prefix = "app.rabbitmq")
+@ConfigurationProperties(prefix = "asimov.rabbitmq")
 public class RabbitInitializer {
 
-    @Value("${app.rabbitmq.autoInit:true}")
+    @Value("${asimov.rabbitmq.autoInit:true}")
     private boolean autoInit;
 
-    @Value("${app.rabbitmq.reset:false}")
+    @Value("${asimov.rabbitmq.reset:false}")
     private boolean reset;
 
-    // @Value("${app.rabbitmq.prefixName:asimov}")
+    // @Value("${asimov.rabbitmq.prefixName:asimov}")
     // private String prefixName;
     
 

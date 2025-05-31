@@ -40,20 +40,6 @@ public class JsonUtils {
     }
 
     /**
-     * 將 JSON 字串轉換為物件（保留原有方法以維持相容性）
-     * @deprecated 建議使用 jsonStringToModelSafe 方法
-     */
-    @Deprecated
-    public <T> T jsonStringToModel(String jsonString, Class<T> clazz) {
-        try {
-            return objectMapper.readValue(jsonString, clazz);
-        } catch (JsonProcessingException e) {
-            log.error("Error parsing JSON string to {}: {}", clazz.getSimpleName(), e.getMessage());
-            return null;
-        }
-    }
-
-    /**
      * 將物件轉換為 JSON 字串
      * @param object 要轉換的物件
      * @return Optional 包裝的 JSON 字串
@@ -72,6 +58,9 @@ public class JsonUtils {
         }
     }
 
+    // ------------------------------------------------------------------------
+    // Deprecated
+    // ------------------------------------------------------------------------
     /**
      * 將物件轉換為 JSON 字串（保留原有方法以維持相容性）
      * @deprecated 建議使用 modelToJsonStringSafe 方法
@@ -85,4 +74,19 @@ public class JsonUtils {
             return null;
         }
     }
+
+    /**
+     * 將 JSON 字串轉換為物件（保留原有方法以維持相容性）
+     * @deprecated 建議使用 jsonStringToModelSafe 方法
+     */
+    @Deprecated
+    public <T> T jsonStringToModel(String jsonString, Class<T> clazz) {
+        try {
+            return objectMapper.readValue(jsonString, clazz);
+        } catch (JsonProcessingException e) {
+            log.error("Error parsing JSON string to {}: {}", clazz.getSimpleName(), e.getMessage());
+            return null;
+        }
+    }
+
 }

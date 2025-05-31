@@ -22,7 +22,7 @@ dependencies {
     // runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
-    // message queue
+    // message queue: rabbitmq
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
     // cache: redis

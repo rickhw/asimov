@@ -113,9 +113,10 @@ public class CacheRepository {
      */
     public Optional<String> retrieveObject(String cacheKey) {
         Assert.hasText(cacheKey, "cacheKey must not be empty");
+        log.info("cacheKey: [{}]", cacheKey);
 
         try {
-            long startTime = System.nanoTime();
+            // long startTime = System.nanoTime();
             String result = valueOps.get(cacheKey);
             // cacheMetrics.recordReadLatency(System.nanoTime() - startTime);
             // cacheMetrics.incrementReadCount();

@@ -1,0 +1,52 @@
+plugins {
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+}
+
+dependencies {
+    // implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    
+    implementation 'org.projectlombok:lombok:1.18.36'
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+}
+
+group = 'com.gtcafe.asimov'
+version = '1.1.0'
+sourceCompatibility = '17'
+
+def buildId = new Date().format("yyyyMMdd-HHmm")
+def buildType = project.hasProperty('buildType') ? project.property('buildType') : 'dev'
+def buildOs = 'uname -v'.execute().text.trim()
+def buildSdk = 'java -version'.execute().text.trim()
+
+// Git hash 取得（可選）
+def gitHash = 'unknown'
+try {
+    def proc = 'git rev-parse --short HEAD'.execute()
+    proc.in.eachLine { line -> gitHash = line.trim() }
+} catch (ignored) {}
+
+def replacements = [
+    VERSION  : version,
+    BUILD_ID  : buildId,
+    BUILD_TYPE: buildType,
+    HASH_CODE : gitHash,
+    BUILD_SDK : System.getProperty("java.runtime.version") + " " + System.getProperty("java.vm.vendor"), // System.getProperty("java.version"),
+    BUILD_OS : buildOs
+]
+
+processResources {
+    filesMatching(['**/*.properties', '**/*.txt']) {
+        filteringCharset = 'UTF-8'
+        filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: replacements)
+    }
+}
+
+bootJar {
+    archiveBaseName.set(project.name)
+    archiveVersion.set("v${version}-${buildType}-b${buildId}")
+}

@@ -74,6 +74,9 @@ spring:
     # password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
 
+    ## custom housekeeping 週期：
+    hikari:
+      housekeeping-period-ms: 30000 # 預設為 30 秒
   jpa:
     open-in-view: false
     hibernate:
@@ -116,9 +119,19 @@ spring:
 logging:
   level:
     com.gtcafe.asimov: INFO
+
+    com.gtcafe.asimov.infrastructure: DEBUG
+
     org.hibernate.SQL: INFO
+
+    # spring
+    ## Debug Bean
+    org.springframework.boot.context.config: DEBUG
     org.springframework.amqp: INFO
     # org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+    # 開啟 HikariCP debug
+    # com.zaxxer.hikari: DEBUG
 
 springdoc:
   api-docs:
@@ -157,42 +170,3 @@ management:
       #   logback: true
       #   tomcat: true
 
-
-# -----------------------------------------------------------------------------
-# Application
-# -----------------------------------------------------------------------------
-
-app:
-  openapi:
-    version: v1
-    title: Asimov
-    description: Asimov API
-    
-  time:
-    zone: UTC
-    format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-
-  rabbitmq:
-    autoInit: true
-    reset: true
-    # prefixName: asimov
-
-    ## ATTENTTION: DON't CHANGE the queueName, due to they are as the key in code
-    ## TODO: move to core
-
-    queues:
-      - name: asimov.platform.task
-        exchange: asimov.directExchange
-        routingKey: platform-task
-
-      - name: asimov.platform.hello
-        exchange: asimov.directExchange
-        routingKey: platform-hello
-
-      - name: asimov.platform.tenant
-        exchange: asimov.directExchange
-        routingKey: platform-tenant
-
-    # - name: platform.tenant
-    #   exchange: fanoutExchange
-    #   routing-key: "" # Fanout exchange doesn't need routing key

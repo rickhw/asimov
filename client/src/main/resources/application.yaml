@@ -1,0 +1,5 @@
+asimov:
+  client:
+    base-url: http://localhost:8080
+    content-type: application/json
+    request-mode: async

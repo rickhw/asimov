@@ -9,6 +9,7 @@ asimov:
     zone: UTC
     format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 
+
   rabbitmq:
     autoInit: true
     reset: true
@@ -33,3 +34,16 @@ asimov:
     # - name: platform.tenant
     #   exchange: fanoutExchange
     #   routing-key: "" # Fanout exchange doesn't need routing key
+
+  task:
+    thread-pool:
+      size: 3
+
+  system:
+    hello:
+      consumer:
+        async-thread-pool:
+          core-size: 2
+          max-size: 5
+          queue-capacity: 1
+          thread-name-prefix: "async-hello-"

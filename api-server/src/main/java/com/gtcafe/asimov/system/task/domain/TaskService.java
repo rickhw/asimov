@@ -1,10 +1,13 @@
 package com.gtcafe.asimov.system.task.domain;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.framework.utils.JsonUtils;
 import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
+import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,13 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 public class TaskService {
 
   @Autowired
-  CacheRepository _repos;
-
-  // @Autowired
-  // TaskMapper _dto;
+  private CacheRepository _repos;
 
   @Autowired
-  private JsonUtils jsonUtils;
+  private JsonUtils _jsonUtils;
 
   // public TaskDomainObject retrieve(String id) {
   //   // 1. validate: is not exist or expire.
@@ -33,16 +33,20 @@ public class TaskService {
   //   return tdo;
   // }
 
-  // public HelloEvent retrieveV4(String id) {
-  //   // 1. validate: is not exist or expire.
+  public HelloEvent retrieveV4(String id) {
+    // 1. validate: is not exist or expire.
+    log.info("id: [{}]", id);
 
-  //   // 2. find the id in cache
-  //   String jsonString = _repos.retrieveObject(id);
-  //   HelloEvent tdo = jsonUtils.jsonStringToModel(jsonString, HelloEvent.class);
+    String cacheKey = String.format("sys.Task:%s", id);
 
-  //   log.info("SayHelloEventV4: {}", jsonString);
+    // 2. find the id in cache
+    String jsonString = _repos.retrieveObject(cacheKey).get();
+    HelloEvent event = _jsonUtils.jsonStringToModelSafe(jsonString, HelloEvent.class).get();
+    log.info("SayHelloEventV4: [{}]", jsonString);
 
-  //   return tdo;
-  // }
+    // 3. find the id in db
+
+    return event;
+  }
 
 }

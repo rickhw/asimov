@@ -13,13 +13,13 @@ import io.swagger.v3.oas.models.servers.Server;
 @Configuration
 public class OpenApiConfig {
 
-    @Value("${app.openapi.title}")
+    @Value("${asimov.openapi.title}")
     private String openapiTitle;
 
-    @Value("${app.openapi.description}")
+    @Value("${asimov.openapi.description}")
     private String description;
 
-    @Value("${app.openapi.version}")
+    @Value("${asimov.openapi.version}")
     private String openapiVersion;
 
     @Bean

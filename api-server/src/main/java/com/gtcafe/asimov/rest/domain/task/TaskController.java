@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gtcafe.asimov.rest.domain.task.response.RetrieveTaskResponse;
+import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
+import com.gtcafe.asimov.system.task.TaskMapper;
 import com.gtcafe.asimov.system.task.domain.TaskService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,24 +21,28 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/v1alpha/tasks")
 @Slf4j
 public class TaskController {
-  // private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
   @Autowired
-  TaskService _service;
+  private TaskService _service;
 
-  @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-  public ResponseEntity<Object> retrieve(@PathVariable String id) {
+  @Autowired
+  private TaskMapper _mapper;
+
+
+  @GetMapping(value = "/{task-id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+  public ResponseEntity<RetrieveTaskResponse> retrieve(@PathVariable(name = "task-id") String taskId) {
+    log.info("taskId: [{}]", taskId);
     // 1. validate: is not exist or expire.
 
     // 2. find the id in cache
-    // HelloEvent tdo = _service.retrieveV4(id);
+    HelloEvent event = _service.retrieveV4(taskId);
 
     // tdo.getData()
 
-    // 3. DTO
-    // RetrieveTaskResponse res = _dto.convertToTaskV4Response(tdo);
+    // 3. Convert
+    RetrieveTaskResponse res = _mapper.event2Response(event);
 
-    return ResponseEntity.ok("ok");
+    return ResponseEntity.ok(res);
   }
 
   // @DeleteMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
