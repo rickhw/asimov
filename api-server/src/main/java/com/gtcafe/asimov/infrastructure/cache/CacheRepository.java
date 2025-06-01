@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.jboss.logging.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.Cursor;
@@ -69,7 +70,13 @@ public class CacheRepository {
         Assert.hasText(cacheKey, "cacheKey must not be empty");
         Assert.hasText(value, "Value must not be empty");
 
-        log.debug("cacheKey: [{}], value: [{}], timeout: [{}], unit: [{}]", cacheKey, value, timeout, unit);
+        MDC.put("CacheKey", cacheKey);
+        // MDC.put("CacheValue", value);
+        MDC.put("CacheAction", "write");
+        MDC.put("CacheMethod", "put_update");
+        MDC.put("CacheTimeout", timeout);
+        log.info(""); // Access Log
+
 
         try {
             // long startTime = System.nanoTime();
@@ -93,7 +100,13 @@ public class CacheRepository {
         Assert.hasText(value, "Value must not be empty");
         Assert.notNull(timeout, "Timeout must not be null");
 
-        log.debug("cacheKey: [{}], value: [{}], timeout: [{}]", cacheKey, value, timeout);
+        MDC.put("CacheKey", cacheKey);
+        // MDC.put("CacheValue", value);
+        MDC.put("CacheAction", "write");
+        MDC.put("CacheMethod", "set");
+        MDC.put("CacheTimeout", timeout);
+        log.info(""); // Access Log
+
 
         try {
             // long startTime = System.nanoTime();
@@ -118,7 +131,11 @@ public class CacheRepository {
      */
     public Optional<String> retrieveObject(String cacheKey) {
         Assert.hasText(cacheKey, "cacheKey must not be empty");
-        log.debug("cacheKey: [{}]", cacheKey);
+        MDC.put("CacheKey", cacheKey);
+        MDC.put("CacheAction", "read");
+        MDC.put("CacheMethod", "get");
+        // MDC.put("CacheTimeout", timeout);
+        log.info(""); // Access Log
 
         try {
             // long startTime = System.nanoTime();
@@ -143,12 +160,16 @@ public class CacheRepository {
         }
     }
 
-    /**
-     * 刪除物件
-     */
     public void delete(String cacheKey) {
         Assert.hasText(cacheKey, "cacheKey must not be empty");
-        log.debug("cacheKey: [{}]", cacheKey);
+        // log.debug("cacheKey: [{}]", cacheKey);
+        MDC.put("CacheKey", cacheKey);
+        // MDC.put("CacheValue", value);
+        MDC.put("CacheAction", "write");
+        MDC.put("CacheMethod", "delete");
+        // MDC.put("CacheTimeout", timeout);
+        log.info(""); // Access Log
+
 
         try {
             redisTemplate.delete(cacheKey);

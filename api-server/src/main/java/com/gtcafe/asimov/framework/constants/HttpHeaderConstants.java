@@ -38,10 +38,10 @@ public class HttpHeaderConstants {
     // HTTP
     public final static String X_REQUEST_ID = "X-Request-Id";
 
-    public final static String CLIENT_IP = "ClientIP";
-    public final static String REQUEST_URI = "RequestURI";
-    public final static String PROTOCOL = "Protocol";
-    public final static String METHOD = "Method";
+    // public final static String CLIENT_IP = "ClientIP";
+    // public final static String REQUEST_URI = "RequestURI";
+    // public final static String PROTOCOL = "Protocol";
+    // public final static String METHOD = "Method";
 
 
     // Response

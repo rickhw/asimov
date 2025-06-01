@@ -1,29 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <!-- 設定 log 檔案儲存路徑 -->
     <property name="LOG_PATH" value="./logs" />
     
-    <appender name="ConsoleJsonLine" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="StdoutConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{36}#%M\(%line\) %message%n</pattern>
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/current.log</file>
+    <!-- 定義 ROOT logger 並輸出到檔案 -->
+    <appender name="StdoutFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/stdout.log</file>
+        
+        <!-- 設定日誌滾動策略，設定檔案名稱和滾動規則 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <totalSizeCap>100MB</totalSizeCap>
+            <!-- 每天創建新檔案，依據日期命名 -->
+            <fileNamePattern>${LOG_PATH}/stdout-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 保留天數 -->
+            <maxHistory>10</maxHistory>
+            <!-- 可選：設定單檔案大小限制 -->
+            <totalSizeCap>10MB</totalSizeCap>
         </rollingPolicy>
 
         <encoder>
-            <pattern>{ "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSS}", "level": "%level", "thread": "%thread", "class": "%logger", "method": "%M", "message": "%message", "X-Tenant-Id": "%X{X-Tenant-Id}" }%n</pattern>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{36}#%M\(%line\) %message%n</pattern>
         </encoder>
     </appender>
 
+    <!-- InfraCache:JSON Appender -->
+    <appender name="CacheAccessLogJsonAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/infra.cache.redis.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/infra.cache.redis.%d{yyyy-MM-dd}.log.json</fileNamePattern>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        
+        <encoder>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "infra.cache.redis", "fb_app-name": "asimov.api-server", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}", "cache": { "cacheKey": "%X{CacheKey}", "action": "%X{CacheAction}", "method": "%X{CacheMethod}", "timeout": "%X{CacheTimeout}" } }%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- <appender name="CacheAccessLogConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "infra.cache.redis", "fb_app-name": "asimov.api-server", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}", "cache": { "cacheKey": "%X{CacheKey}", "value": "%X{CacheValue}", "action": "%X{CacheAction}", "method": "%X{CacheMethod}", "timeout": "%X{CacheTimeout}" } }%n</pattern>
+        </encoder>
+    </appender> -->
+
+    <!-- CacheAccessLog Logger -->
+    <logger name="com.gtcafe.asimov.infrastructure.cache.CacheRepository" level="INFO" additivity="false">
+        <appender-ref ref="CacheAccessLogJsonAppender" />
+        <!-- <appender-ref ref="CacheAccessLogConsoleAppender" /> -->
+    </logger>
+
+
+    <!-- HttpAccessLog:JSON Appender -->
+    <appender name="HttpAccessLogJsonAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/http-access-log.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/http-access-log.%d{yyyy-MM-dd}.log.json</fileNamePattern>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        
+        <encoder>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "access-log", "fb_app-name": "asimov.api-server", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}" }%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="HttpAccessLogConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "access-log", "fb_app-name": "asimov.api-server", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}" }%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- HttpAccessLog Logger -->
+    <logger name="com.gtcafe.asimov.framework.filter.GlobalHttpRequestFilter" level="INFO" additivity="false">
+        <appender-ref ref="HttpAccessLogJsonAppender" />
+        <appender-ref ref="HttpAccessLogConsoleAppender" />
+    </logger>
+
+    <!-- 根 logger 設定 -->
     <root level="INFO">
-        <appender-ref ref="ConsoleJsonLine" />
-        <appender-ref ref="FILE" />
+        <appender-ref ref="StdoutConsoleAppender" />
+        <appender-ref ref="StdoutFileAppender" />
     </root>
 </configuration>
