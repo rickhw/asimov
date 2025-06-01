@@ -21,7 +21,7 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
     @Autowired
     private CacheRepository cacheRepos;
 
-    private static final int SIMULATE_DELAY = 500;
+    private static final int SIMULATE_DELAY = (int) (Math.random() * 100000) % 10000;
 
     @Override
     public void handleEvent(HelloEvent event) {
