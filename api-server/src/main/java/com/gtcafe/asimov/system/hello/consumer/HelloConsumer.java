@@ -38,7 +38,7 @@ public class HelloConsumer {
 
         // 1. handle data model: convert json string to model
         HelloEvent event = _jsonUtils.jsonStringToModelSafe(eventString, HelloEvent.class).get();
-        log.info("task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
+        log.info("task: [{}], state: [{}] ...: ", event.getId(), event.getState());
 
         // 2. update state: update state from pending to running
         String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());

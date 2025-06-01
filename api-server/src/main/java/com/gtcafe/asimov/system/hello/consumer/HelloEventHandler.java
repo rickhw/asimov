@@ -31,7 +31,7 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
             // log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
             
             // simulate the process
-            log.info("start: task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
+            log.info("start: task: [{}], state: [{}], delay: [{}] ...: ", event.getId(), event.getState(), SIMULATE_DELAY);
             // log.info("start the handler, cachedKey: [{}], state: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
             Thread.sleep(SIMULATE_DELAY);
 
@@ -43,7 +43,7 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
             cacheRepos.saveOrUpdateObject(cachedKey, afterEventString);
             cacheRepos.saveOrUpdateObject(taskCachedKeyForIndex, afterEventString);
 
-            log.info("finish: task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
+            log.info("finish: task: [{}], state: [{}], delay: [{}] ...: ", event.getId(), event.getState(), SIMULATE_DELAY);
 
         } catch (Exception ex) {
             event.setState(TaskState.FAILURE);
