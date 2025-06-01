@@ -1,10 +1,15 @@
 #!/bin/bash
 
+# === [設定區] ===
+# 記錄 log 檔路徑（每天產生一個檔）
+LOG_DIR="/var/log/hello-task"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/hello-$(date '+%Y-%m-%d').log"
+
 # 檢查參數
 if [[ -z "$1" ]]; then
-  echo "❌ 用法錯誤：請提供 HOSTNAME"
-  echo "用法: $0 <hostname>"
-  echo "範例: $0 https://rws.lab.gtcafe.com"
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] ❌ 用法錯誤：請提供 HOSTNAME" >> "$LOG_FILE"
+  echo "用法: $0 <hostname>" >> "$LOG_FILE"
   exit 1
 fi
 
@@ -12,17 +17,21 @@ HOSTNAME="$1"
 CONTENT_TYPE="application/json"
 REQUEST_MODE="async"
 
-# 產生 1～30 的隨機數
+# log function with timestamp
+log() {
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOG_FILE"
+}
+
+# 隨機產生 1~30 筆請求
 REQUEST_COUNT=$((RANDOM % 30 + 1))
+log "🚀 準備平行發送 $REQUEST_COUNT 筆請求到 $HOSTNAME"
 
-echo "🚀 準備平行發送 $REQUEST_COUNT 筆請求到 $HOSTNAME"
-
-# 宣告任務函式
+# === 任務 function ===
 send_and_track_task() {
   local index="$1"
   local message="Hello, Asimov #$index"
 
-  echo "[#${index}] 發送請求..."
+  log "[#${index}] 發送請求..."
 
   RESPONSE=$(curl -s -X POST "$HOSTNAME/api/v1alpha/hello" \
     -H "Content-Type: $CONTENT_TYPE" \
@@ -32,24 +41,24 @@ send_and_track_task() {
   TASK_ID=$(echo "$RESPONSE" | jq -r '.id')
 
   if [[ "$TASK_ID" == "null" || -z "$TASK_ID" ]]; then
-    echo "[#${index}] ❌ 無法取得 Task ID，回應如下：$RESPONSE"
+    log "[#${index}] ❌ 無法取得 Task ID，回應如下：$RESPONSE"
     return
   fi
 
-  echo "[#${index}] ✅ 任務送出成功 Task ID = $TASK_ID"
+  log "[#${index}] ✅ 任務送出成功 Task ID = $TASK_ID"
 
   # 查詢狀態直到完成
   while true; do
     STATUS_RESPONSE=$(curl -s "$HOSTNAME/api/v1alpha/tasks/$TASK_ID")
     STATE=$(echo "$STATUS_RESPONSE" | jq -r '.state')
 
-    echo "[#${index}] 狀態: $STATE"
+    log "[#${index}] 狀態: $STATE"
 
     if [[ "$STATE" == "COMPLETED" ]]; then
-      echo "[#${index}] ✅ 已完成"
+      log "[#${index}] ✅ 已完成"
       break
     elif [[ "$STATE" == "FAILED" ]]; then
-      echo "[#${index}] ❌ 任務失敗"
+      log "[#${index}] ❌ 任務失敗"
       break
     fi
 
@@ -57,11 +66,10 @@ send_and_track_task() {
   done
 }
 
-# 發送所有請求（平行）
+# === 平行送出所有任務 ===
 for ((i=1; i<=REQUEST_COUNT; i++)); do
   send_and_track_task "$i" &
 done
 
-# 等待所有背景任務結束
 wait
-echo "🎉 所有請求已完成"
+log "🎉 所有任務完成"

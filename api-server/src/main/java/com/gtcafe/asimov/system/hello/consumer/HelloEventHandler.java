@@ -21,7 +21,7 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
     @Autowired
     private CacheRepository cacheRepos;
 
-    private static final int SIMULATE_DELAY = (int) (Math.random() * 100000) % 10000;
+    private static final int SIMULATE_DELAY = (int) (Math.random() * 1000000) % 50000;
 
     @Override
     public void handleEvent(HelloEvent event) {
@@ -37,7 +37,7 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
 
             event.setState(TaskState.COMPLETED);
             log.info("task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
-            // log.info("finish the handler, cachedKey: [{}], state: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
+            // log.info("finish the handler, cachedKey: [{}], steate: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
 
             String afterEventString = jsonUtils.modelToJsonString(event);
 

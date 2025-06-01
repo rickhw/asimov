@@ -20,8 +20,8 @@ SuccessExitStatus=143
 Restart=always
 RestartSec=10
 
-StandardOutput=append:/home/ubuntu/asimov/api-server/logs/systemctl.stdout.log
-StandardError=append:/home/ubuntu/asimov/api-server/logs/systemctl.stderr.log
+# StandardOutput=append:/home/ubuntu/asimov/api-server/logs/systemctl.stdout.log
+# StandardError=append:/home/ubuntu/asimov/api-server/logs/systemctl.stderr.log
 
 [Install]
 WantedBy=multi-user.target
