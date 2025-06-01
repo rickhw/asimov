@@ -21,7 +21,7 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
     @Autowired
     private CacheRepository cacheRepos;
 
-    private static final int SIMULATE_DELAY = (int) (Math.random() * 1000000) % 50000;
+    private static final int SIMULATE_DELAY = (int) (Math.random() * 1000000) % 5000;
 
     @Override
     public void handleEvent(HelloEvent event) {
@@ -31,18 +31,19 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
             // log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
             
             // simulate the process
-            log.info("task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
+            log.info("start: task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
             // log.info("start the handler, cachedKey: [{}], state: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
             Thread.sleep(SIMULATE_DELAY);
 
             event.setState(TaskState.COMPLETED);
-            log.info("task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
             // log.info("finish the handler, cachedKey: [{}], steate: [{}], sleep [{}], data: [{}] ...: ", cachedKey, event.getState(), SIMULATE_DELAY, event.getData());
-
+            
             String afterEventString = jsonUtils.modelToJsonString(event);
-
+            
             cacheRepos.saveOrUpdateObject(cachedKey, afterEventString);
             cacheRepos.saveOrUpdateObject(taskCachedKeyForIndex, afterEventString);
+
+            log.info("finish: task: [{}], state: [{}], data: [{}] ...: ", event.getId(), event.getState(), event.getData());
 
         } catch (Exception ex) {
             event.setState(TaskState.FAILURE);

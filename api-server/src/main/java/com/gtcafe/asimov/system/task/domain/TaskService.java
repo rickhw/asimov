@@ -1,7 +1,5 @@
 package com.gtcafe.asimov.system.task.domain;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +33,14 @@ public class TaskService {
 
   public HelloEvent retrieveV4(String id) {
     // 1. validate: is not exist or expire.
-    log.info("id: [{}]", id);
+    // log.info("id: [{}]", id);
 
     String cacheKey = String.format("sys.Task:%s", id);
 
     // 2. find the id in cache
     String jsonString = _repos.retrieveObject(cacheKey).get();
     HelloEvent event = _jsonUtils.jsonStringToModelSafe(jsonString, HelloEvent.class).get();
-    log.info("SayHelloEventV4: [{}]", jsonString);
+    // log.info("SayHelloEventV4: [{}]", jsonString);
 
     // 3. find the id in db
 
