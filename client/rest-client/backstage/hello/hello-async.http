@@ -1,6 +1,6 @@
 @contentType = application/json
 @hostname = http://localhost:8080
-#@hostname = https://rws.lab.gtcafe.com
+# @hostname = https://rws.lab.gtcafe.com
 #@hostname = https://lab.gtcafe.com
 
 

@@ -35,6 +35,28 @@
         </encoder>
     </appender>
 
+    <!-- HttpAccessLog:JSON Appender -->
+    <appender name="HttpAccessLogJsonAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/access_log.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/access_log.%d{yyyy-MM-dd}.log.json</fileNamePattern>
+            <maxHistory>180</maxHistory>
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        
+        <!-- Log as JSON -->
+        <encoder>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}" }%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- HttpAccessLog Logger -->
+    <logger name="com.gtcafe.asimov.framework.filter.GlobalHttpRequestFilter" level="INFO" additivity="false">
+        <appender-ref ref="HttpAccessLogJsonAppender" />
+    </logger>
+
+
+
     <!-- 根 logger 設定 -->
     <root level="INFO">
         <appender-ref ref="ConsoleJsonLine" />

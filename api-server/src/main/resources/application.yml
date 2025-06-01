@@ -124,7 +124,7 @@ logging:
   level:
     com.gtcafe.asimov: INFO
 
-    com.gtcafe.asimov.infrastructure: DEBUG
+    #com.gtcafe.asimov.infrastructure: DEBUG
 
     org.hibernate.SQL: INFO
 

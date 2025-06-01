@@ -30,8 +30,8 @@ public class EntryController {
 
     @GetMapping(value = "/version", produces = { MediaType.TEXT_PLAIN_VALUE })
     public ResponseEntity<String> getSlogon() {
-        ApiMetadataContext ctx = ApiMetadataContext.GetCurrentContext();
-        log.info("API Metadata: kind: [{}], opId: [{}]", ctx.getKind(), ctx.getOperationId());
+        // ApiMetadataContext ctx = ApiMetadataContext.GetCurrentContext();
+        // log.debug("API Metadata: kind: [{}], opId: [{}]", ctx.getKind(), ctx.getOperationId());
         return ResponseEntity.ok(slogan.apiSlogan(HttpRequestContext.GetCurrentContext().getRequestId()));
     }
 

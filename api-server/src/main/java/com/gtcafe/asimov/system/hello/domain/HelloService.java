@@ -57,7 +57,6 @@ public class HelloService {
     // 3. sent to queue
     producer.sendEvent(event, QueueName.HELLO_QUEUE);
 
-
     return event;
   }
 }

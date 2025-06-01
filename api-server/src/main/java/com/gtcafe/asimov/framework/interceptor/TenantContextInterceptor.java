@@ -15,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TenantContextInterceptor implements HandlerInterceptor {
 
-    public TenantContextInterceptor() {
-        log.info("TenantContextInterceptor initialized");
-    }
+    // public TenantContextInterceptor() {
+    //     log.info("TenantContextInterceptor initialized");
+    // }
 
     @Override
     public boolean preHandle( 

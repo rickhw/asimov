@@ -44,6 +44,6 @@ asimov:
       consumer:
         async-thread-pool:
           core-size: 2
-          max-size: 5
-          queue-capacity: 1
+          max-size: 10
+          queue-capacity: 10
           thread-name-prefix: "async-hello-"

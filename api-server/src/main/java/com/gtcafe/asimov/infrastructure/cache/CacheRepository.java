@@ -48,6 +48,7 @@ public class CacheRepository {
 
     public CacheRepository(RedisTemplate<String, String> redisTemplate) {
         Assert.notNull(redisTemplate, "RedisTemplate must not be null");
+
         this.redisTemplate = redisTemplate;
         this.valueOps = redisTemplate.opsForValue();
         // this.cacheMetrics = new CacheMetrics();
@@ -68,8 +69,10 @@ public class CacheRepository {
         Assert.hasText(cacheKey, "cacheKey must not be empty");
         Assert.hasText(value, "Value must not be empty");
 
+        log.debug("cacheKey: [{}], value: [{}], timeout: [{}], unit: [{}]", cacheKey, value, timeout, unit);
+
         try {
-            long startTime = System.nanoTime();
+            // long startTime = System.nanoTime();
             valueOps.set(cacheKey, value, timeout, unit);
             // cacheMetrics.recordWriteLatency(System.nanoTime() - startTime);
             // cacheMetrics.incrementWriteCount();
@@ -90,8 +93,10 @@ public class CacheRepository {
         Assert.hasText(value, "Value must not be empty");
         Assert.notNull(timeout, "Timeout must not be null");
 
+        log.debug("cacheKey: [{}], value: [{}], timeout: [{}]", cacheKey, value, timeout);
+
         try {
-            long startTime = System.nanoTime();
+            // long startTime = System.nanoTime();
             Boolean result = redisTemplate.execute(
                     setIfNotExistsScript,
                     Collections.singletonList(cacheKey),
@@ -113,7 +118,7 @@ public class CacheRepository {
      */
     public Optional<String> retrieveObject(String cacheKey) {
         Assert.hasText(cacheKey, "cacheKey must not be empty");
-        log.info("cacheKey: [{}]", cacheKey);
+        log.debug("cacheKey: [{}]", cacheKey);
 
         try {
             // long startTime = System.nanoTime();
@@ -143,6 +148,7 @@ public class CacheRepository {
      */
     public void delete(String cacheKey) {
         Assert.hasText(cacheKey, "cacheKey must not be empty");
+        log.debug("cacheKey: [{}]", cacheKey);
 
         try {
             redisTemplate.delete(cacheKey);
