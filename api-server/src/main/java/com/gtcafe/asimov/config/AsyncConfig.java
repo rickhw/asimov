@@ -30,33 +30,33 @@ public class AsyncConfig {
         executor.initialize();
         
         // 註冊 metrics
-        registerExecutorMetrics(executor, "helloExecutor", meterRegistry);
+        // registerExecutorMetrics(executor, "helloExecutor", meterRegistry);
 
         return executor;
     }
 
 
-    private void registerExecutorMetrics(ThreadPoolTaskExecutor executor, String name, MeterRegistry registry) {
-        ThreadPoolExecutor threadPool = executor.getThreadPoolExecutor();
+    // private void registerExecutorMetrics(ThreadPoolTaskExecutor executor, String name, MeterRegistry registry) {
+    //     ThreadPoolExecutor threadPool = executor.getThreadPoolExecutor();
 
-        Gauge.builder("executor.pool.size", threadPool, ThreadPoolExecutor::getPoolSize)
-                .description("The current number of threads in the pool")
-                .tag("name", name)
-                .register(registry);
+    //     Gauge.builder("executor.pool.size", threadPool, ThreadPoolExecutor::getPoolSize)
+    //             .description("The current number of threads in the pool")
+    //             .tag("name", name)
+    //             .register(registry);
 
-        Gauge.builder("executor.active.count", threadPool, ThreadPoolExecutor::getActiveCount)
-                .description("The approximate number of threads that are actively executing tasks")
-                .tag("name", name)
-                .register(registry);
+    //     Gauge.builder("executor.active.count", threadPool, ThreadPoolExecutor::getActiveCount)
+    //             .description("The approximate number of threads that are actively executing tasks")
+    //             .tag("name", name)
+    //             .register(registry);
 
-        Gauge.builder("executor.queue.size", threadPool, e -> e.getQueue().size())
-                .description("The number of tasks currently in the queue")
-                .tag("name", name)
-                .register(registry);
+    //     Gauge.builder("executor.queue.size", threadPool, e -> e.getQueue().size())
+    //             .description("The number of tasks currently in the queue")
+    //             .tag("name", name)
+    //             .register(registry);
 
-        Gauge.builder("executor.completed.count", threadPool, e -> e.getCompletedTaskCount())
-                .description("The number of completed tasks")
-                .tag("name", name)
-                .register(registry);
-    }
+    //     Gauge.builder("executor.completed.count", threadPool, e -> e.getCompletedTaskCount())
+    //             .description("The number of completed tasks")
+    //             .tag("name", name)
+    //             .register(registry);
+    // }
 }
