@@ -174,3 +174,6 @@ management:
       #   logback: true
       #   tomcat: true
 
+    # endpoint:
+    #   prometheus:
+    #     enabled: true

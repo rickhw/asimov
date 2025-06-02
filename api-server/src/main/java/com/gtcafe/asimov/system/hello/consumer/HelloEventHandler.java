@@ -21,12 +21,11 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
     @Autowired
     private CacheRepository cacheRepos;
 
-    private static final int SIMULATE_DELAY = (int) (Math.random() * 1000000) % 5000;
-
     @Override
     public void handleEvent(HelloEvent event) {
         String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
         String taskCachedKeyForIndex = String.format("%s:%s", KindConstants.SYS_TASK, event.getId());
+        int SIMULATE_DELAY = (int) (Math.random() * 1000000) % 10000;
         try {
             // log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
             
