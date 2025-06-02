@@ -22,7 +22,7 @@ npm-debug.log
 *.jar
 *.class
 target/
-current.log
+*.json
 *.log
 
 ## Gradle
