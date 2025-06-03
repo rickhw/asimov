@@ -1,25 +1,23 @@
 package com.gtcafe.asimov.client;
 
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@Component
-public class Main implements ApplicationRunner {
+import jakarta.annotation.PostConstruct;
 
-    private final HelloClientService clientService;
+@SpringBootApplication
+public class Main  {
 
-    public Main(HelloClientService clientService) {
-        this.clientService = clientService;
+    @Autowired
+    private TaskService taskService;
+
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
     }
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        // 模擬發送 hello 請求
-        clientService.postHelloMessage("Hello, Asimov");
-
-        // 模擬查詢任務狀態
-        String taskId = "30305161-53d5-41d8-9b30-eed67899801d";
-        clientService.getTaskStatus(taskId);
+    @PostConstruct
+    public void run() {
+        taskService.runParallelTasks(); // 每次啟動執行一次
     }
 }

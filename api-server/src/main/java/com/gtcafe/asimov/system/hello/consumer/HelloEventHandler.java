@@ -25,7 +25,7 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
     public boolean handleEvent(HelloEvent event) {
         String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
         String taskCachedKeyForIndex = String.format("%s:%s", KindConstants.SYS_TASK, event.getId());
-        int SIMULATE_DELAY = (int) (Math.random() * 1000000) % 10000;
+        int SIMULATE_DELAY = (int) (Math.random() * 10000);
         boolean result = false;
         try {
             // log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);

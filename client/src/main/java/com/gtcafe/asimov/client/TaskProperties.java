@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import lombok.Data;
 
 @Configuration
-@ConfigurationProperties(prefix = "asimov.client")
+@ConfigurationProperties(prefix = "app.task")
 @Data
-public class ClientProperties {
-    private String baseUrl;
-    private String contentType;
-    private String requestMode;
+public class TaskProperties {
+    private String hostname;
+    private int maxRequest;
+    private int pollIntervalMs;
 }

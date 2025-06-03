@@ -1,5 +1,5 @@
-asimov:
-  client:
-    base-url: http://localhost:8080
-    content-type: application/json
-    request-mode: async
+app:
+  task:
+    hostname: https://rws.lab.gtcafe.com
+    max-request: 30
+    poll-interval-ms: 2000

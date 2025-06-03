@@ -33,7 +33,7 @@ public class RabbitListenerConfig {
         factory.setConnectionFactory(connectionFactory);
         factory.setConcurrentConsumers(1);
         factory.setMaxConcurrentConsumers(32); // @TODO, align with  hello.async-thread-pool.max-size: 32
-        factory.setPrefetchCount(1); // @TODO: 每個 consumer 一次只處理一個 message
+        factory.setPrefetchCount(32); // @TODO: 每個 consumer 一次只處理一個 message
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL); // 手動 ACK
         return factory;
     }
