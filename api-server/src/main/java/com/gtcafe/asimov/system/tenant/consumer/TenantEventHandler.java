@@ -16,7 +16,7 @@ public class TenantEventHandler implements TaskEventHandler<TenantTaskEvent> {
     private CacheRepository cacheRepos;
 
     @Override
-    public void handleEvent(TenantTaskEvent event) {
-
+    public boolean handleEvent(TenantTaskEvent event) {
+        return false;
     }
 }

@@ -22,10 +22,11 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
     private CacheRepository cacheRepos;
 
     @Override
-    public void handleEvent(HelloEvent event) {
+    public boolean handleEvent(HelloEvent event) {
         String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
         String taskCachedKeyForIndex = String.format("%s:%s", KindConstants.SYS_TASK, event.getId());
         int SIMULATE_DELAY = (int) (Math.random() * 1000000) % 10000;
+        boolean result = false;
         try {
             // log.info("Simulate the process, delay: [{}]", SIMULATE_DELAY);
             
@@ -44,11 +45,16 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
 
             log.info("finish: task: [{}], state: [{}], delay: [{}] ...: ", event.getId(), event.getState(), SIMULATE_DELAY);
 
+            result = true;
+
         } catch (Exception ex) {
+            result = false;
             event.setState(TaskState.FAILURE);
             cacheRepos.saveOrUpdateObject(cachedKey, jsonUtils.modelToJsonString(event));
 
             ex.printStackTrace();
         }
+
+        return result;
     }
 }
