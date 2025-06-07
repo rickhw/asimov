@@ -2,7 +2,7 @@
 
 # === [設定區] ===
 # 記錄 log 檔路徑（每天產生一個檔）
-LOG_DIR="/var/log/hello-task"
+LOG_DIR="/tmp/log/hello-task"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/hello-$(date '+%Y-%m-%d').log"
 
@@ -23,7 +23,7 @@ log() {
 }
 
 # 隨機產生 1~30 筆請求
-REQUEST_COUNT=$((RANDOM % 30 + 1))
+REQUEST_COUNT=$((RANDOM % 128 + 1))
 log "🚀 準備平行發送 $REQUEST_COUNT 筆請求到 $HOSTNAME"
 
 # === 任務 function ===

@@ -1,9 +1,7 @@
 package com.gtcafe.asimov.system.hello;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.framework.utils.TimeUtils;
 import com.gtcafe.asimov.rest.domain.hello.request.SayHelloRequest;
 import com.gtcafe.asimov.rest.domain.hello.response.HelloTaskResponse;
 import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
@@ -11,9 +9,7 @@ import com.gtcafe.asimov.system.hello.model.Hello;
 
 @Service
 public class HelloMapper {
-    
-    @Autowired
-    private TimeUtils timeUtils;
+
 
     public Hello mapRequestToDomain(SayHelloRequest request) {
         // Hello hello = new Hello();

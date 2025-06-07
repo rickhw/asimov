@@ -1,5 +1,13 @@
+server:
+  port: 8081
+
 app:
   task:
+    # hostname: http://localhost:8080
     hostname: https://rws.lab.gtcafe.com
     max-request: 30
-    poll-interval-ms: 2000
+    poll-interval-ms: 500
+    thread-pool:
+      core-size: 10
+      max-size: 50
+      queue-capacity: 100

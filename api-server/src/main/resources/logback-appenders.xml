@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
     <!-- 設定 log 檔案儲存路徑 -->
     <property name="LOG_PATH" value="./logs" />
     <property name="APP_NAME" value="asimov.api-server" />
-    
+
     <appender name="StdoutConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{36}#%M\(%line\) %message%n</pattern>
@@ -20,7 +19,7 @@
         </rollingPolicy>
 
         <encoder>
-            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{36}#%M\(%line\) %message%n</pattern>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{20}:%line %message%n</pattern>
         </encoder>
     </appender>
 
@@ -37,12 +36,6 @@
             <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "infra.cache.redis", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}", "cache": { "cacheKey": "%X{CacheKey}", "action": "%X{CacheAction}", "method": "%X{CacheMethod}", "timeout": "%X{CacheTimeout}" } }%n</pattern>
         </encoder>
     </appender>
-
-    <!-- CacheAccessLog Logger -->
-    <logger name="com.gtcafe.asimov.infrastructure.cache.CacheRepository" level="INFO" additivity="false">
-        <appender-ref ref="CacheAccessLogJsonAppender" />
-        <!-- <appender-ref ref="CacheAccessLogConsoleAppender" /> -->
-    </logger>
 
 
     <!-- HttpAccessLog:JSON Appender -->
@@ -65,12 +58,6 @@
         </encoder>
     </appender>
 
-    <!-- HttpAccessLog Logger -->
-    <logger name="com.gtcafe.asimov.framework.filter.GlobalHttpRequestFilter" level="INFO" additivity="false">
-        <appender-ref ref="HttpAccessLogJsonAppender" />
-        <appender-ref ref="HttpAccessLogConsoleAppender" />
-    </logger>
-
     <!-- QueueProcuder:JSON Appender -->
     <appender name="QueueProcuderJsonAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/queue-producer-access-log.json</file>
@@ -85,12 +72,6 @@
         </encoder>
     </appender>
 
-    <!-- QueueProcuder Logger -->
-    <logger name="com.gtcafe.asimov.infrastructure.queue.Producer" level="INFO" additivity="false">
-        <appender-ref ref="QueueProcuderJsonAppender" />
-    </logger>
-
-
     <!-- QueueConsumer:JSON Appender -->
     <appender name="QueueConsumerJsonAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/queue-consumer-access-log.json</file>
@@ -101,20 +82,8 @@
         </rollingPolicy>
         
         <encoder>
-            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "queue-producer-log", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level",  "vendor": "%X{QueueVendor}", "queueName": "%X{QueueName}", "exchangeName": "%X{ExchangeName}", "routingKey": "%X{RoutingKey}", "queueAction": "%X{QueueAction}" }%n</pattern>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "queue-consumer-log", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level",  "vendor": "%X{QueueVendor}", "queueName": "%X{QueueName}", "exchangeName": "%X{ExchangeName}", "routingKey": "%X{RoutingKey}", "queueAction": "%X{QueueAction}" }%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Consumer Logger -->
-    <logger name="com.gtcafe.asimov.system.hello.consumer.HelloConsumer" level="INFO" additivity="false">
-        <appender-ref ref="QueueConsumerJsonAppender" />
-    </logger>
-
-
-
-    <!-- 根 logger 設定 -->
-    <root level="INFO">
-        <appender-ref ref="StdoutConsoleAppender" />
-        <appender-ref ref="StdoutFileAppender" />
-    </root>
 </configuration>

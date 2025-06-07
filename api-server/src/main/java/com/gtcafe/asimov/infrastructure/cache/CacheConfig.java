@@ -1,6 +1,10 @@
 package com.gtcafe.asimov.infrastructure.cache;
 
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -8,8 +12,26 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import lombok.Data;
+import lombok.Getter;
+
 @Configuration
-public class RedisConfig {
+@ConfigurationProperties(prefix = "infra.cache.redis")
+@Data
+public class CacheConfig {
+
+    @Value("${default-ttl:3600}") // 預設 1 小時
+    private long defaultTtl;
+
+    @Value("${perfix-name:asimov}")
+    private String defaultPrefixName;
+
+    @Getter
+    private String defaultPrefixNameDelimiter = ":";
+
+
+    @Getter
+    private TimeUnit defaultTimeUnit = TimeUnit.SECONDS;
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory(RedisProperties properties) {

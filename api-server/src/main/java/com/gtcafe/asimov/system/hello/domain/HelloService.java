@@ -9,6 +9,7 @@ import com.gtcafe.asimov.framework.utils.JsonUtils;
 import com.gtcafe.asimov.framework.utils.TimeUtils;
 import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
 import com.gtcafe.asimov.infrastructure.queue.Producer;
+import com.gtcafe.asimov.system.hello.config.HelloQueueConfig;
 import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.system.hello.model.Hello;
 
@@ -28,9 +29,7 @@ public class HelloService {
   private JsonUtils jsonUtils;
 
   @Autowired
-  private TimeUtils timeUtils;
-
-  // private static final String CACHE_KEY_PREFIEX = "";
+  private HelloQueueConfig _qconfig;
 
   public Hello sayHelloSync() {
 
@@ -48,14 +47,14 @@ public class HelloService {
     String taskCachedKeyForIndex = String.format("%s:%s", KindConstants.SYS_TASK, event.getId());
 
     // 2. store to cache
-    String taskJsonString = jsonUtils.modelToJsonString(event);
+    String taskJsonString = jsonUtils.modelToJsonStringSafe(event).get();
     cacheRepos.saveOrUpdateObject(cachedKey, taskJsonString);
     cacheRepos.saveOrUpdateObject(taskCachedKeyForIndex, taskJsonString);
 
     // 3. store to db
 
     // 3. sent to queue
-    producer.sendEvent(event, QueueName.HELLO_QUEUE);
+    producer.sendEvent(event, _qconfig.getQueueName());
 
     return event;
   }

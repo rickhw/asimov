@@ -17,7 +17,6 @@ asimov:
 
     ## ATTENTTION: DON't CHANGE the queueName, due to they are as the key in code
     ## TODO: move to core
-
     queues:
       - name: asimov.platform.task
         exchange: asimov.directExchange
@@ -41,9 +40,21 @@ asimov:
 
   system:
     hello:
+      queues:
+        task-queue:
+          queue-name: asimov.platform.hello
+          exchange-name: asimov.directExchange
+          routing-key-name: platform-hello
       consumer:
         async-thread-pool:
-          core-size: 32
+          core-size: 16
           max-size: 32
           queue-capacity: 128
           thread-name-prefix: "async-hello-"
+
+infra:
+  cache:
+    redis:
+      ## second
+      default-ttl: 360
+      perfix-name: asimov

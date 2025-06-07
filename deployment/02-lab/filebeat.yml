@@ -21,6 +21,28 @@ filebeat.inputs:
     json.add_error_key: true
     # index: "asimov.api-server"  # 自定義索引標記
 
+  - type: log
+    paths:
+      - /home/ubuntu/asimov/api-server/logs/queue-consumer-access-log.json
+    fields:
+      fb_app-name: asimov.api-server
+      fb_log-type: queue-access-log           # 你可以用這個來標示 log 類型
+    fields_under_root: true
+    json.keys_under_root: true
+    json.add_error_key: true
+    # index: "asimov.api-server"  # 自定義索引標記
+
+  - type: log
+    paths:
+      - /home/ubuntu/asimov/api-server/logs/queue-producer-access-log.json
+    fields:
+      fb_app-name: asimov.api-server
+      fb_log-type: queue-access-log           # 你可以用這個來標示 log 類型
+    fields_under_root: true
+    json.keys_under_root: true
+    json.add_error_key: true
+
+
 # ============================== Elasticsearch output ===========================
 
 output.elasticsearch:
@@ -37,6 +59,10 @@ output.elasticsearch:
     - index: "asimov.api-server.cache-access-log-%{+yyyy.MM.dd}"
       when.equals:
         fb_log-type: "cache-access-log"
+
+    - index: "asimov.api-server.queue-access-log-%{+yyyy.MM.dd}"
+      when.equals:
+        fb_log-type: "queue-access-log"
 
 
 # ============================ Setup Kibana (optional) ==========================

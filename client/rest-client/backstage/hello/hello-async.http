@@ -16,6 +16,6 @@ X-Request-Mode: async
 
 
 ### get status
-GET {{hostname}}/api/v1alpha/tasks/37f11041-5fba-4cd7-96d9-d2de3be61839
+GET {{hostname}}/api/v1alpha/tasks/5f31c03d-e542-4f6c-abb8-6006a544eb67
 
 

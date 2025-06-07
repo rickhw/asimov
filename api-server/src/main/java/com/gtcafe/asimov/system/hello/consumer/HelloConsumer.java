@@ -10,10 +10,12 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.framework.constants.KindConstants;
-import com.gtcafe.asimov.framework.constants.QueueName;
 import com.gtcafe.asimov.framework.utils.JsonUtils;
 import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
+import com.gtcafe.asimov.infrastructure.queue.QueueMdcUtils;
+import com.gtcafe.asimov.system.hello.HelloConstants;
+import com.gtcafe.asimov.system.hello.HelloUtils;
+import com.gtcafe.asimov.system.hello.config.HelloQueueConfig;
 import com.gtcafe.asimov.system.task.domain.TaskService;
 import com.gtcafe.asimov.system.task.schema.TaskState;
 import com.rabbitmq.client.Channel;
@@ -33,15 +35,21 @@ public class HelloConsumer {
     @Autowired
     private HelloEventHandler _handler;
 
+    // @Autowired
+    // private HelloUtils _utils;
+
+    @Autowired
+    private HelloQueueConfig _qconfig;
+
     @Autowired
     private TaskService _taskService;
 
-
-    @Async(value = "helloThreadPool")
+    @Async(value = HelloConstants.THREAD_POOL_EXECUTOR_BEANNAME)
     // @RabbitListener(queues = QueueName.HELLO_QUEUE, autoStartup = "false")
     @RabbitListener(
         //queues = "${application.rabbitmq.queue-name}",
-        queues = QueueName.HELLO_QUEUE,
+        // queues = QueueName.HELLO_QUEUE,
+        queues = "${asimov.system.hello.queues.task-queue.queue-name}",
         containerFactory = "rabbitListenerContainerFactory"
     )
     // public void consumeHelloQueue(String eventString) {
@@ -52,39 +60,40 @@ public class HelloConsumer {
         @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag
     ) throws IOException {
         // log.info("Received message: [{}]", eventString);
+        // log dequeue
+        QueueMdcUtils.Dequeue(_qconfig.getQueueName(), _qconfig.getExchangeName(), _qconfig.getRoutingKeyName());
 
         // 1. handle data model: convert json string to model
         HelloEvent event = _jsonUtils.jsonStringToModelSafe(eventString, HelloEvent.class).get();
         log.info("task: [{}], state: [{}] ...: ", event.getId(), event.getState());
 
         // 2. update state: update state from pending to running
-        String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
+        String cachedKey = HelloUtils.renderCacheKey(event.getId());
+
         event.setState(TaskState.RUNNING);
-        // log.info("start the conusmer, cachedKey: [{}], state: [{}]", cachedKey, event.getState());
         
         // 2.1: persist state to cache
         String afterEventString = _jsonUtils.modelToJsonStringSafe(event).get();
         _cacheRepos.saveOrUpdateObject(cachedKey, afterEventString);
 
         // 2.2: persist state to db
+        // @TODO
 
         // start processing (running)
         try {
             boolean processed = _handler.handleEvent(event);
             
             if (processed) {
-                // 手動確認消息
-                channel.basicAck(deliveryTag, false);
-                // log.info("Message processed successfully: {}", messageBody);
+                channel.basicAck(deliveryTag, false); // 手動確認
             } else {
-                // 處理失敗，重新入隊
-                channel.basicNack(deliveryTag, false, true);
-                // log.warn("Message processing failed, will be requeued: {}", messageBody);
+                channel.basicNack(deliveryTag, false, true); // 處理失敗，重新入隊
             }
         } catch (Exception e) {
-            // 發生異常，重新入隊
-            channel.basicNack(deliveryTag, false, true);
-            // log.error("Unexpected error processing message", e);
+            
+            channel.basicNack(deliveryTag, false, true); // 發生異常，重新入隊
+            QueueMdcUtils.Requeue(_qconfig.getQueueName(), _qconfig.getExchangeName(), _qconfig.getRoutingKeyName());
+           
+            log.error(String.format("發生異常，Message 重新排隊, cachedKey: [%s]", cachedKey), e);
         }
         
     }

@@ -62,7 +62,7 @@ public class GlobalHttpRequestFilter implements Filter {
             MDC.put(AccessLogConstants.DURATION, String.valueOf(duration));
 
             // Access Log
-            log.info("");
+            log.info("HTTP Access Log");
         }
 
         // System.out.println("doFilter::after");

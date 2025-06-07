@@ -31,10 +31,12 @@ public class Producer {
             return null;
         }
 
-        String eventJsonString = jsonUtils.modelToJsonString(event);
+        QueueMdcUtils.Enqueue(queueName, queueName, queueName);
+        log.info("Pushed message to queue: [{}], exchange: [{}], routingKey: [{}]", queueConfig.getName(), queueConfig.getExchange(), queueConfig.getRoutingKey());
+
+        String eventJsonString = jsonUtils.modelToJsonStringSafe(event).get();
         rabbitTemplate.convertAndSend(queueConfig.getExchange(), queueConfig.getRoutingKey(), eventJsonString);
 
-        log.info("Pushed message to queue: [{}], exchange: [{}], routingKey: [{}]", queueConfig.getName(), queueConfig.getExchange(), queueConfig.getRoutingKey());
         return event;
     }
 }

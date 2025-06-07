@@ -35,7 +35,7 @@ public class TaskController {
     // 1. validate: is not exist or expire.
 
     // 2. find the id in cache
-    HelloEvent event = _service.retrieveV4(taskId);
+    HelloEvent event = _service.retrieve(taskId);
 
     // tdo.getData()
 

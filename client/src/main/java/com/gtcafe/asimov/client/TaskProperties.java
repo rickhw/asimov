@@ -10,6 +10,14 @@ import lombok.Data;
 @Data
 public class TaskProperties {
     private String hostname;
-    private int maxRequest;
-    private int pollIntervalMs;
+    private Integer maxRequest;
+    private Integer pollIntervalMs;
+    private ThreadPool threadPool = new ThreadPool();
+
+    @Data
+    public static class ThreadPool {
+        private Integer coreSize;
+        private Integer maxSize;
+        private Integer queueCapacity;
+    }
 }

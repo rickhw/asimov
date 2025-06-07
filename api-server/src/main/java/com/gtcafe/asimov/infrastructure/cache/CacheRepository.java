@@ -7,8 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.logging.MDC;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,11 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CacheRepository {
 
     private final RedisTemplate<String, String> redisTemplate;
+    private final CacheConfig config;
     private final ValueOperations<String, String> valueOps;
-    // private final CacheMetrics cacheMetrics;
-
-    @Value("${cache.default.ttl:3600}") // 預設 1 小時
-    private long defaultTtl;
 
     // Lua 腳本：如果 cacheKey 不存在則設值
     private static final String SET_IF_NOT_EXISTS_SCRIPT = """
@@ -47,9 +43,10 @@ public class CacheRepository {
 
     private final RedisScript<Boolean> setIfNotExistsScript;
 
-    public CacheRepository(RedisTemplate<String, String> redisTemplate) {
+    public CacheRepository(CacheConfig config, RedisTemplate<String, String> redisTemplate) {
         Assert.notNull(redisTemplate, "RedisTemplate must not be null");
 
+        this.config = config;
         this.redisTemplate = redisTemplate;
         this.valueOps = redisTemplate.opsForValue();
         // this.cacheMetrics = new CacheMetrics();
@@ -60,22 +57,17 @@ public class CacheRepository {
      * 儲存或更新物件，使用預設的 TTL
      */
     public void saveOrUpdateObject(String cacheKey, String value) {
-        saveOrUpdateObject(cacheKey, value, defaultTtl, TimeUnit.SECONDS);
+        saveOrUpdateObject(cacheKey, value, config.getDefaultTtl(), config.getDefaultTimeUnit());
     }
 
     /**
      * 儲存或更新物件，使用指定的 TTL
      */
     public void saveOrUpdateObject(String cacheKey, String value, long timeout, TimeUnit unit) {
-        Assert.hasText(cacheKey, "cacheKey must not be empty");
-        Assert.hasText(value, "Value must not be empty");
+        cacheKey = appendPrefixKeyName(cacheKey);
 
-        MDC.put("CacheKey", cacheKey);
-        // MDC.put("CacheValue", value);
-        MDC.put("CacheAction", "write");
-        MDC.put("CacheMethod", "put_update");
-        MDC.put("CacheTimeout", timeout);
-        log.info(""); // Access Log
+        CacheMdcUtils.UpdateWrite_Put(cacheKey, timeout);
+        log.info("Cache Access Log: cache write - put"); // Access Log
 
 
         try {
@@ -96,17 +88,10 @@ public class CacheRepository {
      * 如果 cacheKey 不存在，則設定值
      */
     public boolean setIfNotExists(String cacheKey, String value, Duration timeout) {
-        Assert.hasText(cacheKey, "cacheKey must not be empty");
-        Assert.hasText(value, "Value must not be empty");
-        Assert.notNull(timeout, "Timeout must not be null");
+        cacheKey = appendPrefixKeyName(cacheKey);
 
-        MDC.put("CacheKey", cacheKey);
-        // MDC.put("CacheValue", value);
-        MDC.put("CacheAction", "write");
-        MDC.put("CacheMethod", "set");
-        MDC.put("CacheTimeout", timeout);
-        log.info(""); // Access Log
-
+        CacheMdcUtils.UpdateWrite_Set(cacheKey, timeout);
+        log.info("Cache Access Log: cache write - set"); // Access Log
 
         try {
             // long startTime = System.nanoTime();
@@ -130,12 +115,10 @@ public class CacheRepository {
      * 取得物件
      */
     public Optional<String> retrieveObject(String cacheKey) {
-        Assert.hasText(cacheKey, "cacheKey must not be empty");
-        MDC.put("CacheKey", cacheKey);
-        MDC.put("CacheAction", "read");
-        MDC.put("CacheMethod", "get");
-        // MDC.put("CacheTimeout", timeout);
-        log.info(""); // Access Log
+        cacheKey = appendPrefixKeyName(cacheKey);
+
+        CacheMdcUtils.UpdateRead_Get(cacheKey);
+        log.info("Cache Access Log: cache read - get"); // Access Log
 
         try {
             // long startTime = System.nanoTime();
@@ -161,15 +144,9 @@ public class CacheRepository {
     }
 
     public void delete(String cacheKey) {
-        Assert.hasText(cacheKey, "cacheKey must not be empty");
-        // log.debug("cacheKey: [{}]", cacheKey);
-        MDC.put("CacheKey", cacheKey);
-        // MDC.put("CacheValue", value);
-        MDC.put("CacheAction", "write");
-        MDC.put("CacheMethod", "delete");
-        // MDC.put("CacheTimeout", timeout);
-        log.info(""); // Access Log
-
+        cacheKey = appendPrefixKeyName(cacheKey);
+        CacheMdcUtils.UpdateWrite_Delete(cacheKey);
+        log.info("Cache Access Log: cache write - delete");
 
         try {
             redisTemplate.delete(cacheKey);
@@ -190,18 +167,18 @@ public class CacheRepository {
     /**
      * 檢查 cacheKey 是否存在
      */
-    public boolean exists(String cacheKey) {
-        Assert.hasText(cacheKey, "CacheKey must not be empty");
-        return Boolean.TRUE.equals(redisTemplate.hasKey(cacheKey));
-    }
+    // public boolean exists(String cacheKey) {
+    //     Assert.hasText(cacheKey, "CacheKey must not be empty");
+    //     return Boolean.TRUE.equals(redisTemplate.hasKey(cacheKey));
+    // }
 
     /**
      * 設定 cacheKey 的過期時間
      */
-    public boolean expire(String cacheKey, long timeout, TimeUnit unit) {
-        Assert.hasText(cacheKey, "cacheKey must not be empty");
-        return Boolean.TRUE.equals(redisTemplate.expire(cacheKey, timeout, unit));
-    }
+    // public boolean expire(String cacheKey, long timeout, TimeUnit unit) {
+    //     Assert.hasText(cacheKey, "cacheKey must not be empty");
+    //     return Boolean.TRUE.equals(redisTemplate.expire(cacheKey, timeout, unit));
+    // }
 
 
     /**
@@ -282,5 +259,13 @@ public class CacheRepository {
             return false;
             // throw new CacheOperationException("Failed to check existence by pattern", e);
         }
+    }
+
+    ///
+    private String appendPrefixKeyName(String originKeyName) {
+        if(StringUtils.isNotBlank(config.getDefaultPrefixName())) {
+            return String.format("%s%s%s", config.getDefaultPrefixName(), config.getDefaultPrefixNameDelimiter(), originKeyName);
+        }
+        return originKeyName;
     }
 }
