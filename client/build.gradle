@@ -15,28 +15,25 @@ dependencies {
 }
 
 group = 'com.gtcafe.asimov'
-version = '1.1.0'
+version = '1.2.0'
 sourceCompatibility = '17'
 
-def buildId = new Date().format("yyyyMMdd-HHmm")
-def buildType = project.hasProperty('buildType') ? project.property('buildType') : 'dev'
-def buildOs = 'uname -v'.execute().text.trim()
-def buildSdk = 'java -version'.execute().text.trim()
-
-// Git hash 取得（可選）
+def buildId = project.hasProperty('buildId') ? project.getProperty('buildId') : new Date().format("yyyyMMdd-HHmm")
+def buildType = project.hasProperty('buildType') ? project.getProperty('buildType') : 'dev'
 def gitHash = 'unknown'
+
 try {
     def proc = 'git rev-parse --short HEAD'.execute()
     proc.in.eachLine { line -> gitHash = line.trim() }
 } catch (ignored) {}
 
 def replacements = [
-    VERSION  : version,
-    BUILD_ID  : buildId,
-    BUILD_TYPE: buildType,
-    HASH_CODE : gitHash,
-    BUILD_SDK : System.getProperty("java.runtime.version") + " " + System.getProperty("java.vm.vendor"), // System.getProperty("java.version"),
-    BUILD_OS : buildOs
+    VERSION    : version,
+    BUILD_ID   : buildId,
+    BUILD_TYPE : buildType,
+    HASH_CODE  : gitHash,
+    BUILD_SDK  : System.getProperty("java.runtime.version") + " " + System.getProperty("java.vm.vendor"),
+    BUILD_OS   : 'uname -v'.execute().text.trim()
 ]
 
 processResources {
@@ -46,7 +43,27 @@ processResources {
     }
 }
 
+// JAR 檔命名方式
 bootJar {
     archiveBaseName.set(project.name)
     archiveVersion.set("v${version}-${buildType}-b${buildId}")
 }
+
+// 產生 meta.json 的 task
+task generateMeta {
+    doLast {
+        def metaFile = file("$buildDir/meta.json")
+        metaFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson([
+            product  : 'asimov',
+            name     : 'client',
+            version  : version,
+            buildId  : buildId,
+            buildType: buildType,
+            hash     : gitHash
+        ]))
+        println "✔ meta.json generated at: $metaFile"
+    }
+}
+
+// 確保在 bootJar 之後執行
+build.finalizedBy(generateMeta)
