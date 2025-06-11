@@ -1,0 +1,18 @@
+
+@hostname = http://192.168.64.18:2375
+
+@CONTAINER_ID = "8768827001b41d19dbdfb1869e3254266261322cbbb56e4ecbb2848a094045bf"
+
+###
+POST {{hostname}}/containers/create
+Content-Type: application/json
+
+{
+    "Image": "nginx",
+    "HostConfig": {
+        "AutoRemove": true
+    }
+}
+
+###
+POST {{hostname}}/containers/{{CONTAINER_ID}}/start

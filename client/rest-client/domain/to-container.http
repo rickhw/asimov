@@ -14,8 +14,7 @@ Content-Type: application/json
 
 
 ### pull image
-POST {{HOST}}/images/create?fromImage=hello-world
-
+POST {{HOST}}/images/create?fromImage=nginx:latest
 
 
 ### start container
@@ -24,7 +23,7 @@ POST {{HOST}}/containers/{{container_id}}}/start
 
 
 ### 建立 Volume
-POST {{HOST}}/volumes/create HTTP/1.1
+POST {{HOST}}/volumes/create
 Content-Type: application/json
 
 {
@@ -32,31 +31,40 @@ Content-Type: application/json
   "Driver": "local"
 }
 
-> {% 
-// 將回應中的 volume 名稱儲存到變數 volumeName
-save("volumeName", json($.Name));
-%}
+# > {% 
+# // 將回應中的 volume 名稱儲存到變數 volumeName
+# save("volumeName", json($.Name));
+# %}
 
+###
+POST {{HOST}}/images/create?fromImage=busybox
 
 ### 建立 Container，並掛載剛剛建立的 Volume
-POST {{HOST}}/containers/create HTTP/1.1
+POST {{HOST}}/containers/create
 Content-Type: application/json
 
 {
-  "Image": "busybox",
+  "Image": "busybox:1",
   "Cmd": ["sh", "-c", "echo 'Hello Volume' > /data/hello.txt && sleep 10"],
   "HostConfig": {
     "Binds": [
-      "{{volumeName}}:/data"
+      "my-volum:/data"
     ]
   }
 }
 
-> {% 
-// 將回應中的 container ID 儲存到變數 containerId
-save("containerId", json($.Id));
-%}
+# > {% 
+# // 將回應中的 container ID 儲存到變數 containerId
+# save("containerId", json($.Id));
+# %}
 
 
-### 啟動 Container
-POST {{HOST}}/containers/{{containerId}}/start HTTP/1.1
+### query container: list all
+GET {{HOST}}/containers/json?all=true
+
+
+### query container: limit count
+GET {{HOST}}/containers/json?filters={"status":["running"]}
+
+
+
