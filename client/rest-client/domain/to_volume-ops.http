@@ -1,0 +1,21 @@
+@HOST=http://192.168.64.18:2375
+
+
+### 建立 Volume
+POST {{HOST}}/volumes/create
+Content-Type: application/json
+
+{
+  "Name": "my-volume",
+  "Driver": "local"
+}
+
+# > {% 
+# // 將回應中的 volume 名稱儲存到變數 volumeName
+# save("volumeName", json($.Name));
+# %}
+
+###
+POST {{HOST}}/images/create?fromImage=busybox
+
+

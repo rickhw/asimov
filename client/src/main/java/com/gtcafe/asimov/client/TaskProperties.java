@@ -19,5 +19,6 @@ public class TaskProperties {
         private Integer coreSize;
         private Integer maxSize;
         private Integer queueCapacity;
+        private String threadNamePrefix;
     }
 }

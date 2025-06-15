@@ -38,7 +38,7 @@ public class TaskService {
     public void executeParallelTasks() {
         log.info("⚙️ 開始執行平行任務 - 主執行緒: " + Thread.currentThread().getName());
 
-        int MAX_TASK = 10;
+        int MAX_TASK = props.getMaxRequest();
 
         List<CompletableFuture<Void>> futures = new ArrayList<>();
 

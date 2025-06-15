@@ -51,9 +51,9 @@ asimov:
           routing-key-name: platform-hello
       consumer:
         async-thread-pool:
-          core-size: 16
-          max-size: 32
-          queue-capacity: 128
+          core-size: 64
+          max-size: 128
+          queue-capacity: 1024
           thread-name-prefix: "async-hello-"
 
 infra:

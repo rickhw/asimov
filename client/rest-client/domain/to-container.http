@@ -21,20 +21,15 @@ POST {{HOST}}/images/create?fromImage=nginx:latest
 POST {{HOST}}/containers/{{container_id}}}/start
 
 
+### query container: list all
+GET {{HOST}}/containers/json?all=true
 
-### 建立 Volume
-POST {{HOST}}/volumes/create
-Content-Type: application/json
 
-{
-  "Name": "my-volume",
-  "Driver": "local"
-}
+### query container: limit count
+GET {{HOST}}/containers/json?filters={"status":["running"]}
 
-# > {% 
-# // 將回應中的 volume 名稱儲存到變數 volumeName
-# save("volumeName", json($.Name));
-# %}
+
+
 
 ###
 POST {{HOST}}/images/create?fromImage=busybox
@@ -57,14 +52,5 @@ Content-Type: application/json
 # // 將回應中的 container ID 儲存到變數 containerId
 # save("containerId", json($.Id));
 # %}
-
-
-### query container: list all
-GET {{HOST}}/containers/json?all=true
-
-
-### query container: limit count
-GET {{HOST}}/containers/json?filters={"status":["running"]}
-
 
 

@@ -17,7 +17,7 @@
     <!-- HttpAccessLog Logger -->
     <logger name="com.gtcafe.asimov.framework.filter.GlobalHttpRequestFilter" level="INFO" additivity="false">
         <appender-ref ref="HttpAccessLogJsonAppender" />
-        <appender-ref ref="HttpAccessLogConsoleAppender" />
+        <!-- <appender-ref ref="HttpAccessLogConsoleAppender" /> -->
     </logger>
 
     <!-- QueueProcuder Logger -->

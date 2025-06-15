@@ -41,7 +41,6 @@ public class SimpleTask implements Runnable {
         log.info("🔵 [{}] 完成 - 執行緒: {}", taskName, threadName);
     }
 
-
     public void submitTask(String taskName) {
         // log.info("index: [{}], message: [{}]", index, message);
         // total.incrementAndGet();
