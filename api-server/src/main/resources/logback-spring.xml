@@ -66,7 +66,7 @@
         </rollingPolicy>
         
         <encoder>
-            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "infra.cache.redis", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}", "cache": { "cacheKey": "%X{CacheKey}", "action": "%X{CacheAction}", "method": "%X{CacheMethod}", "timeout": "%X{CacheTimeout}" } }%n</pattern>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "infra.cache.redis", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": %X{Duration}, "cache": { "cacheKey": "%X{CacheKey}", "action": "%X{CacheAction}", "method": "%X{CacheMethod}", "timeout": %X{CacheTimeout} } }%n</pattern>
         </encoder>
     </appender>
 
@@ -81,13 +81,13 @@
         </rollingPolicy>
         
         <encoder>
-            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "access-log", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}" }%n</pattern>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "access-log", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": %X{Duration} }%n</pattern>
         </encoder>
     </appender>
 
     <appender name="HttpAccessLogConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "access-log", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": "%X{Duration}" }%n</pattern>
+            <pattern>{ "@timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}", "fb_log-type": "access-log", "fb_app-name": "${APP_NAME}", "class": "%logger", "thread": "%thread", "level": "%level", "Protocol": "%X{Protocol}", "uri": "%X{RequestURI}", "method": "%X{Method}", "X-Request-Id": "%X{X-Request-Id}", "startTime": "%X{StartTime}", "endTime": "%X{EndTime}", "duration": %X{Duration} }%n</pattern>
         </encoder>
     </appender>
 
