@@ -17,10 +17,12 @@ public class TaskService {
 
     private final Executor taskExecutor;
     private final TaskProperties props;
+    private final TrafficSimulator trafficSimulator;
 
-    public TaskService(@Qualifier("taskExecutor") Executor taskExecutor, TaskProperties props) {
+    public TaskService(@Qualifier("taskExecutor") Executor taskExecutor, TaskProperties props, TrafficSimulator trafficSimulator) {
         this.taskExecutor = taskExecutor;
         this.props = props;
+        this.trafficSimulator = trafficSimulator;
     }
 
     @Scheduled(fixedRate = 30000)
@@ -38,11 +40,15 @@ public class TaskService {
     public void executeParallelTasks() {
         log.info("⚙️ 開始執行平行任務 - 主執行緒: " + Thread.currentThread().getName());
 
-        int MAX_TASK = props.getMaxRequest();
+        int baseTaskCount = props.getMaxRequest();
+        double multiplier = trafficSimulator.getCurrentTrafficMultiplier();
+        int actualTaskCount = (int) (baseTaskCount * multiplier);
+
+        log.info("Current traffic multiplier: {}, Actual tasks to run: {}", multiplier, actualTaskCount);
 
         List<CompletableFuture<Void>> futures = new ArrayList<>();
 
-        for (int index = 0; index < MAX_TASK; index++ ) {
+        for (int index = 0; index < actualTaskCount; index++ ) {
             String name = String.format("Task #%s", index);
             futures.add(runTask(name));
         }
