@@ -18,12 +18,12 @@ public class ReentrantCapacityUnit implements ICapacityUnit {
         capacityUnit = DEFAULT_CAPACITY_UNIT;
     }
 
-    public void consume(int value) throws CapacityInsufficient {
+    public void consume(int value) throws CapacityInsufficientException {
         locker.lock();
 
         if (value > capacityUnit) {
             locker.unlock();    // free the lock before throwing exception, to avoid deadlock
-            throw new CapacityInsufficient("capacity unit is insufficient: required=" + value + ", current=" + capacityUnit);
+            throw new CapacityInsufficientException("capacity unit is insufficient: required=" + value + ", current=" + capacityUnit);
         }
 
         try {

@@ -13,7 +13,7 @@ public interface ICapacityUnit {
 
     // public void decrease(int value);
 
-    void consume(int unit) throws CapacityInsufficient;
+    void consume(int unit) throws CapacityInsufficientException;
 
     void resume(int unit);
 }

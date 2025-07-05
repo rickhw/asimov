@@ -48,7 +48,6 @@ public class HelloConsumer {
     @Async(value = HelloConstants.THREAD_POOL_EXECUTOR_BEANNAME)
     // @RabbitListener(queues = QueueName.HELLO_QUEUE, autoStartup = "false")
     @RabbitListener(
-        //queues = "${application.rabbitmq.queue-name}",
         // queues = QueueName.HELLO_QUEUE,
         queues = "${asimov.system.hello.queues.task-queue.queue-name}",
         containerFactory = "rabbitListenerContainerFactory"

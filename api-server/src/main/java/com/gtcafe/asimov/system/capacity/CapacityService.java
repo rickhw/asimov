@@ -3,7 +3,7 @@ package com.gtcafe.asimov.system.capacity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gtcafe.asimov.system.capacity.domain.CapacityInsufficient;
+import com.gtcafe.asimov.system.capacity.domain.CapacityInsufficientException;
 import com.gtcafe.asimov.system.capacity.domain.ReentrantCapacityUnit;
 
 import io.micrometer.core.instrument.MeterRegistry;
@@ -29,7 +29,7 @@ public class CapacityService {
             meterRegistry.counter("capacity.consumed").increment(unit);
             meterRegistry.gauge("capacity.remaining", cu, ReentrantCapacityUnit::getValue);
             // meterRegistry.gauge("capacity.consumed", cu, ReentrantCapacityUnit::getValue);
-        } catch (CapacityInsufficient e) {
+        } catch (CapacityInsufficientException e) {
             log.error("capacity insufficient: {}", e.getMessage());
             return;
         }
