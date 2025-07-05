@@ -44,3 +44,55 @@ dependencies {
 bootJar {
     enabled = true
 }
+
+
+def buildId = project.hasProperty('buildId') ? project.getProperty('buildId') : new Date().format("yyyyMMdd-HHmm")
+def buildType = project.hasProperty('buildType') ? project.getProperty('buildType') : 'dev'
+def gitHash = 'unknown'
+
+try {
+    def proc = 'git rev-parse --short HEAD'.execute()
+    proc.in.eachLine { line -> gitHash = line.trim() }
+} catch (ignored) {}
+
+def replacements = [
+    VERSION    : version,
+    BUILD_ID   : buildId,
+    BUILD_TYPE : buildType,
+    HASH_CODE  : gitHash,
+    BUILD_SDK  : System.getProperty("java.runtime.version") + " " + System.getProperty("java.vm.vendor"),
+    BUILD_OS   : 'uname -v'.execute().text.trim()
+]
+
+processResources {
+    filesMatching(['**/*.properties', '**/*.txt']) {
+        filteringCharset = 'UTF-8'
+        filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: replacements)
+    }
+}
+
+// JAR 檔命名方式
+bootJar {
+    archiveBaseName.set(project.name)
+    archiveVersion.set("v${version}-${buildType}-b${buildId}")
+}
+
+// 產生 meta.json 的 task
+task generateMeta {
+    doLast {
+        def metaFile = file("$buildDir/meta.json")
+        metaFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson([
+            product  : 'asimov',
+            name     : 'api-server',
+            version  : version,
+            buildId  : buildId,
+            buildType: buildType,
+            hash     : gitHash
+        ]))
+        println "✔ meta.json generated at: $metaFile"
+    }
+}
+
+// 確保在 bootJar 之後執行
+build.finalizedBy(generateMeta)
+
