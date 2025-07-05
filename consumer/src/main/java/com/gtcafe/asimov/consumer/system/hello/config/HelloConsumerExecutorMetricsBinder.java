@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.hello.config;
+package com.gtcafe.asimov.consumer.system.hello.config;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -14,7 +14,7 @@ import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 
 @Component
-public class HelloExecutorMetricsBinder implements ApplicationListener<ApplicationReadyEvent> {
+public class HelloConsumerExecutorMetricsBinder implements ApplicationListener<ApplicationReadyEvent> {
 
     @Autowired
     private ThreadPoolTaskExecutor asyncExecutor;

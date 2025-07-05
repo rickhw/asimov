@@ -11,8 +11,8 @@ asimov:
 
 
   rabbitmq:
-    autoInit: true
-    reset: true
+    autoInit: false
+    reset: false
     # prefixName: asimov
 
     ## ATTENTTION: DON't CHANGE the queueName, due to they are as the key in code
@@ -51,7 +51,7 @@ asimov:
           routing-key-name: platform-hello
       consumer:
         async-thread-pool:
-          core-size: 64
+          core-size: 4
           max-size: 128
           queue-capacity: 1024
           thread-name-prefix: "async-hello-"

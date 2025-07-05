@@ -49,8 +49,8 @@ public class HelloConsumer {
     // @RabbitListener(queues = QueueName.HELLO_QUEUE, autoStartup = "false")
     @RabbitListener(
         // queues = QueueName.HELLO_QUEUE,
-        queues = "${asimov.system.hello.queues.task-queue.queue-name}",
-        containerFactory = "rabbitListenerContainerFactory"
+        queues = "${asimov.system.hello.queues.task-queue.queue-name}"
+        // containerFactory = "rabbitListenerContainerFactory"
     )
     // public void consumeHelloQueue(String eventString) {
     public void receiveMessage(

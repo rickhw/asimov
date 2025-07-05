@@ -1,4 +1,4 @@
-package com.gtcafe.asimov.system.hello.config;
+package com.gtcafe.asimov.consumer.system.hello.config;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -15,7 +15,7 @@ import lombok.Data;
 @Configuration
 @ConfigurationProperties(prefix = "asimov.system.hello.consumer.async-thread-pool")
 @Data
-public class HelloAsyncConfig implements ApplicationRunner {
+public class HelloConsumerAsyncConfig implements ApplicationRunner {
 
     private Integer coreSize = 16;
     private Integer maxSize = 32;
@@ -34,7 +34,7 @@ public class HelloAsyncConfig implements ApplicationRunner {
     }
 
     @Bean(name = HelloConstants.THREAD_POOL_EXECUTOR_BEANNAME)
-    public ThreadPoolTaskExecutor asyncExecutor(MeterRegistry meterRegistry) {
+    public ThreadPoolTaskExecutor asyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(getCoreSize());
         executor.setMaxPoolSize(getMaxSize());

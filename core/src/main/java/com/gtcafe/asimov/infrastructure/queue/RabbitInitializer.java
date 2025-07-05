@@ -53,8 +53,8 @@ public class RabbitInitializer {
     @DependsOn("rabbitAdmin")
     public CommandLineRunner initRabbitMQ(RabbitAdmin rabbitAdmin) {
         return args -> {
-            System.out.println("Initiate the Queue ... ");
             if (reset) {
+                System.out.println("Reset the Queue ... ");
                 System.out.println("Reset flag is true, deleting existing queues...");
                 for (QueueConfig config : queues) {
                     rabbitAdmin.deleteQueue(config.getName());

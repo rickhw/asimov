@@ -23,12 +23,12 @@ public class ContainerConfig implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        System.out.println("asimov.container:");
-        System.out.printf("  - core-size: [%s]\n", coreSize);
-        System.out.printf("  - max-size: [%s]\n", maxSize);
-        System.out.printf("  - queue-capacity: [%s]\n", queueCapacity);
-        System.out.printf("  - thread-name-prefix: [%s]\n", threadNamePrefix);
-        System.out.println();
+        // System.out.println("asimov.container:");
+        // System.out.printf("  - core-size: [%s]\n", coreSize);
+        // System.out.printf("  - max-size: [%s]\n", maxSize);
+        // System.out.printf("  - queue-capacity: [%s]\n", queueCapacity);
+        // System.out.printf("  - thread-name-prefix: [%s]\n", threadNamePrefix);
+        // System.out.println();
     }
 
     // @Bean(name = HelloConstants.THREAD_POOL_EXECUTOR_BEANNAME)
