@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.rest.domain.hello.request.SayHelloRequest;
 import com.gtcafe.asimov.rest.domain.hello.response.HelloTaskResponse;
-import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.system.hello.model.Hello;
+import com.gtcafe.asimov.system.hello.model.HelloEvent;
 
 @Service
 public class HelloMapper {

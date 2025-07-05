@@ -16,9 +16,9 @@ import com.gtcafe.asimov.rest.domain.hello.request.SayHelloRequest;
 import com.gtcafe.asimov.rest.domain.hello.response.HelloTaskResponse;
 import com.gtcafe.asimov.rest.domain.hello.response.SayHelloResponse;
 import com.gtcafe.asimov.system.hello.HelloMapper;
-import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.system.hello.domain.HelloService;
 import com.gtcafe.asimov.system.hello.model.Hello;
+import com.gtcafe.asimov.system.hello.model.HelloEvent;
 import com.gtcafe.asimov.system.task.schema.ExecMode;
 
 import io.swagger.v3.oas.annotations.Parameter;

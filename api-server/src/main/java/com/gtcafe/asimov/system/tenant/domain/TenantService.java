@@ -10,8 +10,8 @@ import com.gtcafe.asimov.infrastructure.queue.Producer;
 import com.gtcafe.asimov.rest.backstage.tenant.request.RegisterTenantRequest;
 import com.gtcafe.asimov.rest.backstage.tenant.response.TenantTaskResponse;
 import com.gtcafe.asimov.system.tenant.TenantMapper;
-import com.gtcafe.asimov.system.tenant.consumer.TenantTaskEvent;
 import com.gtcafe.asimov.system.tenant.model.Tenant;
+import com.gtcafe.asimov.system.tenant.model.TenantTaskEvent;
 import com.gtcafe.asimov.system.tenant.repository.TenantEntity;
 import com.gtcafe.asimov.system.tenant.repository.TenantRepository;
 

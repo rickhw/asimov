@@ -10,8 +10,8 @@ import com.gtcafe.asimov.framework.utils.TimeUtils;
 import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
 import com.gtcafe.asimov.infrastructure.queue.Producer;
 import com.gtcafe.asimov.system.hello.config.HelloQueueConfig;
-import com.gtcafe.asimov.system.hello.consumer.HelloEvent;
 import com.gtcafe.asimov.system.hello.model.Hello;
+import com.gtcafe.asimov.system.hello.model.HelloEvent;
 
 import lombok.extern.slf4j.Slf4j;
 

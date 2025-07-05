@@ -6,7 +6,6 @@ rootProject.name = 'asimov'
 include 'api-server'
 include 'client'
 include 'consumer'
-
 include 'core'
 
 
