@@ -6,6 +6,7 @@ sudo vi /etc/systemd/system/asimov.api-server.service
 sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
 sudo systemctl enable asimov.api-server.service
+sudo systemctl disable asimov.api-server.service
 sudo systemctl restart asimov.api-server.service
 sudo systemctl stop asimov.api-server.service
 sudo systemctl start asimov.api-server.service

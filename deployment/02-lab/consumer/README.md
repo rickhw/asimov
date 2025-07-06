@@ -6,6 +6,7 @@ sudo vi /etc/systemd/system/asimov.consumer-server.service
 sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
 sudo systemctl enable asimov.consumer-server.service
+sudo systemctl disable asimov.consumer-server.service
 sudo systemctl restart asimov.consumer-server.service
 sudo systemctl stop asimov.consumer-server.service
 sudo systemctl start asimov.consumer-server.service

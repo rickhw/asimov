@@ -64,15 +64,15 @@ output.elasticsearch:
   # password: "your_elastic_password"
 
   indices:
-    - index: "asimov.api-server.access-log-%{+yyyy.MM.dd}"
+    - index: "asimov.access-log-%{+yyyy.MM.dd}"
       when.equals:
         fb_log-type: "access-log"
 
-    - index: "asimov.api-server.cache-access-log-%{+yyyy.MM.dd}"
+    - index: "asimov.cache-access-log-%{+yyyy.MM.dd}"
       when.equals:
         fb_log-type: "cache-access-log"
 
-    - index: "asimov.api-server.queue-access-log-%{+yyyy.MM.dd}"
+    - index: "asimov.queue-access-log-%{+yyyy.MM.dd}"
       when.equals:
         fb_log-type: "queue-access-log"
 
