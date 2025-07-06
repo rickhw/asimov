@@ -23,9 +23,20 @@ filebeat.inputs:
 
   - type: log
     paths:
-      - /home/ubuntu/asimov/api-server/logs/queue-consumer-access-log.json
+      - /home/ubuntu/asimov/api-server/logs/queue-producer-access-log.json
     fields:
       fb_app-name: asimov.api-server
+      fb_log-type: queue-access-log           # 你可以用這個來標示 log 類型
+    fields_under_root: true
+    json.keys_under_root: true
+    json.add_error_key: true
+
+## consumer server
+  - type: log
+    paths:
+      - /home/ubuntu/asimov/consumer-server/logs/queue-consumer-access-log.json
+    fields:
+      fb_app-name: asimov.consumer-server
       fb_log-type: queue-access-log           # 你可以用這個來標示 log 類型
     fields_under_root: true
     json.keys_under_root: true
@@ -34,13 +45,14 @@ filebeat.inputs:
 
   - type: log
     paths:
-      - /home/ubuntu/asimov/api-server/logs/queue-producer-access-log.json
+      - /home/ubuntu/asimov/consumer-server/logs/infra.cache.redis.json
     fields:
-      fb_app-name: asimov.api-server
-      fb_log-type: queue-access-log           # 你可以用這個來標示 log 類型
+      fb_app-name: asimov.consumer-server
+      fb_log-type: cache-access-log           # 你可以用這個來標示 log 類型
     fields_under_root: true
     json.keys_under_root: true
     json.add_error_key: true
+    # index: "asimov.api-server"  # 自定義索引標記
 
 
 # ============================== Elasticsearch output ===========================

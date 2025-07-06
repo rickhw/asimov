@@ -1,0 +1,27 @@
+[Unit]
+Description=Asimov.ConsumerServer
+After=network.target
+
+[Service]
+User=ubuntu
+
+Environment=APP_HOME=/home/ubuntu/asimov/consumer-server
+Environment=JAVA_HOME=/home/ubuntu/.sdkman/candidates/java/current
+Environment=JAVA_OPTS=-Xms1024m -Xmx2048m
+EnvironmentFile=/home/ubuntu/asimov/consumer-server/conf/asimov.env
+
+WorkingDirectory=/home/ubuntu/asimov/consumer-server
+ExecStart=/home/ubuntu/.sdkman/candidates/java/current/bin/java \
+  -Dlogging.config=/home/ubuntu/asimov/consumer-server/conf/logback-spring.xml \
+  $JAVA_OPTS \
+  -jar /home/ubuntu/asimov/consumer-server/consumer-server.jar
+
+SuccessExitStatus=143
+Restart=always
+RestartSec=10
+
+StandardOutput=append:/home/ubuntu/asimov/consumer-server/logs/systemctl.stdout.log
+StandardError=append:/home/ubuntu/asimov/consumer-server/logs/systemctl.stderr.log
+
+[Install]
+WantedBy=multi-user.target

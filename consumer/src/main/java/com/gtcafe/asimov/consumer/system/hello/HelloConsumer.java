@@ -49,8 +49,8 @@ public class HelloConsumer {
     // @RabbitListener(queues = QueueName.HELLO_QUEUE, autoStartup = "false")
     @RabbitListener(
         // queues = QueueName.HELLO_QUEUE,
-        queues = "${asimov.system.hello.queues.task-queue.queue-name}"
-        // containerFactory = "rabbitListenerContainerFactory"
+        queues = "${asimov.system.hello.queues.task-queue.queue-name}",
+        containerFactory = "rabbitListenerContainerFactory"
     )
     // public void consumeHelloQueue(String eventString) {
     public void receiveMessage(
@@ -86,7 +86,10 @@ public class HelloConsumer {
             if (processed) {
                 channel.basicAck(deliveryTag, false); // 手動確認
             } else {
+                // requeue
                 channel.basicNack(deliveryTag, false, true); // 處理失敗，重新入隊
+                QueueMdcUtils.Requeue(_qconfig.getQueueName(), _qconfig.getExchangeName(), _qconfig.getRoutingKeyName());
+                log.error(String.format("發生異常，Message 重新排隊, cachedKey: [%s]", cachedKey));
             }
         } catch (Exception e) {
             
