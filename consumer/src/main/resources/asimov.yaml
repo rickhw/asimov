@@ -3,7 +3,7 @@ asimov:
   openapi:
     version: v1
     title: Asimov
-    description: Asimov API
+    description: Consumer
     
   time:
     zone: UTC

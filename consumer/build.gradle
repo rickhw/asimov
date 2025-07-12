@@ -16,6 +16,7 @@ dependencies {
     implementation project(':core') // Consumer will depend on core module
 
     implementation 'org.springframework.boot:spring-boot-starter-web' // If consumer needs web functionalities (e.g., health check)
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // rdb: mysql or maria, or pgsql
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -87,7 +88,7 @@ task generateMeta {
         def metaFile = file("$buildDir/meta.json")
         metaFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson([
             product  : 'asimov',
-            name     : 'api-server',
+            name     : 'consumer-server',
             version  : version,
             buildId  : buildId,
             buildType: buildType,
