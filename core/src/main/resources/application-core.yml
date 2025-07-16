@@ -1,0 +1,60 @@
+spring:
+  session:
+    store-type: redis
+    timeout: 30m
+    redis:
+      namespace: asimov:session
+      flush-mode: on-save
+      cleanup-cron: "0 * * * * *"
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      housekeeping-period-ms: 30000
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      validation-timeout: 5000
+      connection-timeout: 30000
+  jpa:
+    open-in-view: false
+    hibernate:
+      dialect: org.hibernate.dialect.MariaDBDialect
+      ddl-auto: update
+
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST}
+    port: ${SPRING_RABBITMQ_PORT}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+    listener:
+      simple:
+        default-requeue-rejected: false
+
+  data:
+    redis:
+      database: 0
+
+logging:
+  level:
+    com.gtcafe.asimov: INFO
+    org.springframework.amqp: INFO
+    org.hibernate.SQL: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+    metrics:
+      tags:
+        application: ${spring.application.name}
+      export:
+        prometheus:
+          enabled: true
+
+    endpoint:
+      prometheus:
+        enabled: true

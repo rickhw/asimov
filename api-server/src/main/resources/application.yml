@@ -1,180 +1,29 @@
-# -----------------------------------------------------------------------------
-# Server (Tomcat)
-# -----------------------------------------------------------------------------
+spring:
+  config:
+    import: "optional:classpath:application-core.yml"
+  main:
+    banner-mode: off
+  application:
+    name: ApiServer
+
 server:
   port: ${port:8080}
   error:
     whitelabel:
       enabled: false
   address: 0.0.0.0
-
   servlet:
     session:
       cookie:
-        # Cookie 名稱，預設 JSESSIONID
         name: rSessionId
-
-        # Cookie 持續時間，默認為 -1 (瀏覽器關閉後失效)
         max-age: 3600
 
-        # 是否僅通過 HTTPS 傳輸
-        # secure: true
-
-        # 是否僅限 HTTP 訪問（不允許 JavaScript 訪問）
-        # http-only: true
-
-        # Cookie 路徑
-        # path: /
-
-        # Cookie 域
-        # domain: example.com
-
-        # Cookie SameSite 屬性
-        # same-site: lax
-
-      # 是否持續性 session，預設 false
-      # persistent: false
-
-      # 追蹤模式，可選值有 cookie(默認)、url、ssl
-      # tracking-modes: cookie
-
-      # 超時時間，預設 30 分鐘
-      timeout: 30m
-
-# -----------------------------------------------------------------------------
-# Sprinboot
-# -----------------------------------------------------------------------------
-spring:
-  main:
-    banner-mode: off
-
-  application:
-    name: ApiServer
-
-  session:
-    # 存儲類型，可選值有 none, jdbc, redis, hazelcast, mongodb
-    store-type: redis
-
-    # session 超時時間，預設 30 分鐘
-    timeout: 30m
-
-    # 是否在啟動時創建 session 存儲需要的表/結構
-    # initialize-schema: always
-
-    # Redis 配置
-    redis:
-      namespace: asimov:session
-      flush-mode: on-save
-      cleanup-cron: "0 * * * * *"
-
-  datasource:
-    #url: jdbc:mysql://localhost:3306/asimov?allowPublicKeyRetrieval=true&useSSL=false
-    # url: ${SPRING_DATASOURCE_URL}
-    # username: ${SPRING_DATASOURCE_USERNAME}
-    # password: ${SPRING_DATASOURCE_PASSWORD}
-    driver-class-name: org.mariadb.jdbc.Driver
-
-    ## custom housekeeping 週期：
-    hikari:
-      housekeeping-period-ms: 30000 # 預設為 30 秒
-  jpa:
-    open-in-view: false
-    hibernate:
-      # dialect: org.hibernate.dialect.MySQLDialect
-      dialect: org.hibernate.dialect.MariaDBDialect
-      ddl-auto: update
-      # ddl-auto: validate
-
-      # https://stackoverflow.com/questions/51136693/how-to-check-hikaricp-connection-pooling-is-working-or-not-in-java
-      # lsof -nP -i :3306 -sTCP:ESTABLISHED
-      # ss -46 -np state established dport = :3306 | grep 'java' | sort -r -k 3,3 | nl
-      # netstat -ant | grep 3306
-      hikari:
-        # maximumPoolSize: 5
-        # minimumIdle: 5
-        minimum-idle: 5
-        maximum-pool-size: 20
-        idle-timeout: 30000
-        max-lifetime: 1800000
-        validation-timeout: 5000
-        connection-timeout: 30000
-
-  # rabbitmq:
-  #   host: ${SPRING_RABBITMQ_HOST}
-  #   port: ${SPRING_RABBITMQ_PORT}
-  #   username: ${SPRING_RABBITMQ_USERNAME}
-  #   password: ${SPRING_RABBITMQ_PASSWORD}
-
-  data:
-    redis:
-      database: 0
-      # host: localhost
-      # port: 
-      # password: password
-      # timeout: 60000
-      # lettuce:
-      #   pool:
-      #     max-active: 10
-      #     max-idle: 5
-      #     min-idle: 1
-# -----------------------------------------------------------------------------
-# logback
-# -----------------------------------------------------------------------------
 logging:
   level:
-    # ROOT: DEBUG
-    com.gtcafe.asimov: INFO
-
-    #com.gtcafe.asimov.infrastructure: DEBUG
-
-    org.hibernate.SQL: INFO
-
-    # spring
-    ## Debug Bean
     org.springframework.boot.context.config: DEBUG
-    org.springframework.amqp: INFO
-    # org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-
-    # 開啟 HikariCP debug
-    # com.zaxxer.hikari: DEBUG
 
 springdoc:
   api-docs:
     enabled: true
-
-  ## http://localhost:8080/swagger-ui/index.html
   swagger-ui:
     path: /swagger-ui.html
-    # operationsSorter: name
-
-# -----------------------------------------------------------------------------
-# Actuator Configuration
-# -----------------------------------------------------------------------------
-management:
-  endpoints:
-    web:
-      exposure:
-        # include: health,metrics,prometheus
-        include: "*"
-
-    # health:
-    #   show-details: always
-
-    metrics:
-      tags:
-        application: ${spring.application.name}
-      export:
-        prometheus:
-          enabled: true
-      # Custom Metrics Configuration
-      # enable:
-      #   all: true
-      #   jvm: true
-      # process: true
-      #   system: true
-      #   logback: true
-      #   tomcat: true
-
-    endpoint:
-      prometheus:
-        enabled: true
