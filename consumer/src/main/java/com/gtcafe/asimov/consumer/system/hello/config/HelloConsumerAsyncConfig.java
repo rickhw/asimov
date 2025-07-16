@@ -1,47 +1,55 @@
 package com.gtcafe.asimov.consumer.system.hello.config;
 
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-
-import com.gtcafe.asimov.system.hello.HelloConstants;
-
-import io.micrometer.core.instrument.MeterRegistry;
-import lombok.Data;
 
 @Configuration
-@ConfigurationProperties(prefix = "asimov.system.hello.consumer.async-thread-pool")
-@Data
-public class HelloConsumerAsyncConfig implements ApplicationRunner {
+public class HelloConsumerAsyncConfig {
 
-    private Integer coreSize = 16;
-    private Integer maxSize = 32;
-    private Integer queueCapacity = 128;
-    private String threadNamePrefix = "async-hell-";
-    private String threadPoolName = "helloThreadPool";
+    public static final String EXCHANGE_NAME = "hello.async.ex";
+    public static final String QUEUE_NAME = "hello.async.q";
+    public static final String ROUTING_KEY = "hello.async.rk";
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        System.out.println("app.hello.consumer.async-thread-pool:");
-        System.out.printf("  - core-size: [%s]\n", coreSize);
-        System.out.printf("  - max-size: [%s]\n", maxSize);
-        System.out.printf("  - queue-capacity: [%s]\n", queueCapacity);
-        System.out.printf("  - thread-name-prefix: [%s]\n", threadNamePrefix);
-        System.out.println();
+    private static final String DLX_SUFFIX = ".dlx";
+    public static final String DLQ_SUFFIX = ".dlq";
+
+    // Main Queue
+    @Bean
+    Queue queue() {
+        return QueueBuilder.durable(QUEUE_NAME)
+                .withArgument("x-dead-letter-exchange", EXCHANGE_NAME + DLX_SUFFIX)
+                .withArgument("x-dead-letter-routing-key", ROUTING_KEY) // Route with the original routing key
+                .build();
     }
 
-    @Bean(name = HelloConstants.THREAD_POOL_EXECUTOR_BEANNAME)
-    public ThreadPoolTaskExecutor asyncExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(getCoreSize());
-        executor.setMaxPoolSize(getMaxSize());
-        executor.setQueueCapacity(getQueueCapacity());
-        executor.setThreadNamePrefix(getThreadNamePrefix());
-        executor.initialize();
+    @Bean
+    DirectExchange exchange() {
+        return new DirectExchange(EXCHANGE_NAME);
+    }
 
-        return executor;
+    @Bean
+    Binding binding(Queue queue, DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
+    }
+
+    // Dead Letter Queue
+    @Bean
+    DirectExchange deadLetterExchange() {
+        return new DirectExchange(EXCHANGE_NAME + DLX_SUFFIX);
+    }
+
+    @Bean
+    Queue deadLetterQueue() {
+        return new Queue(QUEUE_NAME + DLQ_SUFFIX, true);
+    }
+
+    @Bean
+    Binding deadLetterBinding(Queue deadLetterQueue, DirectExchange deadLetterExchange) {
+        return BindingBuilder.bind(deadLetterQueue).to(deadLetterExchange).with(ROUTING_KEY);
     }
 }
