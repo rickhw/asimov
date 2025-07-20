@@ -2,8 +2,6 @@ package com.gtcafe.asimov.consumer.system.hello;
 
 import java.util.Optional;
 
-import org.slf4j.log;
-import org.slf4j.logFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
