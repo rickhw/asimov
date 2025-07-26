@@ -12,6 +12,7 @@ import com.gtcafe.asimov.system.hello.model.HelloEvent;
 import com.gtcafe.asimov.system.hello.repository.HelloEntity;
 import com.gtcafe.asimov.system.hello.repository.HelloRepository;
 import com.gtcafe.asimov.system.hello.service.HelloCacheService;
+import com.gtcafe.asimov.system.hello.service.HelloValidationService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class HelloService {
   private final HelloQueueConfig queueConfig;
   private final HelloRepository helloRepository;
   private final HelloCacheService helloCacheService;
+  private final HelloValidationService validationService;
 
   /**
    * 同步處理 Hello 請求
@@ -55,6 +57,7 @@ public class HelloService {
    * 
    * @param hello Hello 物件
    * @return HelloEvent 事件物件
+   * @throws HelloValidationService.HelloValidationException 當輸入驗證失敗時拋出
    */
   @Transactional
   @Retryable(value = DataAccessException.class, maxAttempts = 3)
@@ -62,6 +65,10 @@ public class HelloService {
     log.info("Processing asynchronous hello request with message: {}", hello.getMessage());
 
     try {
+      // 0. validate input
+      validationService.validateHello(hello);
+      log.debug("Input validation passed for hello message");
+
       // 1. create a event
       HelloEvent event = new HelloEvent(hello);
       log.debug("Created hello event with ID: {}", event.getId());
@@ -98,11 +105,15 @@ public class HelloService {
    * 
    * @param eventId 事件 ID
    * @return HelloEvent 物件，如果不存在則返回 null
+   * @throws HelloValidationService.HelloValidationException 當事件 ID 驗證失敗時拋出
    */
   public HelloEvent getHelloEvent(String eventId) {
     log.debug("Retrieving hello event with ID: {}", eventId);
 
     try {
+      // validate event ID
+      validationService.validateEventId(eventId);
+      log.debug("Event ID validation passed");
       // 1. 先從快取檢索
       var cachedEvent = helloCacheService.getHelloEvent(eventId);
       if (cachedEvent.isPresent()) {
@@ -133,11 +144,24 @@ public class HelloService {
    * 
    * @param event 更新後的 HelloEvent
    * @return 是否更新成功
+   * @throws HelloValidationService.HelloValidationException 當事件驗證失敗時拋出
    */
   public boolean updateHelloEvent(HelloEvent event) {
     log.debug("Updating hello event with ID: {}", event.getId());
 
     try {
+      // validate event
+      if (event == null) {
+        throw new HelloValidationService.HelloValidationException("HelloEvent cannot be null");
+      }
+      
+      validationService.validateEventId(event.getId());
+      
+      if (event.getData() != null) {
+        validationService.validateHello(event.getData());
+      }
+      
+      log.debug("Event validation passed");
       // 更新快取
       boolean cacheSuccess = helloCacheService.updateHelloEvent(event);
       if (!cacheSuccess) {

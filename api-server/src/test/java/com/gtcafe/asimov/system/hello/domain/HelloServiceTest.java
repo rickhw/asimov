@@ -29,6 +29,7 @@ import com.gtcafe.asimov.system.hello.model.HelloEvent;
 import com.gtcafe.asimov.system.hello.repository.HelloEntity;
 import com.gtcafe.asimov.system.hello.repository.HelloRepository;
 import com.gtcafe.asimov.system.hello.service.HelloCacheService;
+import com.gtcafe.asimov.system.hello.service.HelloValidationService;
 
 /**
  * HelloService 單元測試
@@ -49,11 +50,14 @@ class HelloServiceTest {
     @Mock
     private HelloCacheService helloCacheService;
 
+    @Mock
+    private HelloValidationService validationService;
+
     private HelloService helloService;
 
     @BeforeEach
     void setUp() {
-        helloService = new HelloService(producer, queueConfig, helloRepository, helloCacheService);
+        helloService = new HelloService(producer, queueConfig, helloRepository, helloCacheService, validationService);
     }
 
     @Test
@@ -97,6 +101,7 @@ class HelloServiceTest {
         assertEquals(inputHello, result.getData());
 
         // Verify interactions
+        verify(validationService, times(1)).validateHello(inputHello);
         verify(helloCacheService, times(1)).cacheHelloEvent(any(HelloEvent.class));
         verify(helloRepository, times(1)).save(any(HelloEntity.class));
         verify(producer, times(1)).sendEvent(eq(result), eq(mockQueueName));
@@ -167,9 +172,32 @@ class HelloServiceTest {
     }
 
     @Test
+    void sayHelloAsync_ShouldThrowExceptionWhenValidationFails() {
+        // Arrange
+        Hello inputHello = new Hello();
+        inputHello.setMessage("invalid message");
+        
+        doThrow(new HelloValidationService.HelloValidationException("Validation failed"))
+            .when(validationService).validateHello(inputHello);
+
+        // Act & Assert
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            helloService.sayHelloAsync(inputHello);
+        });
+
+        assertEquals("Failed to process asynchronous hello request", exception.getMessage());
+        
+        // Verify that validation was called but other operations were not
+        verify(validationService, times(1)).validateHello(inputHello);
+        verify(helloCacheService, times(0)).cacheHelloEvent(any(HelloEvent.class));
+        verify(helloRepository, times(0)).save(any(HelloEntity.class));
+        verify(producer, times(0)).sendEvent(any(HelloEvent.class), anyString());
+    }
+
+    @Test
     void getHelloEvent_ShouldReturnEventFromCache() {
         // Arrange
-        String eventId = "test-event-id";
+        String eventId = "123e4567-e89b-12d3-a456-426614174000";
         Hello hello = new Hello();
         hello.setMessage("Test Message");
         HelloEvent expectedEvent = new HelloEvent(hello);
@@ -182,7 +210,25 @@ class HelloServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(expectedEvent.getId(), result.getId());
+        verify(validationService, times(1)).validateEventId(eventId);
         verify(helloCacheService, times(1)).getHelloEvent(eventId);
+    }
+
+    @Test
+    void getHelloEvent_ShouldThrowExceptionWhenEventIdValidationFails() {
+        // Arrange
+        String invalidEventId = "invalid-id";
+        
+        doThrow(new HelloValidationService.HelloValidationException("Invalid event ID"))
+            .when(validationService).validateEventId(invalidEventId);
+
+        // Act & Assert
+        assertThrows(HelloValidationService.HelloValidationException.class, () -> {
+            helloService.getHelloEvent(invalidEventId);
+        });
+        
+        verify(validationService, times(1)).validateEventId(invalidEventId);
+        verify(helloCacheService, times(0)).getHelloEvent(anyString());
     }
 
     @Test
