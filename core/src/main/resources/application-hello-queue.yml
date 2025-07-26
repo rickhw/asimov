@@ -1,0 +1,23 @@
+asimov:
+  system:
+    hello:
+      queues:
+        task-queue:
+          queue-name: "hello.async.q"
+          exchange-name: "hello.async.ex"
+          routing-key-name: "hello.async.rk"
+  
+  rabbitmq:
+    auto-init: true
+    reset: false
+    queues:
+      - name: "hello.async.q"
+        exchange: "hello.async.ex"
+        routing-key: "hello.async.rk"
+        durable: true
+        dead-letter-exchange: "hello.async.ex.dlx"
+        dead-letter-routing-key: "hello.async.rk"
+      - name: "hello.async.q.dlq"
+        exchange: "hello.async.ex.dlx"
+        routing-key: "hello.async.rk"
+        durable: true

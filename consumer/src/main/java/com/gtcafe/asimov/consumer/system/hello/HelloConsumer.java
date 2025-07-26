@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import com.gtcafe.asimov.consumer.system.hello.config.HelloConsumerAsyncConfig;
 import com.gtcafe.asimov.framework.utils.JsonUtils;
+import com.gtcafe.asimov.system.hello.config.HelloQueueConfigService;
 import com.gtcafe.asimov.system.hello.model.HelloEvent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,10 @@ public class HelloConsumer {
     @Autowired
     private HelloEventHandler helloEventHandler;
 
-    @RabbitListener(queues = HelloConsumerAsyncConfig.QUEUE_NAME)
+    @Autowired
+    private HelloQueueConfigService queueConfigService;
+
+    @RabbitListener(queues = "#{helloQueueConfigService.queueName}")
     public void receiveMessage(@Payload String eventString) {
         log.info("Received message on main queue: {}", eventString);
 
@@ -52,9 +55,10 @@ public class HelloConsumer {
         }
     }
 
-    @RabbitListener(queues = HelloConsumerAsyncConfig.QUEUE_NAME + HelloConsumerAsyncConfig.DLQ_SUFFIX)
+    @RabbitListener(queues = "#{helloQueueConfigService.deadLetterQueueName}")
     public void receiveDeadLetterMessage(@Payload String eventString) {
-        log.error("Received dead-lettered message: {}. Storing for analysis.", eventString);
+        log.error("Received dead-lettered message on queue [{}]: {}. Storing for analysis.", 
+            queueConfigService.getDeadLetterQueueName(), eventString);
         // Here you can add logic to handle the failed message,
         // e.g., save it to a database, send a notification, etc.
     }
