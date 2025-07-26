@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
+import com.gtcafe.asimov.system.hello.service.AbstractHelloMetricsService;
+
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.Gauge;
@@ -15,12 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Hello Consumer 指標監控服務
  * 負責收集和記錄 Consumer 端的業務指標
+ * 繼承 AbstractHelloMetricsService 以共享通用功能
  */
 @Service
 @Slf4j
-public class HelloConsumerMetricsService {
-
-    private final MeterRegistry meterRegistry;
+public class HelloConsumerMetricsService extends AbstractHelloMetricsService {
     
     // 計數器指標
     private final Counter messagesProcessedCounter;
@@ -44,65 +45,39 @@ public class HelloConsumerMetricsService {
     private final AtomicLong lastProcessingTime = new AtomicLong(0);
 
     public HelloConsumerMetricsService(MeterRegistry meterRegistry) {
-        this.meterRegistry = meterRegistry;
-        
-        // 初始化計數器
-        this.messagesProcessedCounter = Counter.builder("hello_consumer_messages_processed_total")
-                .description("Total number of messages processed by hello consumer")
-                .register(meterRegistry);
-                
-        this.messagesFailedCounter = Counter.builder("hello_consumer_messages_failed_total")
-                .description("Total number of messages that failed processing")
-                .register(meterRegistry);
-                
-        this.dlqMessagesCounter = Counter.builder("hello_consumer_dlq_messages_total")
-                .description("Total number of messages sent to dead letter queue")
-                .register(meterRegistry);
-                
-        this.retryAttemptsCounter = Counter.builder("hello_consumer_retry_attempts_total")
-                .description("Total number of retry attempts")
-                .register(meterRegistry);
-                
-        this.taskStateTransitionsCounter = Counter.builder("hello_consumer_task_state_transitions_total")
-                .description("Total number of task state transitions")
-                .register(meterRegistry);
-        
-        // 初始化計時器
-        this.messageProcessingTimer = Timer.builder("hello_consumer_message_processing_duration_seconds")
-                .description("Time taken to process a message")
-                .register(meterRegistry);
-                
-        this.businessLogicTimer = Timer.builder("hello_consumer_business_logic_duration_seconds")
-                .description("Time taken for business logic processing")
-                .register(meterRegistry);
-                
-        this.cacheOperationTimer = Timer.builder("hello_consumer_cache_operation_duration_seconds")
-                .description("Time taken for cache operations")
-                .register(meterRegistry);
-        
-        // 初始化分布摘要
-        this.messageSizeSummary = DistributionSummary.builder("hello_consumer_message_size_bytes")
-                .description("Distribution of message sizes")
-                .register(meterRegistry);
-                
-        this.processingDelaySummary = DistributionSummary.builder("hello_consumer_processing_delay_seconds")
-                .description("Distribution of processing delays")
-                .register(meterRegistry);
-        
-        // 初始化儀表
-        Gauge.builder("hello_consumer_active_processing_messages", this, HelloConsumerMetricsService::getActiveProcessingMessages)
-                .description("Number of messages currently being processed")
-                .register(meterRegistry);
-                
-        Gauge.builder("hello_consumer_total_dlq_messages", this, HelloConsumerMetricsService::getTotalDlqMessages)
-                .description("Total number of messages in dead letter queue")
-                .register(meterRegistry);
-                
-        Gauge.builder("hello_consumer_last_processing_time_seconds", this, HelloConsumerMetricsService::getLastProcessingTime)
-                .description("Timestamp of last message processing")
-                .register(meterRegistry);
+        super(meterRegistry);
+        initializeSpecificMetrics();
         
         log.info("HelloConsumerMetricsService initialized with all metrics registered");
+    }
+
+    @Override
+    protected String getMetricPrefix() {
+        return "hello_consumer";
+    }
+
+    @Override
+    protected void initializeSpecificMetrics() {
+        // 初始化 Consumer 特有的計數器
+        this.messagesProcessedCounter = createCounter("hello_consumer_messages_processed_total", "Total number of messages processed by hello consumer");
+        this.messagesFailedCounter = createCounter("hello_consumer_messages_failed_total", "Total number of messages that failed processing");
+        this.dlqMessagesCounter = createCounter("hello_consumer_dlq_messages_total", "Total number of messages sent to dead letter queue");
+        this.retryAttemptsCounter = createCounter("hello_consumer_retry_attempts_total", "Total number of retry attempts");
+        this.taskStateTransitionsCounter = createCounter("hello_consumer_task_state_transitions_total", "Total number of task state transitions");
+        
+        // 初始化 Consumer 特有的計時器
+        this.messageProcessingTimer = createTimer("hello_consumer_message_processing_duration_seconds", "Time taken to process a message");
+        this.businessLogicTimer = createTimer("hello_consumer_business_logic_duration_seconds", "Time taken for business logic processing");
+        this.cacheOperationTimer = createTimer("hello_consumer_cache_operation_duration_seconds", "Time taken for cache operations");
+        
+        // 初始化 Consumer 特有的分布摘要
+        this.messageSizeSummary = createDistributionSummary("hello_consumer_message_size_bytes", "Distribution of message sizes");
+        this.processingDelaySummary = createDistributionSummary("hello_consumer_processing_delay_seconds", "Distribution of processing delays");
+        
+        // 初始化 Consumer 特有的儀表
+        createGauge("hello_consumer_active_processing_messages", "Number of messages currently being processed", this, HelloConsumerMetricsService::getActiveProcessingMessages);
+        createGauge("hello_consumer_total_dlq_messages", "Total number of messages in dead letter queue", this, HelloConsumerMetricsService::getTotalDlqMessages);
+        createGauge("hello_consumer_last_processing_time_seconds", "Timestamp of last message processing", this, HelloConsumerMetricsService::getLastProcessingTime);
     }
 
     // 訊息處理指標
@@ -112,18 +87,14 @@ public class HelloConsumerMetricsService {
     }
 
     public void recordMessageFailed(String errorType) {
-        Counter.builder("hello_consumer_messages_failed_total")
-                .description("Total number of messages that failed processing by error type")
-                .tag("error_type", errorType)
-                .register(meterRegistry)
-                .increment();
+        recordTaggedCounter("hello_consumer_messages_failed_total", "Total number of messages that failed processing by error type", "error_type", errorType);
         messagesFailedCounter.increment();
         log.debug("Recorded message failed metric for error type: {}", errorType);
     }
 
     public Timer.Sample startMessageProcessingTimer() {
         activeProcessingMessages.incrementAndGet();
-        return Timer.start(meterRegistry);
+        return startTimer();
     }
 
     public void recordMessageProcessingTime(Timer.Sample sample) {
@@ -186,6 +157,16 @@ public class HelloConsumerMetricsService {
     public void recordCacheOperationTime(Timer.Sample sample) {
         sample.stop(cacheOperationTimer);
         log.debug("Recorded cache operation time metric");
+    }
+
+    public void recordCacheOperation(String operation, boolean success) {
+        Counter.builder("hello_consumer_cache_operations_total")
+                .description("Total number of cache operations")
+                .tag("operation", operation)
+                .tag("success", String.valueOf(success))
+                .register(meterRegistry)
+                .increment();
+        log.debug("Recorded cache operation metric: {} - {}", operation, success ? "success" : "failure");
     }
 
     // 訊息大小指標

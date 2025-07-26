@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
+import com.gtcafe.asimov.system.hello.service.AbstractHelloMetricsService;
+
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.Gauge;
@@ -13,14 +15,13 @@ import io.micrometer.core.instrument.Timer;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Hello 指標監控服務
- * 負責收集和記錄 Hello 相關的業務指標
+ * Hello API-Server 指標監控服務
+ * 負責收集和記錄 API-Server 端的業務指標
+ * 繼承 AbstractHelloMetricsService 以共享通用功能
  */
 @Service
 @Slf4j
-public class HelloMetricsService {
-
-    private final MeterRegistry meterRegistry;
+public class HelloMetricsService extends AbstractHelloMetricsService {
 
     // 計數器指標
     private final Counter syncRequestCounter;
@@ -47,78 +48,42 @@ public class HelloMetricsService {
     private final AtomicLong totalCachedEvents = new AtomicLong(0);
 
     public HelloMetricsService(MeterRegistry meterRegistry) {
-        this.meterRegistry = meterRegistry;
-
-        // 初始化計數器
-        this.syncRequestCounter = Counter.builder("hello.requests.sync")
-                .description("Number of synchronous hello requests")
-                .register(meterRegistry);
-
-        this.asyncRequestCounter = Counter.builder("hello.requests.async")
-                .description("Number of asynchronous hello requests")
-                .register(meterRegistry);
-
-        this.validationFailureCounter = Counter.builder("hello.validation.failures")
-                .description("Number of validation failures")
-                .tag("type", "all")
-                .register(meterRegistry);
-
-        this.cacheHitCounter = Counter.builder("hello.cache.hits")
-                .description("Number of cache hits")
-                .register(meterRegistry);
-
-        this.cacheMissCounter = Counter.builder("hello.cache.misses")
-                .description("Number of cache misses")
-                .register(meterRegistry);
-
-        this.databaseOperationCounter = Counter.builder("hello.database.operations")
-                .description("Number of database operations")
-                .register(meterRegistry);
-
-        this.queueOperationCounter = Counter.builder("hello.queue.operations")
-                .description("Number of queue operations")
-                .register(meterRegistry);
-
-        // 初始化計時器
-        this.syncProcessingTimer = Timer.builder("hello.processing.sync")
-                .description("Time taken to process synchronous hello requests")
-                .register(meterRegistry);
-
-        this.asyncProcessingTimer = Timer.builder("hello.processing.async")
-                .description("Time taken to process asynchronous hello requests")
-                .register(meterRegistry);
-
-        this.validationTimer = Timer.builder("hello.validation.time")
-                .description("Time taken for validation")
-                .register(meterRegistry);
-
-        this.cacheOperationTimer = Timer.builder("hello.cache.operation.time")
-                .description("Time taken for cache operations")
-                .register(meterRegistry);
-
-        this.databaseOperationTimer = Timer.builder("hello.database.operation.time")
-                .description("Time taken for database operations")
-                .register(meterRegistry);
-
-        // 初始化分布摘要
-        this.messageLengthSummary = DistributionSummary.builder("hello.message.length")
-                .description("Distribution of hello message lengths")
-                .register(meterRegistry);
-
-        this.batchSizeSummary = DistributionSummary.builder("hello.batch.size")
-                .description("Distribution of batch sizes")
-                .register(meterRegistry);
-
-        // 初始化儀表
-        Gauge.builder("hello.requests.active.async", this, HelloMetricsService::getActiveAsyncRequests)
-                .description("Number of active asynchronous requests")
-                .register(meterRegistry);
-
-        Gauge.builder("hello.cache.events.total", this, HelloMetricsService::getTotalCachedEvents)
-                .description("Total number of cached events")
-                .register(meterRegistry);
+        super(meterRegistry);
+        initializeSpecificMetrics();
 
         log.info("HelloMetricsService initialized with all metrics registered");
+    }
+
+    @Override
+    protected String getMetricPrefix() {
+        return "hello";
+    }
+
+    @Override
+    protected void initializeSpecificMetrics() {
+        // 初始化 API-Server 特有的計數器
+        this.syncRequestCounter = createCounter("hello.requests.sync", "Number of synchronous hello requests");
+        this.asyncRequestCounter = createCounter("hello.requests.async", "Number of asynchronous hello requests");
+        this.validationFailureCounter = createTaggedCounter("hello.validation.failures", "Number of validation failures", "type", "all");
+        this.cacheHitCounter = createCounter("hello.cache.hits", "Number of cache hits");
+        this.cacheMissCounter = createCounter("hello.cache.misses", "Number of cache misses");
+        this.databaseOperationCounter = createCounter("hello.database.operations", "Number of database operations");
+        this.queueOperationCounter = createCounter("hello.queue.operations", "Number of queue operations");
+
+        // 初始化 API-Server 特有的計時器
+        this.syncProcessingTimer = createTimer("hello.processing.sync", "Time taken to process synchronous hello requests");
+        this.asyncProcessingTimer = createTimer("hello.processing.async", "Time taken to process asynchronous hello requests");
+        this.validationTimer = createTimer("hello.validation.time", "Time taken for validation");
+        this.cacheOperationTimer = createTimer("hello.cache.operation.time", "Time taken for cache operations");
+        this.databaseOperationTimer = createTimer("hello.database.operation.time", "Time taken for database operations");
+
+        // 初始化 API-Server 特有的分布摘要
+        this.messageLengthSummary = createDistributionSummary("hello.message.length", "Distribution of hello message lengths");
+        this.batchSizeSummary = createDistributionSummary("hello.batch.size", "Distribution of batch sizes");
+
+        // 初始化 API-Server 特有的儀表
+        createGauge("hello.requests.active.async", "Number of active asynchronous requests", this, HelloMetricsService::getActiveAsyncRequests);
+        createGauge("hello.cache.events.total", "Total number of cached events", this, HelloMetricsService::getTotalCachedEvents);
     }
 
     // 同步請求指標
@@ -128,7 +93,7 @@ public class HelloMetricsService {
     }
 
     public Timer.Sample startSyncProcessingTimer() {
-        return Timer.start(meterRegistry);
+        return startTimer();
     }
 
     public void recordSyncProcessingTime(Timer.Sample sample) {
@@ -144,7 +109,7 @@ public class HelloMetricsService {
     }
 
     public Timer.Sample startAsyncProcessingTimer() {
-        return Timer.start(meterRegistry);
+        return startTimer();
     }
 
     public void recordAsyncProcessingTime(Timer.Sample sample) {
@@ -155,18 +120,13 @@ public class HelloMetricsService {
 
     // 驗證指標
     public void recordValidationFailure(String validationType) {
-        Counter.builder("hello.validation.failures")
-                .description("Number of validation failures by type")
-                .tag("type", validationType)
-                .register(meterRegistry)
-                .increment();
-        
+        recordTaggedCounter("hello.validation.failures", "Number of validation failures by type", "type", validationType);
         validationFailureCounter.increment();
         log.debug("Recorded validation failure metric for type: {}", validationType);
     }
 
     public Timer.Sample startValidationTimer() {
-        return Timer.start(meterRegistry);
+        return startTimer();
     }
 
     public void recordValidationTime(Timer.Sample sample) {
@@ -186,7 +146,7 @@ public class HelloMetricsService {
     }
 
     public Timer.Sample startCacheOperationTimer() {
-        return Timer.start(meterRegistry);
+        return startTimer();
     }
 
     public void recordCacheOperationTime(Timer.Sample sample) {
@@ -206,18 +166,13 @@ public class HelloMetricsService {
 
     // 資料庫指標
     public void recordDatabaseOperation(String operationType) {
-        Counter.builder("hello.database.operations")
-                .description("Number of database operations by type")
-                .tag("type", operationType)
-                .register(meterRegistry)
-                .increment();
-        
+        recordTaggedCounter("hello.database.operations", "Number of database operations by type", "type", operationType);
         databaseOperationCounter.increment();
         log.debug("Recorded database operation metric for type: {}", operationType);
     }
 
     public Timer.Sample startDatabaseOperationTimer() {
-        return Timer.start(meterRegistry);
+        return startTimer();
     }
 
     public void recordDatabaseOperationTime(Timer.Sample sample) {
@@ -227,12 +182,7 @@ public class HelloMetricsService {
 
     // 佇列指標
     public void recordQueueOperation(String operationType) {
-        Counter.builder("hello.queue.operations")
-                .description("Number of queue operations by type")
-                .tag("type", operationType)
-                .register(meterRegistry)
-                .increment();
-        
+        recordTaggedCounter("hello.queue.operations", "Number of queue operations by type", "type", operationType);
         queueOperationCounter.increment();
         log.debug("Recorded queue operation metric for type: {}", operationType);
     }

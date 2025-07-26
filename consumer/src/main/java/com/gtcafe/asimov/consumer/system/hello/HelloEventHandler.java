@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtcafe.asimov.consumer.system.hello.service.HelloConsumerMetricsService;
-import com.gtcafe.asimov.framework.constants.KindConstants;
 import com.gtcafe.asimov.framework.utils.JsonUtils;
-import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
-import com.gtcafe.asimov.system.hello.HelloUtils;
 import com.gtcafe.asimov.system.hello.model.HelloEvent;
+import com.gtcafe.asimov.system.hello.service.HelloCacheService;
 import com.gtcafe.asimov.system.task.TaskEventHandler;
 import com.gtcafe.asimov.system.task.schema.TaskState;
 
@@ -26,7 +24,7 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
     private JsonUtils jsonUtils;
 
     @Autowired
-    private CacheRepository cacheRepos;
+    private HelloCacheService cacheService;
     
     @Autowired
     private HelloConsumerMetricsService metricsService;
@@ -186,14 +184,11 @@ public class HelloEventHandler implements TaskEventHandler<HelloEvent> {
      * 更新事件到快取
      */
     private void updateEventInCache(HelloEvent event) {
-        String cachedKey = HelloUtils.renderCacheKey(event.getId());
-        String taskCachedKeyForIndex = String.format("%s:%s", KindConstants.SYS_TASK, event.getId());
-        String afterEventString = jsonUtils.modelToJsonStringSafe(event)
-            .orElseThrow(() -> new RuntimeException("Failed to serialize event to JSON"));
-            
-        cacheRepos.saveOrUpdateObject(cachedKey, afterEventString);
-        cacheRepos.saveOrUpdateObject(taskCachedKeyForIndex, afterEventString);
-        
+        boolean success = cacheService.updateHelloEvent(event);
+        if (!success) {
+            log.warn("Failed to update event in cache: {}", event.getId());
+            throw new RuntimeException("Cache update failed for event: " + event.getId());
+        }
         log.debug("Event updated in cache: {}", event.getId());
     }
     

@@ -10,6 +10,7 @@ import lombok.Data;
 /**
  * Hello 快取配置
  * 集中管理 Hello 相關的快取配置參數
+ * 統一供 API-Server 和 Consumer 使用
  */
 @Configuration
 @ConfigurationProperties(prefix = "asimov.system.hello.cache")

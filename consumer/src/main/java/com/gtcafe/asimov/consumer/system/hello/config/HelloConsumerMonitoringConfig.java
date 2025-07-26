@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 
 import com.gtcafe.asimov.consumer.system.hello.service.HelloConsumerMetricsService;
+import com.gtcafe.asimov.consumer.system.hello.service.HelloCacheInvalidationHandler;
+import com.gtcafe.asimov.system.hello.service.HelloCacheService;
 
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +27,21 @@ public class HelloConsumerMonitoringConfig {
     @Autowired
     private HelloConsumerMetricsService metricsService;
     
+    @Autowired
+    private HelloCacheService cacheService;
+    
+    @Autowired
+    private HelloCacheInvalidationHandler invalidationHandler;
+    
     private ScheduledExecutorService scheduler;
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
         log.info("Initializing Hello Consumer monitoring...");
+        
+        // 註冊快取失效監聽器
+        cacheService.registerInvalidationListener(invalidationHandler);
+        log.info("Registered cache invalidation handler");
         
         // 初始化排程器
         scheduler = Executors.newScheduledThreadPool(2);

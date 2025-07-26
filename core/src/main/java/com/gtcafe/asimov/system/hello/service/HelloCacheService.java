@@ -1,6 +1,9 @@
 package com.gtcafe.asimov.system.hello.service;
 
+import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
@@ -15,8 +18,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Hello 快取服務
+ * Hello 統一快取服務
  * 負責處理 Hello 相關的快取操作，包括儲存、檢索、更新和刪除
+ * 統一供 API-Server 和 Consumer 使用
  */
 @Service
 @Slf4j
@@ -26,10 +30,26 @@ public class HelloCacheService {
     private final CacheRepository cacheRepository;
     private final JsonUtils jsonUtils;
     private final HelloCacheConfig cacheConfig;
-    private final HelloMetricsService metricsService;
 
     // 快取配置常數
     private static final String LOCK_SUFFIX = ":lock";
+    private static final String INVALIDATION_CHANNEL = "hello:cache:invalidation";
+    
+    // 快取失效監聽器列表
+    private final List<CacheInvalidationListener> invalidationListeners = new CopyOnWriteArrayList<>();
+    
+    // 可選的指標服務 (由各模組自行注入)
+    private CacheMetricsRecorder metricsRecorder;
+
+    /**
+     * 設定指標記錄器 (可選)
+     * 
+     * @param metricsRecorder 指標記錄器
+     */
+    public void setMetricsRecorder(CacheMetricsRecorder metricsRecorder) {
+        this.metricsRecorder = metricsRecorder;
+        log.debug("Cache metrics recorder set: {}", metricsRecorder.getClass().getSimpleName());
+    }
 
     /**
      * 儲存 HelloEvent 到快取
@@ -40,6 +60,11 @@ public class HelloCacheService {
      */
     public boolean cacheHelloEvent(HelloEvent event) {
         log.debug("Caching hello event with ID: {}", event.getId());
+        
+        if (!cacheConfig.isEnabled()) {
+            log.debug("Cache is disabled, skipping cache operation for event: {}", event.getId());
+            return true;
+        }
         
         try {
             String eventJsonString = jsonUtils.modelToJsonStringSafe(event)
@@ -57,10 +82,24 @@ public class HelloCacheService {
 
             log.debug("Successfully cached hello event with keys: {} and {}", 
                 primaryKey, taskIndexKey);
+            
+            // 記錄快取操作指標
+            recordMetrics("save", true);
+            
+            // 通知快取更新
+            notifyCacheInvalidation(event.getId(), CacheInvalidationType.UPDATE);
+            
             return true;
 
         } catch (Exception e) {
             log.error("Failed to cache hello event with ID: {}", event.getId(), e);
+            
+            // 記錄快取操作失敗指標
+            recordMetrics("save", false);
+            
+            if (cacheConfig.isFailOnCacheError()) {
+                throw new RuntimeException("Cache operation failed", e);
+            }
             return false;
         }
     }
@@ -74,12 +113,18 @@ public class HelloCacheService {
     public Optional<HelloEvent> getHelloEvent(String eventId) {
         log.debug("Retrieving hello event from cache with ID: {}", eventId);
         
+        if (!cacheConfig.isEnabled()) {
+            log.debug("Cache is disabled, returning empty for event: {}", eventId);
+            return Optional.empty();
+        }
+        
         try {
             String primaryKey = generatePrimaryKey(eventId);
             Optional<String> cachedValue = cacheRepository.retrieveObject(primaryKey);
             
             if (cachedValue.isEmpty()) {
                 log.debug("Cache miss for hello event ID: {}", eventId);
+                recordMetrics("get", false);
                 return Optional.empty();
             }
 
@@ -88,14 +133,17 @@ public class HelloCacheService {
             
             if (event.isPresent()) {
                 log.debug("Cache hit for hello event ID: {}", eventId);
+                recordMetrics("get", true);
             } else {
                 log.warn("Failed to deserialize cached hello event with ID: {}", eventId);
+                recordMetrics("get", false);
             }
             
             return event;
 
         } catch (Exception e) {
             log.error("Error retrieving hello event from cache with ID: {}", eventId, e);
+            recordMetrics("get", false);
             return Optional.empty();
         }
     }
@@ -108,6 +156,11 @@ public class HelloCacheService {
      */
     public Optional<HelloEvent> getHelloEventFromTaskIndex(String eventId) {
         log.debug("Retrieving hello event from task index cache with ID: {}", eventId);
+        
+        if (!cacheConfig.isEnabled()) {
+            log.debug("Cache is disabled, returning empty for event: {}", eventId);
+            return Optional.empty();
+        }
         
         try {
             String taskIndexKey = generateTaskIndexKey(eventId);
@@ -155,6 +208,11 @@ public class HelloCacheService {
     public boolean deleteHelloEvent(String eventId) {
         log.debug("Deleting hello event from cache with ID: {}", eventId);
         
+        if (!cacheConfig.isEnabled()) {
+            log.debug("Cache is disabled, skipping delete operation for event: {}", eventId);
+            return true;
+        }
+        
         try {
             String primaryKey = generatePrimaryKey(eventId);
             String taskIndexKey = generateTaskIndexKey(eventId);
@@ -166,10 +224,24 @@ public class HelloCacheService {
             cacheRepository.delete(taskIndexKey);
             
             log.debug("Successfully deleted hello event from cache with ID: {}", eventId);
+            
+            // 記錄快取操作指標
+            recordMetrics("delete", true);
+            
+            // 通知快取刪除
+            notifyCacheInvalidation(eventId, CacheInvalidationType.DELETE);
+            
             return true;
 
         } catch (Exception e) {
             log.error("Failed to delete hello event from cache with ID: {}", eventId, e);
+            
+            // 記錄快取操作失敗指標
+            recordMetrics("delete", false);
+            
+            if (cacheConfig.isFailOnCacheError()) {
+                throw new RuntimeException("Cache delete operation failed", e);
+            }
             return false;
         }
     }
@@ -181,6 +253,10 @@ public class HelloCacheService {
      * @return 是否存在
      */
     public boolean existsInCache(String eventId) {
+        if (!cacheConfig.isEnabled()) {
+            return false;
+        }
+        
         try {
             String primaryKey = generatePrimaryKey(eventId);
             return cacheRepository.retrieveObject(primaryKey).isPresent();
@@ -198,6 +274,15 @@ public class HelloCacheService {
      * @return 操作結果
      */
     public <T> Optional<T> executeWithLock(String eventId, CacheOperation<T> operation) {
+        if (!cacheConfig.isEnabled()) {
+            try {
+                return Optional.of(operation.execute());
+            } catch (Exception e) {
+                log.error("Error executing operation without cache lock for event ID: {}", eventId, e);
+                return Optional.empty();
+            }
+        }
+        
         String lockKey = generatePrimaryKey(eventId) + LOCK_SUFFIX;
         boolean lockAcquired = false;
         
@@ -252,6 +337,88 @@ public class HelloCacheService {
     }
 
     /**
+     * 註冊快取失效監聽器
+     * 
+     * @param listener 監聽器
+     */
+    public void registerInvalidationListener(CacheInvalidationListener listener) {
+        invalidationListeners.add(listener);
+        log.debug("Registered cache invalidation listener: {}", listener.getClass().getSimpleName());
+    }
+
+    /**
+     * 移除快取失效監聽器
+     * 
+     * @param listener 監聽器
+     */
+    public void unregisterInvalidationListener(CacheInvalidationListener listener) {
+        invalidationListeners.remove(listener);
+        log.debug("Unregistered cache invalidation listener: {}", listener.getClass().getSimpleName());
+    }
+
+    /**
+     * 記錄指標 (如果有設定指標記錄器)
+     */
+    private void recordMetrics(String operation, boolean success) {
+        if (cacheConfig.isMetricsEnabled() && metricsRecorder != null) {
+            metricsRecorder.recordCacheOperation(operation, success);
+        }
+    }
+
+    /**
+     * 通知快取失效
+     * 
+     * @param eventId 事件 ID
+     * @param operation 操作類型 (UPDATE, DELETE)
+     */
+    private void notifyCacheInvalidation(String eventId, CacheInvalidationType operation) {
+        if (invalidationListeners.isEmpty()) {
+            return;
+        }
+        
+        log.debug("Notifying cache invalidation for event: {} with operation: {}", eventId, operation);
+        
+        CacheInvalidationEvent invalidationEvent = new CacheInvalidationEvent(
+            eventId, operation, System.currentTimeMillis());
+        
+        // 通知所有監聽器
+        for (CacheInvalidationListener listener : invalidationListeners) {
+            try {
+                listener.onCacheInvalidation(invalidationEvent);
+            } catch (Exception e) {
+                log.error("Error notifying cache invalidation listener: {}", 
+                    listener.getClass().getSimpleName(), e);
+            }
+        }
+        
+        // 發布到 Redis 頻道 (如果需要跨服務通知)
+        publishInvalidationToChannel(invalidationEvent);
+    }
+
+    /**
+     * 發布快取失效事件到 Redis 頻道
+     * 
+     * @param event 失效事件
+     */
+    private void publishInvalidationToChannel(CacheInvalidationEvent event) {
+        try {
+            String eventJson = jsonUtils.modelToJsonStringSafe(event)
+                .orElseThrow(() -> new RuntimeException("Failed to serialize invalidation event"));
+            
+            // 將失效事件儲存到特殊的快取鍵中，供其他服務查詢
+            String invalidationKey = String.format("%s:invalidation:%s:%d", 
+                INVALIDATION_CHANNEL, event.getEventId(), event.getTimestamp());
+            
+            cacheRepository.saveOrUpdateObject(invalidationKey, eventJson, 
+                Duration.ofMinutes(5).toSeconds(), TimeUnit.SECONDS);
+            
+            log.debug("Stored cache invalidation event with key: {}", invalidationKey);
+        } catch (Exception e) {
+            log.error("Failed to store cache invalidation event", e);
+        }
+    }
+
+    /**
      * 生成主要快取鍵
      */
     private String generatePrimaryKey(String eventId) {
@@ -278,5 +445,53 @@ public class HelloCacheService {
     @FunctionalInterface
     public interface CacheOperation<T> {
         T execute() throws Exception;
+    }
+
+    /**
+     * 快取失效監聽器介面
+     */
+    @FunctionalInterface
+    public interface CacheInvalidationListener {
+        void onCacheInvalidation(CacheInvalidationEvent event);
+    }
+
+    /**
+     * 快取指標記錄器介面
+     * 各模組可實作此介面來記錄快取操作指標
+     */
+    public interface CacheMetricsRecorder {
+        void recordCacheOperation(String operation, boolean success);
+    }
+
+    /**
+     * 快取失效事件
+     */
+    public static class CacheInvalidationEvent {
+        private final String eventId;
+        private final CacheInvalidationType operation;
+        private final long timestamp;
+
+        public CacheInvalidationEvent(String eventId, CacheInvalidationType operation, long timestamp) {
+            this.eventId = eventId;
+            this.operation = operation;
+            this.timestamp = timestamp;
+        }
+
+        public String getEventId() { return eventId; }
+        public CacheInvalidationType getOperation() { return operation; }
+        public long getTimestamp() { return timestamp; }
+
+        @Override
+        public String toString() {
+            return String.format("CacheInvalidationEvent{eventId='%s', operation=%s, timestamp=%d}", 
+                eventId, operation, timestamp);
+        }
+    }
+
+    /**
+     * 快取失效操作類型
+     */
+    public enum CacheInvalidationType {
+        UPDATE, DELETE, EXPIRE
     }
 }
