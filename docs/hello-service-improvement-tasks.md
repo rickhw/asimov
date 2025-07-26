@@ -12,17 +12,17 @@
 
 #### Task #7: 統一佇列配置管理
 **問題**: Producer 使用動態配置，Consumer 使用硬編碼配置
-- [ ] 7.1 將 `HelloConsumerAsyncConfig` 改為使用 `HelloQueueConfig`
-- [ ] 7.2 Consumer 端支援 `@ConfigurationProperties` 動態配置
-- [ ] 7.3 建立配置驗證機制，確保兩端配置一致
+- [x] 7.1 將 `HelloConsumerAsyncConfig` 改為使用 `HelloQueueConfig`
+- [x] 7.2 Consumer 端支援 `@ConfigurationProperties` 動態配置
+- [x] 7.3 建立配置驗證機制，確保兩端配置一致
 
 **預估工時**: 14 小時
 
 #### Task #8: Consumer 端監控完善
 **問題**: Consumer 端缺乏業務指標監控
-- [ ] 8.1 建立 `HelloConsumerMetricsService`
-- [ ] 8.2 監控訊息消費速率、處理時間、DLQ 統計
-- [ ] 8.3 與 Producer 端監控指標對應，實作端到端追蹤
+- [x] 8.1 建立 `HelloConsumerMetricsService`
+- [x] 8.2 監控訊息消費速率、處理時間、DLQ 統計
+- [x] 8.3 與 Producer 端監控指標對應，實作端到端追蹤
 
 **預估工時**: 18 小時
 
