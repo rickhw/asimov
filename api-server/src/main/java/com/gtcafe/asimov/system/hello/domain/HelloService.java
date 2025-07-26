@@ -154,13 +154,13 @@ public class HelloService {
       if (event == null) {
         throw new HelloValidationService.HelloValidationException("HelloEvent cannot be null");
       }
-      
+
       validationService.validateEventId(event.getId());
-      
+
       if (event.getData() != null) {
         validationService.validateHello(event.getData());
       }
-      
+
       log.debug("Event validation passed");
       // 更新快取
       boolean cacheSuccess = helloCacheService.updateHelloEvent(event);
