@@ -29,6 +29,7 @@ import com.gtcafe.asimov.system.hello.model.HelloEvent;
 import com.gtcafe.asimov.system.hello.repository.HelloEntity;
 import com.gtcafe.asimov.system.hello.repository.HelloRepository;
 import com.gtcafe.asimov.system.hello.service.HelloCacheService;
+import com.gtcafe.asimov.system.hello.service.HelloMetricsService;
 import com.gtcafe.asimov.system.hello.service.HelloValidationService;
 
 /**
@@ -53,11 +54,14 @@ class HelloServiceTest {
     @Mock
     private HelloValidationService validationService;
 
+    @Mock
+    private HelloMetricsService metricsService;
+
     private HelloService helloService;
 
     @BeforeEach
     void setUp() {
-        helloService = new HelloService(producer, queueConfig, helloRepository, helloCacheService, validationService);
+        helloService = new HelloService(producer, queueConfig, helloRepository, helloCacheService, validationService, metricsService);
     }
 
     @Test

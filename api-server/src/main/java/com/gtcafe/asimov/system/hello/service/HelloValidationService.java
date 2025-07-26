@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HelloValidationService {
 
     private final Validator validator;
+    private final HelloMetricsService metricsService;
 
     /**
      * 驗證 Hello 物件
@@ -119,11 +120,13 @@ public class HelloValidationService {
         if (message != null) {
             // 不能包含 HTML 標籤
             if (containsHtmlTags(message)) {
+                metricsService.recordSecurityThreatDetection("xss_attempt");
                 throw new HelloValidationException("Message cannot contain HTML tags");
             }
 
             // 不能包含 SQL 注入關鍵字
             if (containsSqlInjectionKeywords(message)) {
+                metricsService.recordSecurityThreatDetection("sql_injection_attempt");
                 throw new HelloValidationException("Message contains potentially dangerous content");
             }
 

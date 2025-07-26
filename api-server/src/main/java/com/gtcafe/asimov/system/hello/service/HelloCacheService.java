@@ -26,6 +26,7 @@ public class HelloCacheService {
     private final CacheRepository cacheRepository;
     private final JsonUtils jsonUtils;
     private final HelloCacheConfig cacheConfig;
+    private final HelloMetricsService metricsService;
 
     // 快取配置常數
     private static final String LOCK_SUFFIX = ":lock";

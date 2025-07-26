@@ -7,11 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.gtcafe.asimov.system.hello.model.Hello;
+import com.gtcafe.asimov.system.hello.service.HelloMetricsService;
 import com.gtcafe.asimov.system.hello.service.HelloValidationService.HelloValidationException;
 
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+
+import org.mockito.Mock;
 
 /**
  * HelloValidationService 單元測試
@@ -19,13 +22,16 @@ import jakarta.validation.ValidatorFactory;
  */
 class HelloValidationServiceTest {
 
+    @Mock
+    private HelloMetricsService metricsService;
+
     private HelloValidationService validationService;
 
     @BeforeEach
     void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
-        validationService = new HelloValidationService(validator);
+        validationService = new HelloValidationService(validator, metricsService);
     }
 
     @Test

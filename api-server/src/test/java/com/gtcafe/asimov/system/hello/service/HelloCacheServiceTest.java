@@ -29,6 +29,7 @@ import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
 import com.gtcafe.asimov.system.hello.config.HelloCacheConfig;
 import com.gtcafe.asimov.system.hello.model.Hello;
 import com.gtcafe.asimov.system.hello.model.HelloEvent;
+import com.gtcafe.asimov.system.hello.service.HelloMetricsService;
 
 /**
  * HelloCacheService 單元測試
@@ -51,6 +52,9 @@ class HelloCacheServiceTest {
     private HelloEvent testEvent;
     private String testEventJson;
 
+    @Mock
+    private HelloMetricsService metricsService;
+
     @BeforeEach
     void setUp() {
         // 設定 cacheConfig 的預設行為
@@ -58,7 +62,7 @@ class HelloCacheServiceTest {
         when(cacheConfig.getTaskIndexTtl()).thenReturn(Duration.ofHours(24));
         when(cacheConfig.getLockTimeout()).thenReturn(Duration.ofSeconds(10));
         
-        helloCacheService = new HelloCacheService(cacheRepository, jsonUtils, cacheConfig);
+        helloCacheService = new HelloCacheService(cacheRepository, jsonUtils, cacheConfig, metricsService);
         
         // 準備測試資料
         Hello hello = new Hello();
