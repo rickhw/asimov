@@ -5,15 +5,13 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gtcafe.asimov.framework.constants.KindConstants;
-import com.gtcafe.asimov.framework.utils.JsonUtils;
-import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
 import com.gtcafe.asimov.infrastructure.queue.Producer;
 import com.gtcafe.asimov.system.hello.config.HelloQueueConfig;
 import com.gtcafe.asimov.system.hello.model.Hello;
 import com.gtcafe.asimov.system.hello.model.HelloEvent;
 import com.gtcafe.asimov.system.hello.repository.HelloEntity;
 import com.gtcafe.asimov.system.hello.repository.HelloRepository;
+import com.gtcafe.asimov.system.hello.service.HelloCacheService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,10 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 public class HelloService {
 
   private final Producer producer;
-  private final CacheRepository cacheRepos;
-  private final JsonUtils jsonUtils;
-  private final HelloQueueConfig _qconfig;
+  private final HelloQueueConfig queueConfig;
   private final HelloRepository helloRepository;
+  private final HelloCacheService helloCacheService;
 
   /**
    * 同步處理 Hello 請求
@@ -67,19 +64,13 @@ public class HelloService {
     try {
       // 1. create a event
       HelloEvent event = new HelloEvent(hello);
-      String cachedKey = String.format("%s:%s", KindConstants.PLATFORM_HELLO, event.getId());
-      String taskCachedKeyForIndex = String.format("%s:%s", KindConstants.SYS_TASK, event.getId());
-
       log.debug("Created hello event with ID: {}", event.getId());
 
-      // 2. store to cache
-      String taskJsonString = jsonUtils.modelToJsonStringSafe(event)
-          .orElseThrow(() -> new RuntimeException("Failed to serialize hello event to JSON"));
-
-      cacheRepos.saveOrUpdateObject(cachedKey, taskJsonString);
-      cacheRepos.saveOrUpdateObject(taskCachedKeyForIndex, taskJsonString);
-      log.debug("Stored hello event to cache with keys: {} and {}", cachedKey,
-          taskCachedKeyForIndex);
+      // 2. store to cache using HelloCacheService
+      boolean cacheSuccess = helloCacheService.cacheHelloEvent(event);
+      if (!cacheSuccess) {
+        log.warn("Failed to cache hello event, but continuing with processing");
+      }
 
       // 3. store to database
       HelloEntity entity = new HelloEntity(hello.getMessage());
@@ -87,8 +78,8 @@ public class HelloService {
       log.debug("Stored hello entity to database with ID: {}", entity.getId());
 
       // 4. send to queue
-      producer.sendEvent(event, _qconfig.getQueueName());
-      log.debug("Sent hello event to queue: {}", _qconfig.getQueueName());
+      producer.sendEvent(event, queueConfig.getQueueName());
+      log.debug("Sent hello event to queue: {}", queueConfig.getQueueName());
 
       log.info("Successfully processed asynchronous hello request with event ID: {}",
           event.getId());
@@ -98,6 +89,67 @@ public class HelloService {
       log.error("Error processing asynchronous hello request for message: {}", hello.getMessage(),
           e);
       throw new RuntimeException("Failed to process asynchronous hello request", e);
+    }
+  }
+
+  /**
+   * 檢索 HelloEvent
+   * 先從快取檢索，如果不存在則從資料庫載入
+   * 
+   * @param eventId 事件 ID
+   * @return HelloEvent 物件，如果不存在則返回 null
+   */
+  public HelloEvent getHelloEvent(String eventId) {
+    log.debug("Retrieving hello event with ID: {}", eventId);
+
+    try {
+      // 1. 先從快取檢索
+      var cachedEvent = helloCacheService.getHelloEvent(eventId);
+      if (cachedEvent.isPresent()) {
+        log.debug("Found hello event in cache with ID: {}", eventId);
+        return cachedEvent.get();
+      }
+
+      // 2. 如果快取中沒有，嘗試從任務索引快取檢索
+      var taskIndexEvent = helloCacheService.getHelloEventFromTaskIndex(eventId);
+      if (taskIndexEvent.isPresent()) {
+        log.debug("Found hello event in task index cache with ID: {}", eventId);
+        // 重新快取到主要快取
+        helloCacheService.cacheHelloEvent(taskIndexEvent.get());
+        return taskIndexEvent.get();
+      }
+
+      log.debug("Hello event not found in cache with ID: {}", eventId);
+      return null;
+
+    } catch (Exception e) {
+      log.error("Error retrieving hello event with ID: {}", eventId, e);
+      return null;
+    }
+  }
+
+  /**
+   * 更新 HelloEvent 狀態
+   * 
+   * @param event 更新後的 HelloEvent
+   * @return 是否更新成功
+   */
+  public boolean updateHelloEvent(HelloEvent event) {
+    log.debug("Updating hello event with ID: {}", event.getId());
+
+    try {
+      // 更新快取
+      boolean cacheSuccess = helloCacheService.updateHelloEvent(event);
+      if (!cacheSuccess) {
+        log.warn("Failed to update hello event in cache with ID: {}", event.getId());
+      }
+
+      log.debug("Successfully updated hello event with ID: {}", event.getId());
+      return true;
+
+    } catch (Exception e) {
+      log.error("Error updating hello event with ID: {}", event.getId(), e);
+      return false;
     }
   }
 }
