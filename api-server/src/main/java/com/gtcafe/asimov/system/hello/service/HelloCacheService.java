@@ -1,6 +1,5 @@
 package com.gtcafe.asimov.system.hello.service;
 
-import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.gtcafe.asimov.framework.constants.KindConstants;
 import com.gtcafe.asimov.framework.utils.JsonUtils;
 import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
+import com.gtcafe.asimov.system.hello.config.HelloCacheConfig;
 import com.gtcafe.asimov.system.hello.model.HelloEvent;
 
 import lombok.RequiredArgsConstructor;
@@ -25,12 +25,10 @@ public class HelloCacheService {
 
     private final CacheRepository cacheRepository;
     private final JsonUtils jsonUtils;
+    private final HelloCacheConfig cacheConfig;
 
     // 快取配置常數
-    private static final Duration DEFAULT_TTL = Duration.ofMinutes(30);
-    private static final Duration TASK_INDEX_TTL = Duration.ofHours(24);
     private static final String LOCK_SUFFIX = ":lock";
-    private static final Duration LOCK_TIMEOUT = Duration.ofSeconds(10);
 
     /**
      * 儲存 HelloEvent 到快取
@@ -49,12 +47,12 @@ public class HelloCacheService {
             // 儲存到主要快取
             String primaryKey = generatePrimaryKey(event.getId());
             cacheRepository.saveOrUpdateObject(primaryKey, eventJsonString, 
-                DEFAULT_TTL.toSeconds(), TimeUnit.SECONDS);
+                cacheConfig.getPrimaryTtl().toSeconds(), TimeUnit.SECONDS);
 
             // 儲存到任務索引快取
             String taskIndexKey = generateTaskIndexKey(event.getId());
             cacheRepository.saveOrUpdateObject(taskIndexKey, eventJsonString, 
-                TASK_INDEX_TTL.toSeconds(), TimeUnit.SECONDS);
+                cacheConfig.getTaskIndexTtl().toSeconds(), TimeUnit.SECONDS);
 
             log.debug("Successfully cached hello event with keys: {} and {}", 
                 primaryKey, taskIndexKey);
@@ -204,7 +202,7 @@ public class HelloCacheService {
         
         try {
             lockAcquired = cacheRepository.setIfNotExists(lockKey, 
-                getLockValue(), LOCK_TIMEOUT);
+                getLockValue(), cacheConfig.getLockTimeout());
             
             if (!lockAcquired) {
                 log.warn("Failed to acquire cache lock for hello event ID: {}", eventId);

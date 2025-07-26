@@ -12,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Duration;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.gtcafe.asimov.framework.constants.KindConstants;
 import com.gtcafe.asimov.framework.utils.JsonUtils;
 import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
+import com.gtcafe.asimov.system.hello.config.HelloCacheConfig;
 import com.gtcafe.asimov.system.hello.model.Hello;
 import com.gtcafe.asimov.system.hello.model.HelloEvent;
 
@@ -41,6 +43,9 @@ class HelloCacheServiceTest {
     @Mock
     private JsonUtils jsonUtils;
 
+    @Mock
+    private HelloCacheConfig cacheConfig;
+
     private HelloCacheService helloCacheService;
 
     private HelloEvent testEvent;
@@ -48,7 +53,12 @@ class HelloCacheServiceTest {
 
     @BeforeEach
     void setUp() {
-        helloCacheService = new HelloCacheService(cacheRepository, jsonUtils);
+        // 設定 cacheConfig 的預設行為
+        when(cacheConfig.getPrimaryTtl()).thenReturn(Duration.ofMinutes(30));
+        when(cacheConfig.getTaskIndexTtl()).thenReturn(Duration.ofHours(24));
+        when(cacheConfig.getLockTimeout()).thenReturn(Duration.ofSeconds(10));
+        
+        helloCacheService = new HelloCacheService(cacheRepository, jsonUtils, cacheConfig);
         
         // 準備測試資料
         Hello hello = new Hello();
