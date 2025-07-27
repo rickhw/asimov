@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.gtcafe.asimov.system.hello.model.Hello;
 import com.gtcafe.asimov.system.hello.service.HelloMetricsService;
@@ -15,11 +16,13 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * HelloValidationService 單元測試
  * 測試驗證服務的各種業務邏輯情境
  */
+@ExtendWith(MockitoExtension.class)
 class HelloValidationServiceTest {
 
     @Mock

@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import com.gtcafe.asimov.framework.constants.KindConstants;
 import com.gtcafe.asimov.framework.utils.JsonUtils;
@@ -29,13 +31,14 @@ import com.gtcafe.asimov.infrastructure.cache.CacheRepository;
 import com.gtcafe.asimov.system.hello.config.HelloCacheConfig;
 import com.gtcafe.asimov.system.hello.model.Hello;
 import com.gtcafe.asimov.system.hello.model.HelloEvent;
-import com.gtcafe.asimov.system.hello.service.HelloMetricsService;
+
 
 /**
  * HelloCacheService 單元測試
  * 測試快取服務的各種操作情境
  */
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class HelloCacheServiceTest {
 
     @Mock
@@ -52,23 +55,24 @@ class HelloCacheServiceTest {
     private HelloEvent testEvent;
     private String testEventJson;
 
-    @Mock
-    private HelloMetricsService metricsService;
-
     @BeforeEach
     void setUp() {
         // 設定 cacheConfig 的預設行為
+        when(cacheConfig.isEnabled()).thenReturn(true);
         when(cacheConfig.getPrimaryTtl()).thenReturn(Duration.ofMinutes(30));
         when(cacheConfig.getTaskIndexTtl()).thenReturn(Duration.ofHours(24));
         when(cacheConfig.getLockTimeout()).thenReturn(Duration.ofSeconds(10));
-        
-        helloCacheService = new HelloCacheService(cacheRepository, jsonUtils, cacheConfig, metricsService);
-        
+        when(cacheConfig.isFailOnCacheError()).thenReturn(false);
+        when(cacheConfig.isMetricsEnabled()).thenReturn(false);
+
+        helloCacheService = new HelloCacheService(cacheRepository, jsonUtils, cacheConfig);
+
         // 準備測試資料
         Hello hello = new Hello();
         hello.setMessage("Test Message");
         testEvent = new HelloEvent(hello);
-        testEventJson = "{\"id\":\"" + testEvent.getId() + "\",\"data\":{\"message\":\"Test Message\"}}";
+        testEventJson =
+                "{\"id\":\"" + testEvent.getId() + "\",\"data\":{\"message\":\"Test Message\"}}";
     }
 
     @Test
@@ -81,8 +85,8 @@ class HelloCacheServiceTest {
 
         // Assert
         assertTrue(result);
-        verify(cacheRepository, times(2)).saveOrUpdateObject(anyString(), eq(testEventJson), 
-            anyLong(), eq(TimeUnit.SECONDS));
+        verify(cacheRepository, times(2)).saveOrUpdateObject(anyString(), eq(testEventJson),
+                anyLong(), eq(TimeUnit.SECONDS));
     }
 
     @Test
@@ -102,7 +106,7 @@ class HelloCacheServiceTest {
         // Arrange
         when(jsonUtils.modelToJsonStringSafe(testEvent)).thenReturn(Optional.of(testEventJson));
         doThrow(new RuntimeException("Cache error")).when(cacheRepository)
-            .saveOrUpdateObject(anyString(), anyString(), anyLong(), any(TimeUnit.class));
+                .saveOrUpdateObject(anyString(), anyString(), anyLong(), any(TimeUnit.class));
 
         // Act
         boolean result = helloCacheService.cacheHelloEvent(testEvent);
@@ -117,7 +121,7 @@ class HelloCacheServiceTest {
         String primaryKey = KindConstants.PLATFORM_HELLO + ":" + testEvent.getId();
         when(cacheRepository.retrieveObject(primaryKey)).thenReturn(Optional.of(testEventJson));
         when(jsonUtils.jsonStringToModelSafe(testEventJson, HelloEvent.class))
-            .thenReturn(Optional.of(testEvent));
+                .thenReturn(Optional.of(testEvent));
 
         // Act
         Optional<HelloEvent> result = helloCacheService.getHelloEvent(testEvent.getId());
@@ -146,7 +150,7 @@ class HelloCacheServiceTest {
         String primaryKey = KindConstants.PLATFORM_HELLO + ":" + testEvent.getId();
         when(cacheRepository.retrieveObject(primaryKey)).thenReturn(Optional.of(testEventJson));
         when(jsonUtils.jsonStringToModelSafe(testEventJson, HelloEvent.class))
-            .thenReturn(Optional.empty());
+                .thenReturn(Optional.empty());
 
         // Act
         Optional<HelloEvent> result = helloCacheService.getHelloEvent(testEvent.getId());
@@ -161,10 +165,11 @@ class HelloCacheServiceTest {
         String taskIndexKey = KindConstants.SYS_TASK + ":" + testEvent.getId();
         when(cacheRepository.retrieveObject(taskIndexKey)).thenReturn(Optional.of(testEventJson));
         when(jsonUtils.jsonStringToModelSafe(testEventJson, HelloEvent.class))
-            .thenReturn(Optional.of(testEvent));
+                .thenReturn(Optional.of(testEvent));
 
         // Act
-        Optional<HelloEvent> result = helloCacheService.getHelloEventFromTaskIndex(testEvent.getId());
+        Optional<HelloEvent> result =
+                helloCacheService.getHelloEventFromTaskIndex(testEvent.getId());
 
         // Assert
         assertTrue(result.isPresent());
@@ -181,8 +186,8 @@ class HelloCacheServiceTest {
 
         // Assert
         assertTrue(result);
-        verify(cacheRepository, times(2)).saveOrUpdateObject(anyString(), eq(testEventJson), 
-            anyLong(), eq(TimeUnit.SECONDS));
+        verify(cacheRepository, times(2)).saveOrUpdateObject(anyString(), eq(testEventJson),
+                anyLong(), eq(TimeUnit.SECONDS));
     }
 
     @Test
@@ -238,11 +243,11 @@ class HelloCacheServiceTest {
         // Arrange
         String lockKey = KindConstants.PLATFORM_HELLO + ":" + testEvent.getId() + ":lock";
         when(cacheRepository.setIfNotExists(eq(lockKey), anyString(), any()))
-            .thenReturn(true);
+                .thenReturn(true);
 
         // Act
-        Optional<String> result = helloCacheService.executeWithLock(testEvent.getId(), 
-            () -> "operation result");
+        Optional<String> result = helloCacheService.executeWithLock(testEvent.getId(),
+                () -> "operation result");
 
         // Assert
         assertTrue(result.isPresent());
@@ -255,11 +260,11 @@ class HelloCacheServiceTest {
         // Arrange
         String lockKey = KindConstants.PLATFORM_HELLO + ":" + testEvent.getId() + ":lock";
         when(cacheRepository.setIfNotExists(eq(lockKey), anyString(), any()))
-            .thenReturn(false);
+                .thenReturn(false);
 
         // Act
-        Optional<String> result = helloCacheService.executeWithLock(testEvent.getId(), 
-            () -> "operation result");
+        Optional<String> result = helloCacheService.executeWithLock(testEvent.getId(),
+                () -> "operation result");
 
         // Assert
         assertTrue(result.isEmpty());
@@ -270,11 +275,11 @@ class HelloCacheServiceTest {
         // Arrange
         Set<String> primaryKeys = Set.of("platform:hello:1", "platform:hello:2");
         Set<String> taskIndexKeys = Set.of("sys:task:1", "sys:task:2");
-        
+
         when(cacheRepository.findKeysByPattern(KindConstants.PLATFORM_HELLO + ":*"))
-            .thenReturn(primaryKeys);
+                .thenReturn(primaryKeys);
         when(cacheRepository.findKeysByPattern(KindConstants.SYS_TASK + ":*"))
-            .thenReturn(taskIndexKeys);
+                .thenReturn(taskIndexKeys);
 
         // Act
         helloCacheService.clearAllHelloCache();

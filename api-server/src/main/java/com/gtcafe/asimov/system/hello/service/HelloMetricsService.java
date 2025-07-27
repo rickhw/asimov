@@ -49,6 +49,26 @@ public class HelloMetricsService extends AbstractHelloMetricsService {
 
     public HelloMetricsService(MeterRegistry meterRegistry) {
         super(meterRegistry);
+        
+        // 在建構子中直接初始化 final 變數
+        this.syncRequestCounter = createCounter("hello.requests.sync", "Number of synchronous hello requests");
+        this.asyncRequestCounter = createCounter("hello.requests.async", "Number of asynchronous hello requests");
+        this.validationFailureCounter = createTaggedCounter("hello.validation.failures", "Number of validation failures", "type", "all");
+        this.cacheHitCounter = createCounter("hello.cache.hits", "Number of cache hits");
+        this.cacheMissCounter = createCounter("hello.cache.misses", "Number of cache misses");
+        this.databaseOperationCounter = createCounter("hello.database.operations", "Number of database operations");
+        this.queueOperationCounter = createCounter("hello.queue.operations", "Number of queue operations");
+
+        this.syncProcessingTimer = createTimer("hello.processing.sync", "Time taken to process synchronous hello requests");
+        this.asyncProcessingTimer = createTimer("hello.processing.async", "Time taken to process asynchronous hello requests");
+        this.validationTimer = createTimer("hello.validation.time", "Time taken for validation");
+        this.cacheOperationTimer = createTimer("hello.cache.operation.time", "Time taken for cache operations");
+        this.databaseOperationTimer = createTimer("hello.database.operation.time", "Time taken for database operations");
+
+        this.messageLengthSummary = createDistributionSummary("hello.message.length", "Distribution of hello message lengths");
+        this.batchSizeSummary = createDistributionSummary("hello.batch.size", "Distribution of batch sizes");
+        
+        // 初始化儀表指標
         initializeSpecificMetrics();
 
         log.info("HelloMetricsService initialized with all metrics registered");
@@ -61,26 +81,6 @@ public class HelloMetricsService extends AbstractHelloMetricsService {
 
     @Override
     protected void initializeSpecificMetrics() {
-        // 初始化 API-Server 特有的計數器
-        this.syncRequestCounter = createCounter("hello.requests.sync", "Number of synchronous hello requests");
-        this.asyncRequestCounter = createCounter("hello.requests.async", "Number of asynchronous hello requests");
-        this.validationFailureCounter = createTaggedCounter("hello.validation.failures", "Number of validation failures", "type", "all");
-        this.cacheHitCounter = createCounter("hello.cache.hits", "Number of cache hits");
-        this.cacheMissCounter = createCounter("hello.cache.misses", "Number of cache misses");
-        this.databaseOperationCounter = createCounter("hello.database.operations", "Number of database operations");
-        this.queueOperationCounter = createCounter("hello.queue.operations", "Number of queue operations");
-
-        // 初始化 API-Server 特有的計時器
-        this.syncProcessingTimer = createTimer("hello.processing.sync", "Time taken to process synchronous hello requests");
-        this.asyncProcessingTimer = createTimer("hello.processing.async", "Time taken to process asynchronous hello requests");
-        this.validationTimer = createTimer("hello.validation.time", "Time taken for validation");
-        this.cacheOperationTimer = createTimer("hello.cache.operation.time", "Time taken for cache operations");
-        this.databaseOperationTimer = createTimer("hello.database.operation.time", "Time taken for database operations");
-
-        // 初始化 API-Server 特有的分布摘要
-        this.messageLengthSummary = createDistributionSummary("hello.message.length", "Distribution of hello message lengths");
-        this.batchSizeSummary = createDistributionSummary("hello.batch.size", "Distribution of batch sizes");
-
         // 初始化 API-Server 特有的儀表
         createGauge("hello.requests.active.async", "Number of active asynchronous requests", this, HelloMetricsService::getActiveAsyncRequests);
         createGauge("hello.cache.events.total", "Total number of cached events", this, HelloMetricsService::getTotalCachedEvents);
@@ -245,5 +245,24 @@ public class HelloMetricsService extends AbstractHelloMetricsService {
                 .tag("component", component)
                 .register(meterRegistry);
         log.debug("Recorded health check metric for {}: {}", component, healthy);
+    }
+
+    // 統計方法
+    @Override
+    public void logMetricsSummary() {
+        log.info("API-Server Metrics Summary:");
+        log.info("- Sync Requests: {}", syncRequestCounter.count());
+        log.info("- Async Requests: {}", asyncRequestCounter.count());
+        log.info("- Validation Failures: {}", validationFailureCounter.count());
+        log.info("- Cache Hits: {}", cacheHitCounter.count());
+        log.info("- Cache Misses: {}", cacheMissCounter.count());
+        log.info("- Database Operations: {}", databaseOperationCounter.count());
+        log.info("- Queue Operations: {}", queueOperationCounter.count());
+        log.info("- Active Async Requests: {}", activeAsyncRequests.get());
+        log.info("- Total Cached Events: {}", totalCachedEvents.get());
+        log.info("- Average Sync Processing Time: {}ms", 
+            syncProcessingTimer.mean(java.util.concurrent.TimeUnit.MILLISECONDS));
+        log.info("- Average Async Processing Time: {}ms", 
+            asyncProcessingTimer.mean(java.util.concurrent.TimeUnit.MILLISECONDS));
     }
 }

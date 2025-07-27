@@ -43,6 +43,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.jayway.jsonpath:json-path'  // 支持 jsonPath
     testImplementation 'org.hamcrest:hamcrest'          // Hamcrest 用於匹配
+    testRuntimeOnly 'com.h2database:h2'                // H2 資料庫用於測試
 
     // operation
     // implementation 'com.github.loki4j:loki-logback-appender:1.4.1'

@@ -46,6 +46,22 @@ public class HelloConsumerMetricsService extends AbstractHelloMetricsService {
 
     public HelloConsumerMetricsService(MeterRegistry meterRegistry) {
         super(meterRegistry);
+        
+        // 在建構子中直接初始化 final 變數
+        this.messagesProcessedCounter = createCounter("hello_consumer_messages_processed_total", "Total number of messages processed by hello consumer");
+        this.messagesFailedCounter = createCounter("hello_consumer_messages_failed_total", "Total number of messages that failed processing");
+        this.dlqMessagesCounter = createCounter("hello_consumer_dlq_messages_total", "Total number of messages sent to dead letter queue");
+        this.retryAttemptsCounter = createCounter("hello_consumer_retry_attempts_total", "Total number of retry attempts");
+        this.taskStateTransitionsCounter = createCounter("hello_consumer_task_state_transitions_total", "Total number of task state transitions");
+        
+        this.messageProcessingTimer = createTimer("hello_consumer_message_processing_duration_seconds", "Time taken to process a message");
+        this.businessLogicTimer = createTimer("hello_consumer_business_logic_duration_seconds", "Time taken for business logic processing");
+        this.cacheOperationTimer = createTimer("hello_consumer_cache_operation_duration_seconds", "Time taken for cache operations");
+        
+        this.messageSizeSummary = createDistributionSummary("hello_consumer_message_size_bytes", "Distribution of message sizes");
+        this.processingDelaySummary = createDistributionSummary("hello_consumer_processing_delay_seconds", "Distribution of processing delays");
+        
+        // 初始化儀表指標
         initializeSpecificMetrics();
         
         log.info("HelloConsumerMetricsService initialized with all metrics registered");
@@ -58,22 +74,6 @@ public class HelloConsumerMetricsService extends AbstractHelloMetricsService {
 
     @Override
     protected void initializeSpecificMetrics() {
-        // 初始化 Consumer 特有的計數器
-        this.messagesProcessedCounter = createCounter("hello_consumer_messages_processed_total", "Total number of messages processed by hello consumer");
-        this.messagesFailedCounter = createCounter("hello_consumer_messages_failed_total", "Total number of messages that failed processing");
-        this.dlqMessagesCounter = createCounter("hello_consumer_dlq_messages_total", "Total number of messages sent to dead letter queue");
-        this.retryAttemptsCounter = createCounter("hello_consumer_retry_attempts_total", "Total number of retry attempts");
-        this.taskStateTransitionsCounter = createCounter("hello_consumer_task_state_transitions_total", "Total number of task state transitions");
-        
-        // 初始化 Consumer 特有的計時器
-        this.messageProcessingTimer = createTimer("hello_consumer_message_processing_duration_seconds", "Time taken to process a message");
-        this.businessLogicTimer = createTimer("hello_consumer_business_logic_duration_seconds", "Time taken for business logic processing");
-        this.cacheOperationTimer = createTimer("hello_consumer_cache_operation_duration_seconds", "Time taken for cache operations");
-        
-        // 初始化 Consumer 特有的分布摘要
-        this.messageSizeSummary = createDistributionSummary("hello_consumer_message_size_bytes", "Distribution of message sizes");
-        this.processingDelaySummary = createDistributionSummary("hello_consumer_processing_delay_seconds", "Distribution of processing delays");
-        
         // 初始化 Consumer 特有的儀表
         createGauge("hello_consumer_active_processing_messages", "Number of messages currently being processed", this, HelloConsumerMetricsService::getActiveProcessingMessages);
         createGauge("hello_consumer_total_dlq_messages", "Total number of messages in dead letter queue", this, HelloConsumerMetricsService::getTotalDlqMessages);

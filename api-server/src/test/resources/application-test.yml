@@ -1,0 +1,73 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ""
+
+# Asimov configuration for tests
+asimov:
+  time:
+    zone: UTC
+    format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+  system:
+    hello:
+      queues:
+        task-queue:
+          queue-name: test.hello.queue
+          exchange-name: test.hello.exchange
+          routing-key-name: test.hello.routing.key
+      consumer:
+        async-thread-pool:
+          core-size: 2
+          max-size: 4
+          queue-capacity: 100
+          thread-name-prefix: "test-async-hello-"
+
+# Infrastructure configuration for tests
+infra:
+  cache:
+    redis:
+      default-ttl: 3600
+      perfix-name: test-asimov
+
+# 測試環境的快取配置
+hello:
+  cache:
+    enabled: true
+    primary-ttl: PT30M
+    task-index-ttl: PT24H
+    lock-timeout: PT10S
+    fail-on-cache-error: false
+    metrics-enabled: false
+
+# 測試環境的佇列配置
+hello-queue:
+  enabled: true
+  exchange-name: test.hello.exchange
+  routing-key: test.hello.routing.key
+  queue-name: test.hello.queue
+  dlq-name: test.hello.dlq
+  retry-attempts: 3
+  retry-delay: PT1S
+
+logging:
+  level:
+    com.gtcafe.asimov: DEBUG
+    org.springframework: WARN
+    org.hibernate: WARN

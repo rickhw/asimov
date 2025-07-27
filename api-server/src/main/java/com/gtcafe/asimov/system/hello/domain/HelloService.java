@@ -202,6 +202,9 @@ public class HelloService {
       log.debug("Hello event not found in cache with ID: {}", eventId);
       return null;
 
+    } catch (HelloValidationService.HelloValidationException e) {
+      // 重新拋出驗證異常，不要捕獲
+      throw e;
     } catch (Exception e) {
       log.error("Error retrieving hello event with ID: {}", eventId, e);
       return null;
